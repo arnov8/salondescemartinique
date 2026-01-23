@@ -1,0 +1,10 @@
+# Robots.txt - Salon des CSE & COS de Martinique
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://www.salondescsemartinique.com/sitemap.xml
+
+# Disallow API routes
+Disallow: /api/
