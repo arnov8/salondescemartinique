@@ -313,7 +313,20 @@ salon-cse-martinique/
 | 21 | Rate limiting sur API routes | ✅ Fait |
 | 22 | Attributs aria accessibilité | ✅ Fait |
 | 23 | Configuration ESLint | ✅ Fait |
-| 24 | Push sur GitHub | 🔄 En cours |
+| 24 | Push sur GitHub | ✅ Fait |
+| 25 | Déploiement Vercel | ✅ Fait |
+
+---
+
+## Liens de production
+
+| Service | URL |
+|---------|-----|
+| **Site Vercel** | https://salon-cse-martinique.vercel.app |
+| **GitHub Repo** | https://github.com/arnov8/salondescemartinique |
+| **Vercel Dashboard** | https://vercel.com/arnauds-projects-84fc44a0/salon-cse-martinique |
+
+> Déploiement automatique activé : chaque push sur `main` déclenche un nouveau build.
 
 ---
 
