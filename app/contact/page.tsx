@@ -1,5 +1,32 @@
-import { MapPin, Phone, Mail, Clock, Instagram } from 'lucide-react'
+import { MapPin, Phone, Mail, Clock, Instagram, ExternalLink, MessageCircle } from 'lucide-react'
 import ContactForm from '@/components/forms/ContactForm'
+
+const contactInfo = [
+  {
+    icon: MapPin,
+    title: 'Organisateur',
+    lines: ['Intersalon', 'CC de Bellevue', '97200 Fort-de-France'],
+  },
+  {
+    icon: Phone,
+    title: 'Téléphone',
+    content: '05 96 61 21 21',
+    href: 'tel:0596612121',
+    sub: 'Fax : 05 96 61 93 44',
+  },
+  {
+    icon: Mail,
+    title: 'Email',
+    content: 'intersaloncaraibe@yahoo.fr',
+    href: 'mailto:intersaloncaraibe@yahoo.fr',
+    sub: 'Réponse sous 24-48h',
+  },
+  {
+    icon: Clock,
+    title: 'Le jour du salon',
+    lines: ['Jeudi 2 Octobre 2025', '8h00 - 16h00', 'Palais des Congrès, Schœlcher'],
+  },
+]
 
 export const metadata = {
   title: 'Contact | Salon des CSE & COS de Martinique 2025',
@@ -10,13 +37,13 @@ export default function ContactPage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="gradient-primary py-20">
+      <section className="gradient-primary py-16 sm:py-20 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl">
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
+          <div className="max-w-3xl mx-auto lg:mx-0 text-center lg:text-left">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 sm:mb-6">
               Contactez-nous
             </h1>
-            <p className="text-xl text-gray-200">
+            <p className="text-base sm:text-lg lg:text-xl text-gray-200">
               Une question sur le salon ? Notre équipe est à votre disposition
               pour vous accompagner.
             </p>
@@ -25,99 +52,83 @@ export default function ContactPage() {
       </section>
 
       {/* Contact Section */}
-      <section className="py-20">
+      <section className="py-12 sm:py-16 lg:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
             {/* Left - Contact Info */}
-            <div>
-              <h2 className="section-title">Informations de contact</h2>
-              <p className="text-gray-600 mb-8">
+            <div className="order-2 lg:order-1">
+              <h2 className="section-title text-center lg:text-left">Informations de contact</h2>
+              <p className="text-gray-600 mb-6 sm:mb-8 text-center lg:text-left text-sm sm:text-base">
                 N&apos;hésitez pas à nous contacter par téléphone, email ou via
                 le formulaire ci-contre.
               </p>
 
-              {/* Contact Cards */}
-              <div className="space-y-6">
-                <div className="card flex items-start gap-4">
-                  <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <MapPin className="w-6 h-6 text-primary" />
+              {/* Contact Cards - 2 columns on mobile */}
+              <div className="grid xs:grid-cols-2 gap-3 sm:gap-4">
+                {contactInfo.map((info, index) => (
+                  <div key={index} className="card !p-4 sm:!p-5">
+                    <div className="flex items-start gap-3">
+                      <div className="w-9 h-9 sm:w-10 sm:h-10 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                        <info.icon className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
+                      </div>
+                      <div className="min-w-0">
+                        <h3 className="font-bold text-primary text-sm sm:text-base mb-1">{info.title}</h3>
+                        {info.lines ? (
+                          info.lines.map((line, i) => (
+                            <p key={i} className={`text-xs sm:text-sm ${i === 0 ? 'font-medium text-gray-800' : 'text-gray-600'}`}>
+                              {line}
+                            </p>
+                          ))
+                        ) : (
+                          <>
+                            <a
+                              href={info.href}
+                              className="font-medium text-gray-800 hover:text-accent transition-colors text-sm block truncate"
+                            >
+                              {info.content}
+                            </a>
+                            {info.sub && <p className="text-gray-500 text-xs mt-0.5">{info.sub}</p>}
+                          </>
+                        )}
+                      </div>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="font-bold text-primary mb-1">Organisateur</h3>
-                    <p className="font-semibold">Intersalon</p>
-                    <p className="text-gray-600 text-sm">CC de Bellevue</p>
-                    <p className="text-gray-600 text-sm">97200 Fort-de-France, Martinique</p>
-                  </div>
-                </div>
-
-                <div className="card flex items-start gap-4">
-                  <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Phone className="w-6 h-6 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-primary mb-1">Téléphone</h3>
-                    <a
-                      href="tel:0596612121"
-                      className="text-lg font-semibold text-gray-800 hover:text-accent transition-colors"
-                    >
-                      05 96 61 21 21
-                    </a>
-                    <p className="text-gray-600 text-sm mt-1">Fax : 05 96 61 93 44</p>
-                  </div>
-                </div>
-
-                <div className="card flex items-start gap-4">
-                  <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Mail className="w-6 h-6 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-primary mb-1">Email</h3>
-                    <a
-                      href="mailto:intersaloncaraibe@yahoo.fr"
-                      className="font-semibold text-gray-800 hover:text-accent transition-colors"
-                    >
-                      intersaloncaraibe@yahoo.fr
-                    </a>
-                    <p className="text-gray-600 text-sm mt-1">Réponse sous 24-48h</p>
-                  </div>
-                </div>
-
-                <div className="card flex items-start gap-4">
-                  <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Clock className="w-6 h-6 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-primary mb-1">Le jour du salon</h3>
-                    <p className="font-semibold">Jeudi 2 Octobre 2025</p>
-                    <p className="text-gray-600 text-sm">De 8h00 à 16h00</p>
-                    <p className="text-gray-600 text-sm">Palais des Congrès de Madiana, Schœlcher</p>
-                  </div>
-                </div>
+                ))}
               </div>
 
               {/* Social Links */}
-              <div className="mt-8">
-                <h3 className="font-bold text-primary mb-4">Suivez-nous</h3>
-                <div className="flex gap-4">
+              <div className="mt-6 sm:mt-8 p-4 sm:p-5 bg-gradient-to-r from-primary/5 to-primary/10 rounded-xl">
+                <h3 className="font-bold text-primary mb-3 sm:mb-4 text-sm sm:text-base">Suivez-nous</h3>
+                <div className="flex items-center gap-3">
                   <a
                     href="https://www.instagram.com/salondescsemartinique/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-12 h-12 bg-primary rounded-xl flex items-center justify-center text-white hover:bg-accent transition-colors"
+                    className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-purple-500 via-pink-500 to-orange-400 rounded-xl flex items-center justify-center text-white hover:scale-110 transition-transform"
+                    aria-label="Instagram"
                   >
-                    <Instagram className="w-6 h-6" />
+                    <Instagram className="w-5 h-5 sm:w-6 sm:h-6" />
                   </a>
+                  <div className="text-sm">
+                    <p className="font-medium text-gray-800">@salondescsemartinique</p>
+                    <p className="text-gray-500 text-xs">Actualités et coulisses du salon</p>
+                  </div>
                 </div>
               </div>
             </div>
 
             {/* Right - Form */}
-            <div>
-              <div className="card">
-                <h2 className="text-2xl font-bold text-primary mb-2">Envoyez-nous un message</h2>
-                <p className="text-gray-600 mb-6">
-                  Remplissez le formulaire ci-dessous et nous vous répondrons rapidement.
-                </p>
+            <div className="order-1 lg:order-2">
+              <div className="card lg:sticky lg:top-24">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-primary flex items-center justify-center">
+                    <MessageCircle className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                  </div>
+                  <div>
+                    <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-primary">Envoyez-nous un message</h2>
+                    <p className="text-gray-500 text-xs sm:text-sm">Réponse rapide garantie</p>
+                  </div>
+                </div>
                 <ContactForm />
               </div>
             </div>
@@ -126,29 +137,34 @@ export default function ContactPage() {
       </section>
 
       {/* Map Section */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-12 sm:py-16 lg:py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
+          <div className="text-center mb-8 sm:mb-12">
             <h2 className="section-title">Lieu du salon</h2>
             <p className="section-subtitle">
               Palais des Congrès de Madiana, 97233 Schœlcher, Martinique
             </p>
           </div>
 
-          {/* Map placeholder */}
-          <div className="aspect-video bg-gray-200 rounded-2xl flex items-center justify-center">
-            <div className="text-center">
-              <MapPin className="w-12 h-12 text-primary mx-auto mb-4" />
-              <p className="text-gray-600 font-medium">Palais des Congrès de Madiana</p>
-              <p className="text-gray-500 text-sm">Schœlcher, Martinique</p>
-              <a
-                href="https://maps.google.com/?q=Palais+des+Congrès+de+Madiana+Schoelcher+Martinique"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-primary mt-4 inline-block"
-              >
-                Voir sur Google Maps
-              </a>
+          {/* Map card */}
+          <div className="card !p-0 overflow-hidden">
+            <div className="aspect-video sm:aspect-[21/9] bg-gradient-to-br from-primary/5 to-primary/10 flex items-center justify-center">
+              <div className="text-center p-6">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                  <MapPin className="w-8 h-8 sm:w-10 sm:h-10 text-primary" />
+                </div>
+                <p className="text-gray-800 font-bold text-lg sm:text-xl mb-1">Palais des Congrès de Madiana</p>
+                <p className="text-gray-500 text-sm sm:text-base mb-4">Schœlcher, Martinique</p>
+                <a
+                  href="https://maps.google.com/?q=Palais+des+Congrès+de+Madiana+Schoelcher+Martinique"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-primary inline-flex items-center gap-2"
+                >
+                  <span>Voir sur Google Maps</span>
+                  <ExternalLink className="w-4 h-4" />
+                </a>
+              </div>
             </div>
           </div>
         </div>
