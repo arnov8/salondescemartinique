@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { Calendar, MapPin, Users, Store, Briefcase, Gift, Plane, GraduationCap, ArrowRight, CheckCircle, Award, Clock, Building2, PartyPopper, CreditCard } from 'lucide-react'
+import VideoBackground from '@/components/VideoBackground'
 
 const stats = [
   { icon: Store, value: '+60', label: 'Exposants' },
@@ -49,16 +50,11 @@ export default function HomePage() {
       {/* Hero Section */}
       <section className="relative min-h-[100svh] flex items-center overflow-hidden">
         {/* Video Background */}
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
+        <VideoBackground
+          src="/videos/hero-background.mp4"
           poster="/images/video-poster.jpg"
           className="absolute inset-0 w-full h-full object-cover scale-105"
-        >
-          <source src="/videos/hero-background.mp4" type="video/mp4" />
-        </video>
+        />
 
         {/* Color Overlay - Éclairci pour mieux voir la vidéo */}
         <div className="absolute inset-0 bg-primary/50" />
@@ -73,13 +69,13 @@ export default function HomePage() {
               <span className="badge mb-4 sm:mb-6">
                 32ème Édition
               </span>
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight">
-                Salon des CSE &amp; COS{' '}
-                <span className="text-accent whitespace-nowrap">Martinique</span>
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-6 leading-tight whitespace-nowrap">
+                <span className="block sm:inline">Salon des CSE &amp; COS</span>{' '}
+                <span className="text-accent">Guadeloupe</span>
               </h1>
               <p className="text-base sm:text-lg lg:text-xl text-gray-200 mb-6 sm:mb-8 max-w-lg mx-auto lg:mx-0">
                 Le rendez-vous annuel des responsables de Comités Sociaux et Économiques
-                et Comités d&apos;Œuvres Sociales en Martinique.
+                et Comités d&apos;Œuvres Sociales en Guadeloupe.
               </p>
 
               {/* Event Info - Mobile optimized */}
@@ -218,7 +214,7 @@ export default function HomePage() {
               <div className="relative aspect-[4/3] sm:aspect-square rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl">
                 <Image
                   src="/images/salon-cse-ambiance.jpg"
-                  alt="Ambiance du Salon des CSE & COS Martinique"
+                  alt="Ambiance du Salon des CSE & COS Guadeloupe"
                   fill
                   className="object-cover"
                 />
@@ -259,7 +255,7 @@ export default function HomePage() {
           </h2>
           <p className="text-base sm:text-lg lg:text-xl text-gray-200 mb-6 sm:mb-8 max-w-2xl mx-auto">
             Rejoignez les +60 exposants et présentez vos produits et services
-            aux décideurs CSE &amp; COS de Martinique.
+            aux décideurs CSE &amp; COS de Guadeloupe.
           </p>
           <Link href="/exposer" className="btn-accent inline-flex items-center gap-2">
             Réserver votre stand
@@ -291,8 +287,8 @@ export default function HomePage() {
                 <div className="flex items-start gap-3 p-3 bg-gray-50 rounded-xl">
                   <MapPin className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
                   <div>
-                    <p className="font-semibold text-sm sm:text-base">Palais des Congrès de Madiana</p>
-                    <p className="text-gray-600 text-sm">97233 Schœlcher, Martinique</p>
+                    <p className="font-semibold text-sm sm:text-base">Palais des Congrès</p>
+                    <p className="text-gray-600 text-sm">Guadeloupe</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3 p-3 bg-gray-50 rounded-xl">

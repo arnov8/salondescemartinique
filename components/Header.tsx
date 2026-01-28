@@ -40,26 +40,26 @@ export default function Header() {
     }`}>
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 safe-area-x">
         <div className="flex items-center justify-between h-16 sm:h-20">
-          {/* Logo - Salon CSE Martinique */}
+          {/* Logo - Salon des CSE & COS de Guadeloupe */}
           <Link href="/" className="flex items-center gap-2 sm:gap-3 group">
-            {/* Logo mark avec texte SALON */}
+            {/* Logo mark avec texte SALON DES */}
             <div className="relative flex-shrink-0">
-              <div className="bg-gradient-to-br from-primary to-primary-dark rounded-xl shadow-lg group-hover:shadow-xl transition-shadow px-2.5 py-1.5 sm:px-3 sm:py-2">
-                <span className="text-accent font-black text-[10px] sm:text-xs tracking-wider block leading-none">SALON</span>
-                <span className="text-white font-black text-base sm:text-xl leading-none">CSE</span>
+              <div className="bg-gradient-to-br from-primary to-primary-dark rounded-xl shadow-lg group-hover:shadow-xl transition-shadow px-2 py-1.5 sm:px-2.5 sm:py-2">
+                <span className="text-accent font-black text-[8px] sm:text-[10px] tracking-wider block leading-none">SALON DES</span>
+                <span className="text-white font-black text-sm sm:text-lg leading-none">CSE & COS</span>
               </div>
               {/* Edition badge */}
               <div className="absolute -top-1.5 -right-1.5 w-5 h-5 sm:w-6 sm:h-6 bg-accent rounded-full flex items-center justify-center shadow-md border-2 border-white">
                 <span className="text-white text-[8px] sm:text-[10px] font-bold">32</span>
               </div>
             </div>
-            {/* Text Martinique */}
+            {/* Text Guadeloupe */}
             <div className="flex flex-col">
               <span className="text-primary font-bold text-base sm:text-lg lg:text-xl leading-tight">
-                <span className="text-accent">Martinique</span>
+                <span className="text-accent">Guadeloupe</span>
               </span>
               <span className="text-gray-400 text-[10px] sm:text-xs font-medium tracking-wide">
-                CSE & COS • 2 Oct. 2025
+                2 Octobre 2025
               </span>
             </div>
           </Link>
