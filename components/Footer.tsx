@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { MapPin, Phone, Mail, Calendar, Instagram, Clock } from 'lucide-react'
+import { MapPin, Phone, Mail, Calendar, Instagram, Facebook, Clock } from 'lucide-react'
 
 export default function Footer() {
   return (
@@ -27,6 +27,15 @@ export default function Footer() {
             </p>
             {/* Social Links - Mobile visible here */}
             <div className="flex gap-3 mt-4 sm:mt-6">
+              <a
+                href="https://www.facebook.com/profile.php?id=100082995503866"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 bg-[#1877F2] rounded-xl flex items-center justify-center hover:scale-110 transition-transform"
+                aria-label="Facebook"
+              >
+                <Facebook className="w-5 h-5" />
+              </a>
               <a
                 href="https://www.instagram.com/salondescsemartinique/"
                 target="_blank"
@@ -98,19 +107,27 @@ export default function Footer() {
             <h3 className="font-semibold text-base sm:text-lg mb-3 sm:mb-4 text-white/90">Contact</h3>
             <ul className="space-y-3">
               <li>
-                <a href="tel:0596612121" className="flex items-center gap-3 text-gray-300 hover:text-accent transition-colors group">
+                <a href="tel:0696263096" className="flex items-center gap-3 text-gray-300 hover:text-accent transition-colors group">
                   <div className="w-8 h-8 rounded-lg bg-white/10 group-hover:bg-accent/20 flex items-center justify-center flex-shrink-0 transition-colors">
                     <Phone className="w-4 h-4 text-accent" />
                   </div>
-                  <span className="text-sm">05 96 61 21 21</span>
+                  <span className="text-sm">06 96 26 30 96</span>
                 </a>
               </li>
               <li>
-                <a href="mailto:intersaloncaraibe@yahoo.fr" className="flex items-center gap-3 text-gray-300 hover:text-accent transition-colors group">
+                <a href="tel:0696334700" className="flex items-center gap-3 text-gray-300 hover:text-accent transition-colors group">
+                  <div className="w-8 h-8 rounded-lg bg-white/10 group-hover:bg-accent/20 flex items-center justify-center flex-shrink-0 transition-colors">
+                    <Phone className="w-4 h-4 text-accent" />
+                  </div>
+                  <span className="text-sm">06 96 33 47 00</span>
+                </a>
+              </li>
+              <li>
+                <a href="mailto:organisation@antillessalons.com" className="flex items-center gap-3 text-gray-300 hover:text-accent transition-colors group">
                   <div className="w-8 h-8 rounded-lg bg-white/10 group-hover:bg-accent/20 flex items-center justify-center flex-shrink-0 transition-colors">
                     <Mail className="w-4 h-4 text-accent" />
                   </div>
-                  <span className="text-sm break-all">intersaloncaraibe@yahoo.fr</span>
+                  <span className="text-sm break-all">organisation@antillessalons.com</span>
                 </a>
               </li>
             </ul>
@@ -121,7 +138,7 @@ export default function Footer() {
         <div className="border-t border-white/10 mt-8 pt-6 sm:pt-8">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
             <p className="text-gray-400 text-xs sm:text-sm">
-              Organisé par <span className="text-white font-medium">Intersalon</span>
+              Organisé par <span className="text-white font-medium">Antilles Salons</span>
             </p>
             <p className="text-gray-500 text-xs">
               © {new Date().getFullYear()} Salon des CSE &amp; COS de Martinique

@@ -1,4 +1,4 @@
-import { Calendar, MapPin, Clock, CheckCircle, Users, Gift, Briefcase, Ticket, Car, UtensilsCrossed, FileCheck } from 'lucide-react'
+import { Calendar, MapPin, Clock, CheckCircle, Users, Gift, Briefcase, Ticket, Car, Snowflake } from 'lucide-react'
 import VisitorForm from '@/components/forms/VisitorForm'
 
 const benefits = [
@@ -10,11 +10,11 @@ const benefits = [
   {
     icon: Briefcase,
     title: 'Conférence CSE/COS',
-    description: 'Assistez à une conférence exclusive animée par un expert en droit du travail.',
+    description: 'Assistez à une conférence exclusive animée par un expert en droit du travail ou expert-comptable.',
   },
   {
     icon: Gift,
-    title: 'Tombola des CE',
+    title: 'La Grande Tombola des Comités',
     description: 'Participez au tirage au sort et tentez de remporter de nombreux cadeaux.',
   },
 ]
@@ -36,9 +36,7 @@ const publicCible = [
 
 const pratiques = [
   { icon: Car, text: 'Parking gratuit sur place' },
-  { icon: Ticket, text: 'Badge visiteur remis à l\'entrée' },
-  { icon: FileCheck, text: 'Plan du salon disponible' },
-  { icon: UtensilsCrossed, text: 'Restauration sur place' },
+  { icon: Snowflake, text: 'Espace d\'exposition climatisé' },
 ]
 
 export const metadata = {
@@ -151,10 +149,9 @@ export default function VisiterPage() {
                     <Gift className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-gray-800 mb-1 text-sm sm:text-base">Tombola des CE</h3>
+                    <h3 className="font-bold text-gray-800 mb-1 text-sm sm:text-base">Grande Tombola des Comités</h3>
                     <p className="text-sm text-gray-600">
-                      Tous les visiteurs inscrits participent automatiquement au tirage
-                      et peuvent remporter de nombreux cadeaux !
+                      Tous les visiteurs du salon peuvent participer à la grande tombola des Comités, ils peuvent tenter de remporter de nombreux cadeaux ! Attention pour remporter un cadeau, il faut être présent lors du tirage au sort.
                     </p>
                   </div>
                 </div>
@@ -170,7 +167,7 @@ export default function VisiterPage() {
                   </div>
                   <div>
                     <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-primary">Inscription visiteur</h2>
-                    <p className="text-gray-500 text-xs sm:text-sm">Gratuite et obligatoire</p>
+                    <p className="text-gray-500 text-xs sm:text-sm">Entrée réservée aux membres de CSE et COS inscrits et enregistrés uniquement.</p>
                   </div>
                 </div>
                 <VisitorForm />

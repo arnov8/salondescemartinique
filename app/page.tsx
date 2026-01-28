@@ -60,11 +60,11 @@ export default function HomePage() {
           <source src="/videos/hero-background.mp4" type="video/mp4" />
         </video>
 
-        {/* Color Overlay */}
-        <div className="absolute inset-0 bg-primary/80" />
+        {/* Color Overlay - Éclairci pour mieux voir la vidéo */}
+        <div className="absolute inset-0 bg-primary/50" />
 
         {/* Gradient Overlay for better text readability */}
-        <div className="absolute inset-0 bg-gradient-to-b sm:bg-gradient-to-r from-primary/95 via-primary/80 to-primary/60" />
+        <div className="absolute inset-0 bg-gradient-to-b sm:bg-gradient-to-r from-primary/70 via-primary/50 to-primary/30" />
 
         <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-16 lg:py-20">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
@@ -217,8 +217,8 @@ export default function HomePage() {
             <div className="relative order-1 lg:order-2">
               <div className="relative aspect-[4/3] sm:aspect-square rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl">
                 <Image
-                  src="/images/visuel-2025.jpg"
-                  alt="Salon des CSE & COS Martinique 2025"
+                  src="/images/salon-cse-ambiance.jpg"
+                  alt="Ambiance du Salon des CSE & COS Martinique"
                   fill
                   className="object-cover"
                 />
@@ -312,16 +312,16 @@ export default function HomePage() {
                 </div>
                 Organisateur
               </h3>
-              <p className="font-semibold mb-1 text-sm sm:text-base">Intersalon</p>
-              <p className="text-gray-600 text-sm mb-4">CC de Bellevue, 97200 Fort-de-France</p>
+              <p className="font-semibold mb-1 text-sm sm:text-base">Antilles Salons</p>
+              <p className="text-gray-600 text-sm mb-4">Organisateur du Salon des CSE & COS</p>
               <div className="space-y-2 text-sm">
-                <a href="tel:0596612121" className="flex items-center gap-2 text-gray-700 hover:text-accent transition-colors p-2 -mx-2 rounded-lg hover:bg-gray-50">
+                <a href="tel:0696263096" className="flex items-center gap-2 text-gray-700 hover:text-accent transition-colors p-2 -mx-2 rounded-lg hover:bg-gray-50">
                   <span className="font-medium w-12">Tél :</span>
-                  <span className="text-primary">05 96 61 21 21</span>
+                  <span className="text-primary">06 96 26 30 96</span>
                 </a>
-                <a href="mailto:intersaloncaraibe@yahoo.fr" className="flex items-center gap-2 text-gray-700 hover:text-accent transition-colors p-2 -mx-2 rounded-lg hover:bg-gray-50">
+                <a href="mailto:organisation@antillessalons.com" className="flex items-center gap-2 text-gray-700 hover:text-accent transition-colors p-2 -mx-2 rounded-lg hover:bg-gray-50">
                   <span className="font-medium w-12">Email :</span>
-                  <span className="text-primary break-all">intersaloncaraibe@yahoo.fr</span>
+                  <span className="text-primary break-all">organisation@antillessalons.com</span>
                 </a>
               </div>
             </div>

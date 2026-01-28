@@ -13,6 +13,7 @@ const visitorSchema = z.object({
   cseName: z.string().min(2, 'Nom du CSE/COS requis'),
   email: z.string().email('Email invalide'),
   phone: z.string().min(10, 'Numéro de téléphone invalide'),
+  participants: z.string().min(1, 'Nombre de participants requis'),
   // Honeypot field - should remain empty
   website: z.string().max(0, 'Ce champ doit rester vide').optional(),
 })
@@ -251,6 +252,36 @@ export default function VisitorForm() {
         )}
       </div>
 
+      {/* Nombre de participants */}
+      <div>
+        <label htmlFor="participants" className="label-field">
+          Nombre de participants <span className="text-red-500" aria-hidden="true">*</span>
+          <span className="sr-only">(requis)</span>
+        </label>
+        <select
+          id="participants"
+          {...register('participants')}
+          className="input-field"
+          aria-required="true"
+          aria-invalid={errors.participants ? 'true' : 'false'}
+          aria-describedby={errors.participants ? 'participants-error' : undefined}
+        >
+          <option value="">Sélectionnez le nombre</option>
+          <option value="1">1 participant</option>
+          <option value="2">2 participants</option>
+          <option value="3">3 participants</option>
+          <option value="4">4 participants</option>
+          <option value="5">5 participants</option>
+          <option value="6">6 participants</option>
+          <option value="7">7 participants</option>
+        </select>
+        {errors.participants && (
+          <p id="participants-error" className="text-red-500 text-sm mt-1" role="alert">
+            {errors.participants.message}
+          </p>
+        )}
+      </div>
+
       {/* Submit */}
       <button
         type="submit"
@@ -272,7 +303,7 @@ export default function VisitorForm() {
       </button>
 
       <p className="text-xs text-gray-500 text-center">
-        Entrée réservée aux membres de CSE et COS uniquement.
+        Entrée réservée aux membres de CSE et COS inscrits et enregistrés uniquement.
         Badge visiteur envoyé par email après validation.
       </p>
     </form>

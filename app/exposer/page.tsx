@@ -27,10 +27,8 @@ const benefits = [
 const included = [
   'Stand équipé (table, chaises, électricité)',
   'Badge exposant',
-  'Visibilité sur le plan du salon',
-  'Listing dans le catalogue exposants',
-  'Participation à la Tombola des CE',
-  'Communication sur les réseaux sociaux',
+  'Participation à la Grande Tombola des Comités',
+  'Salon mis en avant sur RCI, dans la presse et sur les réseaux sociaux',
 ]
 
 const targetAudience = [
@@ -177,13 +175,17 @@ export default function ExposerPage() {
                     Vous avez des questions ? Contactez notre équipe :
                   </p>
                   <div className="space-y-2">
-                    <a href="tel:0596612121" className="flex items-center gap-2 text-sm hover:text-accent transition-colors">
+                    <a href="tel:0696263096" className="flex items-center gap-2 text-sm hover:text-accent transition-colors">
                       <Phone className="w-4 h-4 text-primary" />
-                      <span>05 96 61 21 21</span>
+                      <span>06 96 26 30 96</span>
                     </a>
-                    <a href="mailto:intersaloncaraibe@yahoo.fr" className="flex items-center gap-2 text-sm hover:text-accent transition-colors">
+                    <a href="tel:0696334700" className="flex items-center gap-2 text-sm hover:text-accent transition-colors">
+                      <Phone className="w-4 h-4 text-primary" />
+                      <span>06 96 33 47 00</span>
+                    </a>
+                    <a href="mailto:organisation@antillessalons.com" className="flex items-center gap-2 text-sm hover:text-accent transition-colors">
                       <Mail className="w-4 h-4 text-primary" />
-                      <span className="break-all">intersaloncaraibe@yahoo.fr</span>
+                      <span className="break-all">organisation@antillessalons.com</span>
                     </a>
                   </div>
                 </div>

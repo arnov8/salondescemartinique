@@ -1,30 +1,28 @@
-import { MapPin, Phone, Mail, Clock, Instagram, ExternalLink, MessageCircle } from 'lucide-react'
+import { MapPin, Phone, Mail, Clock, Instagram, Facebook, ExternalLink, MessageCircle } from 'lucide-react'
 import ContactForm from '@/components/forms/ContactForm'
 
 const contactInfo = [
   {
     icon: MapPin,
     title: 'Organisateur',
-    lines: ['Intersalon', 'CC de Bellevue', '97200 Fort-de-France'],
+    lines: ['Antilles Salons', 'Organisateur du Salon des CSE & COS'],
   },
   {
     icon: Phone,
     title: 'Téléphone',
-    content: '05 96 61 21 21',
-    href: 'tel:0596612121',
-    sub: 'Fax : 05 96 61 93 44',
+    lines: ['06 96 26 30 96', '06 96 33 47 00'],
   },
   {
     icon: Mail,
     title: 'Email',
-    content: 'intersaloncaraibe@yahoo.fr',
-    href: 'mailto:intersaloncaraibe@yahoo.fr',
+    content: 'organisation@antillessalons.com',
+    href: 'mailto:organisation@antillessalons.com',
     sub: 'Réponse sous 24-48h',
   },
   {
     icon: Clock,
     title: 'Le jour du salon',
-    lines: ['Jeudi 2 Octobre 2025', '8h00 - 16h00', 'Palais des Congrès, Schœlcher'],
+    lines: ['Jeudi 2 Octobre 2025', '9h00 - 16h00', 'Madiana, Palais des Congrès, Schœlcher'],
   },
 ]
 
@@ -99,19 +97,36 @@ export default function ContactPage() {
               {/* Social Links */}
               <div className="mt-6 sm:mt-8 p-4 sm:p-5 bg-gradient-to-r from-primary/5 to-primary/10 rounded-xl">
                 <h3 className="font-bold text-primary mb-3 sm:mb-4 text-sm sm:text-base">Suivez-nous</h3>
-                <div className="flex items-center gap-3">
-                  <a
-                    href="https://www.instagram.com/salondescsemartinique/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-purple-500 via-pink-500 to-orange-400 rounded-xl flex items-center justify-center text-white hover:scale-110 transition-transform"
-                    aria-label="Instagram"
-                  >
-                    <Instagram className="w-5 h-5 sm:w-6 sm:h-6" />
-                  </a>
-                  <div className="text-sm">
-                    <p className="font-medium text-gray-800">@salondescsemartinique</p>
-                    <p className="text-gray-500 text-xs">Actualités et coulisses du salon</p>
+                <div className="flex flex-col gap-4">
+                  <div className="flex items-center gap-3">
+                    <a
+                      href="https://www.facebook.com/profile.php?id=100082995503866"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-10 h-10 sm:w-12 sm:h-12 bg-[#1877F2] rounded-xl flex items-center justify-center text-white hover:scale-110 transition-transform"
+                      aria-label="Facebook"
+                    >
+                      <Facebook className="w-5 h-5 sm:w-6 sm:h-6" />
+                    </a>
+                    <div className="text-sm">
+                      <p className="font-medium text-gray-800">Salon des CSE Martinique</p>
+                      <p className="text-gray-500 text-xs">Retrouvez-nous sur Facebook</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <a
+                      href="https://www.instagram.com/salondescsemartinique/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-purple-500 via-pink-500 to-orange-400 rounded-xl flex items-center justify-center text-white hover:scale-110 transition-transform"
+                      aria-label="Instagram"
+                    >
+                      <Instagram className="w-5 h-5 sm:w-6 sm:h-6" />
+                    </a>
+                    <div className="text-sm">
+                      <p className="font-medium text-gray-800">@salondescsemartinique</p>
+                      <p className="text-gray-500 text-xs">Actualités et coulisses du salon</p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -142,30 +157,42 @@ export default function ContactPage() {
           <div className="text-center mb-8 sm:mb-12">
             <h2 className="section-title">Lieu du salon</h2>
             <p className="section-subtitle">
-              Palais des Congrès de Madiana, 97233 Schœlcher, Martinique
+              Madiana, Palais des Congrès, 97233 Schœlcher, Martinique
             </p>
           </div>
 
-          {/* Map card */}
+          {/* Google Maps embed */}
           <div className="card !p-0 overflow-hidden">
-            <div className="aspect-video sm:aspect-[21/9] bg-gradient-to-br from-primary/5 to-primary/10 flex items-center justify-center">
-              <div className="text-center p-6">
-                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                  <MapPin className="w-8 h-8 sm:w-10 sm:h-10 text-primary" />
-                </div>
-                <p className="text-gray-800 font-bold text-lg sm:text-xl mb-1">Palais des Congrès de Madiana</p>
-                <p className="text-gray-500 text-sm sm:text-base mb-4">Schœlcher, Martinique</p>
-                <a
-                  href="https://maps.google.com/?q=Palais+des+Congrès+de+Madiana+Schoelcher+Martinique"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-primary inline-flex items-center gap-2"
-                >
-                  <span>Voir sur Google Maps</span>
-                  <ExternalLink className="w-4 h-4" />
-                </a>
-              </div>
+            <div className="aspect-video sm:aspect-[21/9] w-full">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3822.7489752367!2d-61.09471392394127!3d14.626080485883832!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8c6aa1f4e0c7a9f9%3A0x8d35e9b4c6e9d0a5!2sPalais%20des%20Congr%C3%A8s%20de%20Madiana!5e0!3m2!1sfr!2smq!4v1700000000000!5m2!1sfr!2smq"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Palais des Congrès de Madiana - Lieu du Salon des CSE & COS"
+                className="w-full h-full"
+              />
             </div>
+          </div>
+
+          {/* Info under map */}
+          <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8">
+            <div className="flex items-center gap-2 text-gray-600">
+              <MapPin className="w-5 h-5 text-primary" />
+              <span className="text-sm sm:text-base font-medium">Madiana, Palais des Congrès, Schœlcher</span>
+            </div>
+            <a
+              href="https://maps.google.com/?q=Palais+des+Congrès+de+Madiana+Schoelcher+Martinique"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-outline-primary inline-flex items-center gap-2 text-sm"
+            >
+              <span>Ouvrir dans Google Maps</span>
+              <ExternalLink className="w-4 h-4" />
+            </a>
           </div>
         </div>
       </section>

@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
-import { Instagram, Calendar } from 'lucide-react'
+import { Instagram, Facebook, Calendar } from 'lucide-react'
 
 const navLinks = [
   { href: '/', label: 'Accueil' },
@@ -40,25 +40,26 @@ export default function Header() {
     }`}>
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 safe-area-x">
         <div className="flex items-center justify-between h-16 sm:h-20">
-          {/* Logo - Redesigned */}
+          {/* Logo - Salon CSE Martinique */}
           <Link href="/" className="flex items-center gap-2 sm:gap-3 group">
-            {/* Logo mark */}
+            {/* Logo mark avec texte SALON */}
             <div className="relative flex-shrink-0">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-primary to-primary-dark rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow">
-                <span className="text-white font-black text-base sm:text-lg">CSE</span>
+              <div className="bg-gradient-to-br from-primary to-primary-dark rounded-xl shadow-lg group-hover:shadow-xl transition-shadow px-2.5 py-1.5 sm:px-3 sm:py-2">
+                <span className="text-accent font-black text-[10px] sm:text-xs tracking-wider block leading-none">SALON</span>
+                <span className="text-white font-black text-base sm:text-xl leading-none">CSE</span>
               </div>
               {/* Edition badge */}
-              <div className="absolute -top-1 -right-1 w-5 h-5 sm:w-6 sm:h-6 bg-accent rounded-full flex items-center justify-center shadow-md">
+              <div className="absolute -top-1.5 -right-1.5 w-5 h-5 sm:w-6 sm:h-6 bg-accent rounded-full flex items-center justify-center shadow-md border-2 border-white">
                 <span className="text-white text-[8px] sm:text-[10px] font-bold">32</span>
               </div>
             </div>
-            {/* Text */}
+            {/* Text Martinique */}
             <div className="flex flex-col">
-              <span className="text-primary font-bold text-sm sm:text-base lg:text-lg leading-tight">
-                Salon <span className="text-accent">Martinique</span>
+              <span className="text-primary font-bold text-base sm:text-lg lg:text-xl leading-tight">
+                <span className="text-accent">Martinique</span>
               </span>
               <span className="text-gray-400 text-[10px] sm:text-xs font-medium tracking-wide">
-                CSE & COS • 2025
+                CSE & COS • 2 Oct. 2025
               </span>
             </div>
           </Link>
@@ -78,18 +79,34 @@ export default function Header() {
           </div>
 
           {/* Social + CTA Desktop */}
-          <div className="hidden lg:flex items-center space-x-4">
-            <a
-              href="https://www.instagram.com/salondescsemartinique/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-9 h-9 rounded-full bg-gray-100 hover:bg-gradient-to-br hover:from-purple-500 hover:via-pink-500 hover:to-orange-400 hover:text-white flex items-center justify-center transition-all duration-300"
-              aria-label="Instagram"
-            >
-              <Instagram size={18} />
-            </a>
-            <Link href="/exposer" className="btn-accent text-sm">
-              Devenir Exposant
+          <div className="hidden lg:flex items-center space-x-3">
+            {/* Social Icons */}
+            <div className="flex items-center space-x-2">
+              <a
+                href="https://www.facebook.com/profile.php?id=100082995503866"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-full bg-gray-100 hover:bg-[#1877F2] hover:text-white flex items-center justify-center transition-all duration-300 text-gray-600"
+                aria-label="Facebook"
+              >
+                <Facebook size={18} />
+              </a>
+              <a
+                href="https://www.instagram.com/salondescsemartinique/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-full bg-gray-100 hover:bg-gradient-to-br hover:from-purple-500 hover:via-pink-500 hover:to-orange-400 hover:text-white flex items-center justify-center transition-all duration-300 text-gray-600"
+                aria-label="Instagram"
+              >
+                <Instagram size={18} />
+              </a>
+            </div>
+            {/* Two CTA Buttons */}
+            <Link href="/visiter" className="btn-outline-primary text-sm px-4 py-2">
+              Visiter le Salon
+            </Link>
+            <Link href="/exposer" className="btn-accent text-sm px-4 py-2">
+              Exposer au Salon
             </Link>
           </div>
 
@@ -156,24 +173,33 @@ export default function Header() {
           {/* CTA + Social */}
           <div className="space-y-3">
             <Link
+              href="/visiter"
+              className="btn-primary w-full text-center block"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Visiter le Salon
+            </Link>
+            <Link
               href="/exposer"
               className="btn-accent w-full text-center block"
               onClick={() => setIsMenuOpen(false)}
             >
-              Devenir Exposant
-            </Link>
-            <Link
-              href="/visiter"
-              className="btn-outline-primary w-full text-center block"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              S&apos;inscrire visiteur
+              Exposer au Salon
             </Link>
           </div>
 
           {/* Social */}
-          <div className="flex items-center justify-center gap-4 pt-4 mt-4 border-t border-gray-100">
+          <div className="flex items-center justify-center gap-3 pt-4 mt-4 border-t border-gray-100">
             <span className="text-sm text-gray-500">Suivez-nous</span>
+            <a
+              href="https://www.facebook.com/profile.php?id=100082995503866"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-10 h-10 rounded-full bg-[#1877F2] text-white flex items-center justify-center hover:scale-110 transition-transform"
+              aria-label="Facebook"
+            >
+              <Facebook size={20} />
+            </a>
             <a
               href="https://www.instagram.com/salondescsemartinique/"
               target="_blank"
