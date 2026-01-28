@@ -40,7 +40,7 @@ export default function Header() {
     }`}>
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 safe-area-x">
         <div className="flex items-center justify-between h-16 sm:h-20">
-          {/* Logo - Salon des CSE & COS de Guadeloupe */}
+          {/* Logo - Salon des CSE & COS de Martinique */}
           <Link href="/" className="flex items-center gap-2 sm:gap-3 group">
             {/* Logo mark avec texte SALON DES */}
             <div className="relative flex-shrink-0">
@@ -53,10 +53,10 @@ export default function Header() {
                 <span className="text-white text-[8px] sm:text-[10px] font-bold">32</span>
               </div>
             </div>
-            {/* Text Guadeloupe */}
+            {/* Text Martinique */}
             <div className="flex flex-col">
               <span className="text-primary font-bold text-base sm:text-lg lg:text-xl leading-tight">
-                <span className="text-accent">Guadeloupe</span>
+                <span className="text-accent">Martinique</span>
               </span>
               <span className="text-gray-400 text-[10px] sm:text-xs font-medium tracking-wide">
                 2 Octobre 2025

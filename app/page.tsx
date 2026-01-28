@@ -71,11 +71,11 @@ export default function HomePage() {
               </span>
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-6 leading-tight whitespace-nowrap">
                 <span className="block sm:inline">Salon des CSE &amp; COS</span>{' '}
-                <span className="text-accent">Guadeloupe</span>
+                <span className="text-accent">Martinique</span>
               </h1>
               <p className="text-base sm:text-lg lg:text-xl text-gray-200 mb-6 sm:mb-8 max-w-lg mx-auto lg:mx-0">
                 Le rendez-vous annuel des responsables de Comités Sociaux et Économiques
-                et Comités d&apos;Œuvres Sociales en Guadeloupe.
+                et Comités d&apos;Œuvres Sociales en Martinique.
               </p>
 
               {/* Event Info - Mobile optimized */}
@@ -214,7 +214,7 @@ export default function HomePage() {
               <div className="relative aspect-[4/3] sm:aspect-square rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl">
                 <Image
                   src="/images/salon-cse-ambiance.jpg"
-                  alt="Ambiance du Salon des CSE & COS Guadeloupe"
+                  alt="Ambiance du Salon des CSE & COS Martinique"
                   fill
                   className="object-cover"
                 />
@@ -255,7 +255,7 @@ export default function HomePage() {
           </h2>
           <p className="text-base sm:text-lg lg:text-xl text-gray-200 mb-6 sm:mb-8 max-w-2xl mx-auto">
             Rejoignez les +60 exposants et présentez vos produits et services
-            aux décideurs CSE &amp; COS de Guadeloupe.
+            aux décideurs CSE &amp; COS de Martinique.
           </p>
           <Link href="/exposer" className="btn-accent inline-flex items-center gap-2">
             Réserver votre stand
@@ -288,7 +288,7 @@ export default function HomePage() {
                   <MapPin className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
                   <div>
                     <p className="font-semibold text-sm sm:text-base">Palais des Congrès</p>
-                    <p className="text-gray-600 text-sm">Guadeloupe</p>
+                    <p className="text-gray-600 text-sm">Martinique</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3 p-3 bg-gray-50 rounded-xl">

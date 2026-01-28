@@ -23,7 +23,7 @@ export default function Footer() {
             </div>
             <p className="text-gray-300 text-sm leading-relaxed">
               Le rendez-vous annuel des responsables de Comités Sociaux et Économiques
-              et Comités d&apos;Œuvres Sociales en Guadeloupe.
+              et Comités d&apos;Œuvres Sociales en Martinique.
             </p>
             {/* Social Links - Mobile visible here */}
             <div className="flex gap-3 mt-4 sm:mt-6">
@@ -96,7 +96,7 @@ export default function Footer() {
                 </div>
                 <div>
                   <p className="text-white text-sm font-medium">Palais des Congrès</p>
-                  <p className="text-gray-400 text-xs">Guadeloupe</p>
+                  <p className="text-gray-400 text-xs">Martinique</p>
                 </div>
               </li>
             </ul>
@@ -141,7 +141,7 @@ export default function Footer() {
               Organisé par <span className="text-white font-medium">Antilles Salons</span>
             </p>
             <p className="text-gray-500 text-xs">
-              © {new Date().getFullYear()} Salon des CSE &amp; COS de Guadeloupe
+              © {new Date().getFullYear()} Salon des CSE &amp; COS de Martinique
             </p>
           </div>
         </div>
