@@ -48,7 +48,7 @@ const steps = [
 ]
 
 export const metadata = {
-  title: 'Devenir Exposant | Salon des CSE & COS de Martinique 2025',
+  title: 'Exposer | Salon des CSE & COS de Martinique 2025',
   description: 'Réservez votre stand au Salon des CSE & COS de Martinique 2025 et présentez vos produits aux décideurs des comités d\'entreprise.',
 }
 
@@ -63,7 +63,7 @@ export default function ExposerPage() {
               Réservez votre stand
             </span>
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 sm:mb-6">
-              Devenir Exposant
+              Exposer
             </h1>
             <p className="text-base sm:text-lg lg:text-xl text-gray-200">
               Rejoignez les +60 exposants et présentez vos produits et services

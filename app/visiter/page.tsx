@@ -40,7 +40,7 @@ const pratiques = [
 ]
 
 export const metadata = {
-  title: 'Visiter le Salon | Salon des CSE & COS de Martinique 2025',
+  title: 'Visiter | Salon des CSE & COS de Martinique 2025',
   description: 'Inscrivez-vous gratuitement pour visiter le Salon des CSE & COS de Martinique 2025. Réservé aux membres de Comités Sociaux et Économiques.',
 }
 
@@ -55,7 +55,7 @@ export default function VisiterPage() {
               Entrée Gratuite
             </span>
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 sm:mb-6">
-              Visiter le Salon
+              Visiter
             </h1>
             <p className="text-base sm:text-lg lg:text-xl text-gray-200 mb-6 sm:mb-8">
               Découvrez en une journée les meilleures solutions pour votre

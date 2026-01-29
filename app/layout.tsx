@@ -10,7 +10,7 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'Salon des CSE & COS de Martinique 2025 | 32ème Édition',
+  title: 'Salon des CSE & COS de Martinique',
   description: 'Le rendez-vous annuel des responsables de Comités Sociaux et Économiques (CSE) et Comités d\'Œuvres Sociales (COS) en Martinique. 2 Octobre 2025 au Palais des Congrès de Madiana.',
   keywords: ['salon', 'CSE', 'COS', 'Martinique', 'comité entreprise', 'CE', 'professionnel', '2025', 'Schœlcher', 'Madiana'],
   authors: [{ name: 'Intersalon' }],

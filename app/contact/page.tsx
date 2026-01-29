@@ -39,7 +39,7 @@ export default function ContactPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto lg:mx-0 text-center lg:text-left">
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 sm:mb-6">
-              Contactez-nous
+              Contact
             </h1>
             <p className="text-base sm:text-lg lg:text-xl text-gray-200">
               Une question sur le salon ? Notre équipe est à votre disposition

@@ -115,7 +115,9 @@ Salon professionnel B2B dédié aux Comités Sociaux et Économiques (CSE) et Co
 - **Formulaires** : React Hook Form + Zod (client & serveur)
 - **Icônes** : Lucide React
 - **Linting** : ESLint (next/core-web-vitals + next/typescript)
-- **Port dev** : 3007
+- **Emails** : Resend (notifications + confirmations)
+- **Base de données** : Google Sheets (stockage formulaires)
+- **Port dev** : 3002
 
 ---
 
@@ -263,7 +265,9 @@ salon-cse-martinique/
 │       ├── ExhibitorForm.tsx  # + honeypot + aria
 │       └── ContactForm.tsx    # + honeypot + aria
 ├── lib/
-│   └── rate-limit.ts          # Rate limiter in-memory
+│   ├── rate-limit.ts          # Rate limiter in-memory
+│   ├── resend.ts              # Configuration Resend emails
+│   └── google-sheets.ts       # API Google Sheets
 ├── public/
 │   ├── robots.txt
 │   ├── sitemap.xml
@@ -349,9 +353,41 @@ Les médias ont été récupérés depuis le site Wix original et optimisés :
 
 ---
 
+## Intégration Emails (Resend)
+
+Chaque formulaire envoie :
+1. **Email notification** → Admin (organisation@antillessalons.com)
+2. **Email confirmation** → Visiteur/Exposant (avec badge ou récapitulatif)
+
+### Variables d'environnement
+```
+RESEND_API_KEY=re_xxx
+FROM_EMAIL=Salon des CSE Martinique <contact@salondescsemartinique.com>
+ADMIN_EMAIL=organisation@antillessalons.com
+```
+
+> **Note** : Avant vérification du domaine, utiliser `FROM_EMAIL=onboarding@resend.dev`
+
+---
+
+## Intégration Google Sheets
+
+Les données des formulaires sont stockées dans une Google Sheet avec 3 onglets :
+- **Visiteurs** : Date | Nom | Fonction | Entreprise | CSE | Email | Téléphone
+- **Exposants** : Date | Entreprise | Secteur | Contact | Email | Téléphone | Adresse | Message
+- **Contact** : Date | Nom | Email | Téléphone | Sujet | Message
+
+### Variables d'environnement
+```
+SHEET_ID=votre-sheet-id
+GOOGLE_CREDENTIALS='{"type":"service_account",...}'
+```
+
+---
+
 ## Notes
 
 - Site actuel : https://www.salondescemartinique.com (Wix)
-- Ne pas confondre avec le Salon des CHR (port 3002)
 - Entrée gratuite mais réservée aux membres CSE/COS
 - URL production prévue : https://www.salondescsemartinique.com
+- Déploiement : Vercel (auto-deploy sur push main)

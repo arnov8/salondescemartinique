@@ -59,12 +59,12 @@ export default function Footer() {
               </li>
               <li>
                 <Link href="/visiter" className="text-gray-300 hover:text-accent transition-colors text-sm inline-flex items-center gap-1">
-                  Visiter le salon
+                  Visiter
                 </Link>
               </li>
               <li>
                 <Link href="/exposer" className="text-gray-300 hover:text-accent transition-colors text-sm inline-flex items-center gap-1">
-                  Devenir exposant
+                  Exposer
                 </Link>
               </li>
               <li>
