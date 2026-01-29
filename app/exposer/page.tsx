@@ -96,6 +96,142 @@ export default function ExposerPage() {
         </div>
       </section>
 
+      {/* Contenu détaillé */}
+      <section className="py-12 sm:py-16 lg:py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Intro */}
+          <div className="max-w-4xl mx-auto text-center mb-12 sm:mb-16">
+            <h2 className="section-title">Développez votre activité auprès des comités d&apos;entreprise</h2>
+            <p className="text-gray-600 text-base sm:text-lg leading-relaxed">
+              Le <strong>Salon des CSE &amp; COS de Martinique</strong> est le plus grand rassemblement de responsables
+              de comités d&apos;entreprise sur le territoire. Depuis <strong>32 ans</strong>, nous offrons aux prestataires
+              et fournisseurs une plateforme unique pour rencontrer directement les décideurs et développer leur portefeuille clients.
+            </p>
+          </div>
+
+          {/* Une opportunité unique */}
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 mb-12 sm:mb-16">
+            <div className="bg-gradient-to-br from-accent/10 to-transparent p-6 sm:p-8 rounded-2xl">
+              <h3 className="text-xl sm:text-2xl font-bold text-primary mb-4">Une opportunité commerciale unique</h3>
+              <p className="text-gray-600 mb-6 leading-relaxed">
+                Le salon réunit chaque année <strong>plus de 700 visiteurs qualifiés</strong>, tous membres actifs
+                de CSE ou COS. Ces décideurs viennent avec un objectif précis : <strong>trouver des prestataires</strong>
+                pour améliorer les avantages proposés aux salariés de leur entreprise.
+              </p>
+              <p className="text-gray-600 leading-relaxed">
+                C&apos;est une occasion rare de rencontrer en une seule journée autant de prospects qualifiés,
+                prêts à <strong>concrétiser des partenariats</strong> et à passer commande pour leurs collaborateurs.
+              </p>
+            </div>
+
+            <div className="bg-gradient-to-br from-primary/5 to-transparent p-6 sm:p-8 rounded-2xl">
+              <h3 className="text-xl sm:text-2xl font-bold text-primary mb-4">Qui sont les visiteurs ?</h3>
+              <p className="text-gray-600 mb-6 leading-relaxed">
+                Les visiteurs du salon sont exclusivement des <strong>membres de bureau de CSE et COS</strong> :
+                secrétaires, trésoriers, présidents, élus du personnel. Ce sont eux qui décident des prestataires
+                retenus et gèrent les budgets des activités sociales et culturelles.
+              </p>
+              <p className="text-gray-600 leading-relaxed">
+                En Martinique, les CSE représentent des milliers de salariés bénéficiaires potentiels
+                pour vos produits et services. Un contact réussi au salon peut se traduire par des
+                <strong> commandes récurrentes sur plusieurs années</strong>.
+              </p>
+            </div>
+          </div>
+
+          {/* Les chiffres clés */}
+          <div className="bg-primary rounded-2xl p-6 sm:p-8 lg:p-10 text-white mb-12 sm:mb-16">
+            <h3 className="text-xl sm:text-2xl font-bold mb-8 text-center">Les chiffres clés du salon</h3>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+              <div className="text-center">
+                <div className="text-3xl sm:text-4xl lg:text-5xl font-bold text-accent mb-2">32</div>
+                <p className="text-gray-300 text-sm sm:text-base">années d&apos;existence</p>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl sm:text-4xl lg:text-5xl font-bold text-accent mb-2">+60</div>
+                <p className="text-gray-300 text-sm sm:text-base">exposants partenaires</p>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl sm:text-4xl lg:text-5xl font-bold text-accent mb-2">~700</div>
+                <p className="text-gray-300 text-sm sm:text-base">visiteurs qualifiés</p>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl sm:text-4xl lg:text-5xl font-bold text-accent mb-2">~200</div>
+                <p className="text-gray-300 text-sm sm:text-base">CSE/COS représentés</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Secteurs recherchés */}
+          <div className="bg-gray-50 rounded-2xl p-6 sm:p-8 lg:p-10 mb-12 sm:mb-16">
+            <h3 className="text-xl sm:text-2xl font-bold text-primary mb-6 text-center">Les secteurs les plus recherchés par les CSE</h3>
+            <p className="text-gray-600 text-center mb-8 max-w-2xl mx-auto">
+              Les responsables de comités recherchent des prestataires dans de nombreux domaines pour satisfaire les attentes de leurs bénéficiaires.
+            </p>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {[
+                'Voyages et séjours organisés',
+                'Billetteries et parcs d\'attraction',
+                'Chèques cadeaux multi-enseignes',
+                'Animation et spectacles',
+                'Hôtellerie locale et internationale',
+                'Loisirs nautiques et sportifs',
+                'Formation professionnelle',
+                'Assurance et prévoyance',
+                'Traiteurs pour événements',
+                'Bien-être et soins esthétiques',
+                'Jouets et cadeaux de Noël',
+                'Services bancaires dédiés CE'
+              ].map((item, index) => (
+                <div key={index} className="flex items-center gap-3 bg-white p-3 rounded-xl shadow-sm">
+                  <CheckCircle className="w-5 h-5 text-accent flex-shrink-0" />
+                  <span className="text-gray-700 text-sm font-medium">{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Visibilité */}
+          <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
+            <div className="card !p-6 sm:!p-8 border-l-4 border-l-accent">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center">
+                  <TrendingUp className="w-6 h-6 text-accent" />
+                </div>
+                <h3 className="text-lg sm:text-xl font-bold text-primary">Visibilité médiatique</h3>
+              </div>
+              <p className="text-gray-600 leading-relaxed mb-4">
+                Le Salon des CSE &amp; COS bénéficie d&apos;une <strong>forte couverture médiatique</strong> en Martinique.
+                En tant qu&apos;exposant, vous profitez de cette visibilité : annonces sur RCI, articles dans la presse locale,
+                communication sur les réseaux sociaux.
+              </p>
+              <p className="text-gray-600 leading-relaxed">
+                Votre participation au salon renforce votre <strong>crédibilité</strong> auprès des comités d&apos;entreprise
+                et positionne votre marque comme un acteur de référence dans votre secteur.
+              </p>
+            </div>
+
+            <div className="card !p-6 sm:!p-8 border-l-4 border-l-primary">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
+                  <Handshake className="w-6 h-6 text-primary" />
+                </div>
+                <h3 className="text-lg sm:text-xl font-bold text-primary">Contact direct avec les décideurs</h3>
+              </div>
+              <p className="text-gray-600 leading-relaxed mb-4">
+                Contrairement à d&apos;autres canaux commerciaux, le salon vous met en <strong>contact direct</strong>
+                avec les personnes qui prennent les décisions d&apos;achat. Pas d&apos;intermédiaire, pas de filtrage :
+                vous présentez vos offres directement aux responsables de budgets.
+              </p>
+              <p className="text-gray-600 leading-relaxed">
+                Les visiteurs viennent avec des <strong>projets concrets</strong> et des besoins identifiés.
+                C&apos;est le moment idéal pour convertir un prospect en client fidèle.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* What's Included */}
       <section className="py-12 sm:py-16 lg:py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

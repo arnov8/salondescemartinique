@@ -53,10 +53,36 @@ Salon professionnel B2B dédié aux Comités Sociaux et Économiques (CSE) et Co
 | Page | Route | Description |
 |------|-------|-------------|
 | Accueil | `/` | Hero vidéo, infos clés, secteurs, chiffres |
-| Visiter | `/visiter` | Infos visiteurs + formulaire inscription |
-| Exposer | `/exposer` | Infos exposants + formulaire pré-inscription |
+| Visiter | `/visiter` | Contenu détaillé visiteurs + formulaire inscription |
+| Exposer | `/exposer` | Contenu détaillé exposants + formulaire pré-inscription |
 | Contact | `/contact` | Formulaire contact + localisation |
 | 404 | `*` | Page d'erreur personnalisée |
+
+---
+
+## Contenu des pages
+
+### Page Visiter (`/visiter`)
+Sections détaillées :
+- **Découvrez le rendez-vous incontournable** - Introduction au salon (32 ans d'existence)
+- **Un événement conçu pour vous** - Date, lieu, +60 exposants
+- **Faites-vous conseiller** - Comparer les offres, négocier directement
+- **Les exposants que vous rencontrerez** - 15 secteurs d'activité listés
+- **La Conférence CSE/COS** - Expert en droit du travail
+- **La Grande Tombola des Comités** - Cadeaux à gagner (présence obligatoire)
+- **Comment participer ?** - Processus en 3 étapes (inscription → badge → jour J)
+- **Qui peut visiter ?** - Public cible + formulaire d'inscription
+
+### Page Exposer (`/exposer`)
+Sections détaillées :
+- **Développez votre activité** - Introduction B2B
+- **Une opportunité commerciale unique** - +700 visiteurs qualifiés
+- **Qui sont les visiteurs ?** - Décideurs CSE/COS, budgets ASC
+- **Les chiffres clés du salon** - 32 ans, +60 exposants, ~700 visiteurs, ~200 CSE
+- **Les secteurs les plus recherchés** - 12 catégories de services
+- **Visibilité médiatique** - RCI, presse locale, réseaux sociaux
+- **Contact direct avec les décideurs** - Avantage du face-à-face
+- **Ce qui est inclus** - Stand équipé + formulaire pré-inscription
 
 ---
 
@@ -69,6 +95,7 @@ Salon professionnel B2B dédié aux Comités Sociaux et Économiques (CSE) et Co
 - Nom du CSE/COS *
 - Email *
 - Téléphone *
+- Nombre de participants * (1-7)
 - Champ honeypot (anti-spam, invisible)
 
 ### 2. Formulaire Exposant (`/exposer`)
@@ -319,6 +346,9 @@ salon-cse-martinique/
 | 23 | Configuration ESLint | ✅ Fait |
 | 24 | Push sur GitHub | ✅ Fait |
 | 25 | Déploiement Vercel | ✅ Fait |
+| 26 | Cohérence SEO (titres H1, navigation) | ✅ Fait |
+| 27 | Contenu détaillé page Visiter | ✅ Fait |
+| 28 | Contenu détaillé page Exposer | ✅ Fait |
 
 ---
 
