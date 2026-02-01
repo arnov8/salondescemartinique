@@ -14,7 +14,7 @@ Salon professionnel B2B dédié aux Comités Sociaux et Économiques (CSE) et Co
 | **Nom** | Salon des CSE & COS de Martinique |
 | **Édition** | 32ème édition |
 | **Date** | Jeudi 2 Octobre 2025 |
-| **Horaires** | 8h00 - 16h00 |
+| **Horaires** | 8h00 - 19h00 |
 | **Lieu** | Palais des Congrès de Madiana, Schœlcher |
 | **Entrée** | Gratuite sur inscription |
 
@@ -136,15 +136,15 @@ Sections détaillées :
 
 ## Stack technique
 
-- **Framework** : Next.js 14+ (App Router)
+- **Framework** : Next.js 16.1.6 (App Router + Turbopack)
 - **Langage** : TypeScript (strict mode)
 - **Styling** : Tailwind CSS 3.4
 - **Formulaires** : React Hook Form + Zod (client & serveur)
 - **Icônes** : Lucide React
-- **Linting** : ESLint (next/core-web-vitals + next/typescript)
+- **Linting** : ESLint 9.x (next/core-web-vitals + next/typescript)
 - **Emails** : Resend (notifications + confirmations)
 - **Base de données** : Google Sheets (stockage formulaires)
-- **Port dev** : 3002
+- **Port dev** : 3007
 
 ---
 
@@ -349,6 +349,10 @@ salon-cse-martinique/
 | 26 | Cohérence SEO (titres H1, navigation) | ✅ Fait |
 | 27 | Contenu détaillé page Visiter | ✅ Fait |
 | 28 | Contenu détaillé page Exposer | ✅ Fait |
+| 29 | Harmonisation horaires (8h-19h) | ✅ Fait |
+| 30 | Mise à jour dépendances (Next.js 16, ESLint 9) | ✅ Fait |
+| 31 | Correction dates sitemap (2026-02-01) | ✅ Fait |
+| 32 | Protection anti-spam Turnstile | ⏳ À faire |
 
 ---
 
@@ -421,3 +425,67 @@ GOOGLE_CREDENTIALS='{"type":"service_account",...}'
 - Entrée gratuite mais réservée aux membres CSE/COS
 - URL production prévue : https://www.salondescsemartinique.com
 - Déploiement : Vercel (auto-deploy sur push main)
+
+---
+
+## 🔒 TODO : Protection Anti-Spam avancée (Cloudflare Turnstile)
+
+> **Référence** : Implémentation identique à `cabinetlaurentvalere`
+
+### Protections actuelles
+- ✅ Honeypot (champ invisible)
+- ✅ Rate limiting (5 req/min)
+- ✅ Validation Zod client/serveur
+
+### Protections à ajouter
+
+| # | Fichier à créer/modifier | Description |
+|---|--------------------------|-------------|
+| 1 | `lib/antispam.ts` | Utilitaires anti-spam centralisés |
+| 2 | `components/ui/Turnstile.tsx` | Composant Cloudflare Turnstile (captcha invisible) + HoneypotField amélioré |
+| 3 | `components/forms/VisitorForm.tsx` | Ajouter `<Turnstile />` et passer le token |
+| 4 | `components/forms/ExhibitorForm.tsx` | Ajouter `<Turnstile />` et passer le token |
+| 5 | `components/forms/ContactForm.tsx` | Ajouter `<Turnstile />` et passer le token |
+| 6 | `app/api/visitor/route.ts` | Utiliser `validateSubmission()` + `isObviousSpam()` |
+| 7 | `app/api/exhibitor/route.ts` | Utiliser `validateSubmission()` + `isObviousSpam()` |
+| 8 | `app/api/contact/route.ts` | Utiliser `validateSubmission()` + `isObviousSpam()` |
+| 9 | `.env.example` | Ajouter les variables Turnstile |
+
+### Fonctions à implémenter dans `lib/antispam.ts`
+
+```typescript
+// Validation combinée honeypot + Turnstile
+validateSubmission(honeypot, turnstileToken): Promise<ValidationResult>
+
+// Détection de patterns suspects (consonnes, liens, injections HTML)
+isObviousSpam(data): boolean
+
+// Réponse silencieuse pour ne pas alerter les bots
+silentRejectResponse(): { success: true, message: string }
+```
+
+### Variables d'environnement à ajouter
+
+```bash
+# Cloudflare Turnstile (captcha invisible)
+NEXT_PUBLIC_TURNSTILE_SITE_KEY=0x4AAAAAAA...  # Côté client
+TURNSTILE_SECRET_KEY=0x4AAAAAAA...            # Côté serveur
+```
+
+### Création du widget Turnstile
+
+1. Aller sur [dash.cloudflare.com](https://dash.cloudflare.com) → Turnstile
+2. **Add widget**
+3. Nom : "Salon CSE Martinique"
+4. Domaines autorisés : `salondescsemartinique.com`, `salon-cse-martinique.vercel.app`, `localhost`
+5. Mode : **Managed** (invisible pour la plupart des utilisateurs)
+6. Récupérer Site Key + Secret Key
+
+### Comportement anti-spam
+
+1. **Honeypot rempli** → Rejet silencieux (retourne succès pour tromper le bot)
+2. **Turnstile invalide** → Erreur "Vérification de sécurité requise"
+3. **Patterns suspects détectés** → Rejet silencieux
+4. **Tout OK** → Traitement normal du formulaire
+
+> **Note** : Turnstile est 100% gratuit et illimité sur Cloudflare.

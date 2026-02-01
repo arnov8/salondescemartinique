@@ -71,7 +71,7 @@ const jsonLd = {
   name: 'Salon des CSE & COS de Martinique 2025 - 32ème Édition',
   description: 'Le rendez-vous annuel des responsables de Comités Sociaux et Économiques (CSE) et Comités d\'Œuvres Sociales (COS) en Martinique.',
   startDate: '2025-10-02T08:00:00+04:00',
-  endDate: '2025-10-02T16:00:00+04:00',
+  endDate: '2025-10-02T19:00:00+04:00',
   eventStatus: 'https://schema.org/EventScheduled',
   eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
   location: {

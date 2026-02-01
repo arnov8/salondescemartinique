@@ -22,7 +22,7 @@ const contactInfo = [
   {
     icon: Clock,
     title: 'Le jour du salon',
-    lines: ['Jeudi 2 Octobre 2025', '9h00 - 16h00', 'Madiana, Palais des Congrès, Schœlcher'],
+    lines: ['Jeudi 2 Octobre 2025', '8h00 - 19h00', 'Madiana, Palais des Congrès, Schœlcher'],
   },
 ]
 

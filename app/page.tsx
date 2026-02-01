@@ -87,7 +87,7 @@ export default function HomePage() {
                   <div className="text-left">
                     <p className="font-semibold text-sm sm:text-base">Jeudi 2 Octobre 2025</p>
                     <p className="text-xs sm:text-sm text-gray-300 flex items-center gap-1">
-                      <Clock className="w-3 h-3" /> 8h00 - 16h00
+                      <Clock className="w-3 h-3" /> 8h00 - 19h00
                     </p>
                   </div>
                 </div>
@@ -295,7 +295,7 @@ export default function HomePage() {
                   <Calendar className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
                   <div>
                     <p className="font-semibold text-sm sm:text-base">Jeudi 2 Octobre 2025</p>
-                    <p className="text-gray-600 text-sm">De 8h00 à 16h00</p>
+                    <p className="text-gray-600 text-sm">De 8h00 à 19h00</p>
                   </div>
                 </div>
               </div>

@@ -86,7 +86,7 @@ export default function Footer() {
                 <div>
                   <p className="text-white text-sm font-medium">Jeudi 2 Octobre 2025</p>
                   <p className="text-gray-400 text-xs flex items-center gap-1">
-                    <Clock className="w-3 h-3" /> 8h00 - 16h00
+                    <Clock className="w-3 h-3" /> 8h00 - 19h00
                   </p>
                 </div>
               </li>

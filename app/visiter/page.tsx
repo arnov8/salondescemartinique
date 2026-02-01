@@ -21,7 +21,7 @@ const benefits = [
 
 const infoPratiques = [
   { icon: Calendar, label: 'Date', value: 'Jeudi 2 Octobre 2025' },
-  { icon: Clock, label: 'Horaires', value: '8h00 - 16h00' },
+  { icon: Clock, label: 'Horaires', value: '8h00 - 19h00' },
   { icon: MapPin, label: 'Lieu', value: 'Palais des Congrès, Schœlcher' },
 ]
 
@@ -125,7 +125,7 @@ export default function VisiterPage() {
             <div className="bg-gradient-to-br from-primary/5 to-transparent p-6 sm:p-8 rounded-2xl">
               <h3 className="text-xl sm:text-2xl font-bold text-primary mb-4">Un événement conçu pour vous</h3>
               <p className="text-gray-600 mb-6 leading-relaxed">
-                Le salon se tiendra le <strong>Jeudi 2 Octobre 2025</strong>, de <strong>8h00 à 16h00</strong>,
+                Le salon se tiendra le <strong>Jeudi 2 Octobre 2025</strong>, de <strong>8h00 à 19h00</strong>,
                 au <strong>Palais des Congrès de Madiana</strong> à Schœlcher. L&apos;entrée est <strong>gratuite</strong>,
                 mais l&apos;inscription est obligatoire et réservée exclusivement aux membres de CSE et COS.
               </p>
