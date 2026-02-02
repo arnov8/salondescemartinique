@@ -3,6 +3,7 @@ import { z } from 'zod'
 import { rateLimit, getClientIP } from '@/lib/rate-limit'
 import { resend, FROM_EMAIL, ADMIN_EMAIL } from '@/lib/resend'
 import { appendToSheet, SHEET_TABS } from '@/lib/google-sheets'
+import { validateSubmission, isObviousSpam, silentRejectResponse } from '@/lib/antispam'
 
 // Server-side validation schema
 const exhibitorSchema = z.object({
@@ -13,6 +14,8 @@ const exhibitorSchema = z.object({
   phone: z.string().min(10).max(20),
   address: z.string().min(5).max(300),
   message: z.string().max(2000).optional(),
+  fax: z.string().optional(), // Honeypot
+  turnstileToken: z.string().optional(),
 })
 
 export async function POST(request: Request) {
@@ -37,6 +40,21 @@ export async function POST(request: Request) {
     }
 
     const data = await request.json()
+
+    // Anti-spam validation (honeypot + Turnstile)
+    const spamCheck = await validateSubmission(data.fax, data.turnstileToken)
+    if (!spamCheck.success) {
+      if (spamCheck.isSpam) {
+        // Silent reject for bots
+        return NextResponse.json(silentRejectResponse(), { status: 200 })
+      }
+      return NextResponse.json({ error: spamCheck.error }, { status: 400 })
+    }
+
+    // Check for obvious spam patterns
+    if (isObviousSpam(data)) {
+      return NextResponse.json(silentRejectResponse(), { status: 200 })
+    }
 
     // Server-side validation
     const validationResult = exhibitorSchema.safeParse(data)

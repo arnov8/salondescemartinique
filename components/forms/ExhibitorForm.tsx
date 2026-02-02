@@ -1,10 +1,11 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { Send, CheckCircle, Loader2, AlertCircle } from 'lucide-react'
+import Turnstile from '@/components/ui/Turnstile'
 
 const exhibitorSchema = z.object({
   companyName: z.string().min(2, 'Nom de l\'entreprise requis'),
@@ -42,6 +43,7 @@ export default function ExhibitorForm() {
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [serverError, setServerError] = useState<string | null>(null)
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null)
 
   const {
     register,
@@ -52,10 +54,19 @@ export default function ExhibitorForm() {
     resolver: zodResolver(exhibitorSchema),
   })
 
+  const handleTurnstileVerify = useCallback((token: string) => {
+    setTurnstileToken(token)
+  }, [])
+
   const onSubmit = async (data: ExhibitorFormData) => {
     // Check honeypot
     if (data.fax) {
       setIsSubmitted(true)
+      return
+    }
+
+    if (!turnstileToken) {
+      setServerError('Veuillez compléter la vérification de sécurité.')
       return
     }
 
@@ -66,7 +77,10 @@ export default function ExhibitorForm() {
       const response = await fetch('/api/exhibitor', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          ...data,
+          turnstileToken,
+        }),
       })
 
       const result = await response.json()
@@ -278,6 +292,9 @@ export default function ExhibitorForm() {
           placeholder="Décrivez brièvement vos produits/services et vos besoins..."
         />
       </div>
+
+      {/* Turnstile CAPTCHA */}
+      <Turnstile onVerify={handleTurnstileVerify} />
 
       {/* Submit */}
       <button

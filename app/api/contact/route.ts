@@ -3,6 +3,7 @@ import { z } from 'zod'
 import { rateLimit, getClientIP } from '@/lib/rate-limit'
 import { resend, FROM_EMAIL, ADMIN_EMAIL } from '@/lib/resend'
 import { appendToSheet, SHEET_TABS } from '@/lib/google-sheets'
+import { validateSubmission, isObviousSpam, silentRejectResponse } from '@/lib/antispam'
 
 // Server-side validation schema
 const contactSchema = z.object({
@@ -11,6 +12,8 @@ const contactSchema = z.object({
   phone: z.string().max(20).optional(),
   subject: z.string().min(1).max(100),
   message: z.string().min(10).max(5000),
+  company: z.string().optional(), // Honeypot
+  turnstileToken: z.string().optional(),
 })
 
 export async function POST(request: Request) {
@@ -35,6 +38,21 @@ export async function POST(request: Request) {
     }
 
     const data = await request.json()
+
+    // Anti-spam validation (honeypot + Turnstile)
+    const spamCheck = await validateSubmission(data.company, data.turnstileToken)
+    if (!spamCheck.success) {
+      if (spamCheck.isSpam) {
+        // Silent reject for bots
+        return NextResponse.json(silentRejectResponse(), { status: 200 })
+      }
+      return NextResponse.json({ error: spamCheck.error }, { status: 400 })
+    }
+
+    // Check for obvious spam patterns
+    if (isObviousSpam(data)) {
+      return NextResponse.json(silentRejectResponse(), { status: 200 })
+    }
 
     // Server-side validation
     const validationResult = contactSchema.safeParse(data)

@@ -1,10 +1,11 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { Send, CheckCircle, Loader2, AlertCircle } from 'lucide-react'
+import Turnstile from '@/components/ui/Turnstile'
 
 const visitorSchema = z.object({
   fullName: z.string().min(2, 'Nom requis (minimum 2 caractères)'),
@@ -24,6 +25,7 @@ export default function VisitorForm() {
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [serverError, setServerError] = useState<string | null>(null)
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null)
 
   const {
     register,
@@ -34,11 +36,20 @@ export default function VisitorForm() {
     resolver: zodResolver(visitorSchema),
   })
 
+  const handleTurnstileVerify = useCallback((token: string) => {
+    setTurnstileToken(token)
+  }, [])
+
   const onSubmit = async (data: VisitorFormData) => {
     // Check honeypot
     if (data.website) {
       // Bot detected, silently reject
       setIsSubmitted(true)
+      return
+    }
+
+    if (!turnstileToken) {
+      setServerError('Veuillez compléter la vérification de sécurité.')
       return
     }
 
@@ -49,7 +60,10 @@ export default function VisitorForm() {
       const response = await fetch('/api/visitor', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          ...data,
+          turnstileToken,
+        }),
       })
 
       const result = await response.json()
@@ -281,6 +295,9 @@ export default function VisitorForm() {
           </p>
         )}
       </div>
+
+      {/* Turnstile CAPTCHA */}
+      <Turnstile onVerify={handleTurnstileVerify} />
 
       {/* Submit */}
       <button

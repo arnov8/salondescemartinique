@@ -352,7 +352,7 @@ salon-cse-martinique/
 | 29 | Harmonisation horaires (8h-19h) | ✅ Fait |
 | 30 | Mise à jour dépendances (Next.js 16, ESLint 9) | ✅ Fait |
 | 31 | Correction dates sitemap (2026-02-01) | ✅ Fait |
-| 32 | Protection anti-spam Turnstile | ⏳ À faire |
+| 32 | Protection anti-spam Turnstile | ✅ Fait |
 
 ---
 
