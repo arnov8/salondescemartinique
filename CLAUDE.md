@@ -353,6 +353,7 @@ salon-cse-martinique/
 | 30 | Mise à jour dépendances (Next.js 16, ESLint 9) | ✅ Fait |
 | 31 | Correction dates sitemap (2026-02-01) | ✅ Fait |
 | 32 | Protection anti-spam Turnstile | ✅ Fait |
+| 33 | Configuration domaine personnalisé | ✅ Fait |
 
 ---
 
@@ -360,11 +361,13 @@ salon-cse-martinique/
 
 | Service | URL |
 |---------|-----|
+| **Site Production** | https://www.salondescemartinique.com |
 | **Site Vercel** | https://salon-cse-martinique.vercel.app |
 | **GitHub Repo** | https://github.com/arnov8/salondescemartinique |
 | **Vercel Dashboard** | https://vercel.com/arnauds-projects-84fc44a0/salon-cse-martinique |
 
 > Déploiement automatique activé : chaque push sur `main` déclenche un nouveau build.
+> Domaine personnalisé configuré : salondescemartinique.com redirige vers www.
 
 ---
 
