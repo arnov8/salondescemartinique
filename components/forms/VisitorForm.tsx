@@ -48,10 +48,11 @@ export default function VisitorForm() {
       return
     }
 
-    if (!turnstileToken) {
-      setServerError('Veuillez compléter la vérification de sécurité.')
-      return
-    }
+    // Turnstile temporairement désactivé
+    // if (!turnstileToken) {
+    //   setServerError('Veuillez compléter la vérification de sécurité.')
+    //   return
+    // }
 
     setIsLoading(true)
     setServerError(null)
