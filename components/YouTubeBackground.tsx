@@ -36,7 +36,7 @@ export default function YouTubeBackground({ videoId, className = '' }: YouTubeBa
             title="Video background"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
-            className="absolute w-[300%] h-[300%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 min-w-full min-h-full"
+            className="absolute w-[177.78vh] h-[100vh] min-w-full min-h-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
             style={{
               border: 'none',
               aspectRatio: '16/9',
