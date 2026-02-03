@@ -393,17 +393,21 @@ Les médias ont été récupérés depuis le site Wix original et optimisés :
 ## Intégration Emails (Resend)
 
 Chaque formulaire envoie :
-1. **Email notification** → Admin (organisation@antillessalons.com)
-2. **Email confirmation** → Visiteur/Exposant (avec badge ou récapitulatif)
+1. **Email notification** → Admin (ADMIN_EMAIL)
+2. **Email confirmation** → Visiteur/Exposant (récapitulatif de l'inscription)
 
-### Variables d'environnement
+### Configuration actuelle
+```
+FROM_EMAIL = Salon des CSE Martinique <noreply@salondescemartinique.com>  # Hardcodé dans lib/resend.ts
+```
+
+### Variables d'environnement Vercel
 ```
 RESEND_API_KEY=re_xxx
-FROM_EMAIL=Salon des CSE Martinique <contact@salondescsemartinique.com>
-ADMIN_EMAIL=organisation@antillessalons.com
+ADMIN_EMAIL=votre-email@exemple.com
 ```
 
-> **Note** : Avant vérification du domaine, utiliser `FROM_EMAIL=onboarding@resend.dev`
+> **Note** : Le domaine salondescemartinique.com doit être vérifié sur Resend (DNS DKIM/SPF configurés)
 
 ---
 
@@ -431,64 +435,33 @@ GOOGLE_CREDENTIALS='{"type":"service_account",...}'
 
 ---
 
-## 🔒 TODO : Protection Anti-Spam avancée (Cloudflare Turnstile)
+## 🔒 Protection Anti-Spam
 
-> **Référence** : Implémentation identique à `cabinetlaurentvalere`
+### Protections actives
+- ✅ Honeypot (champ invisible sur tous les formulaires)
+- ✅ Rate limiting (3-5 req/min selon le formulaire)
+- ✅ Validation Zod client & serveur
+- ✅ Détection de patterns suspects (`lib/antispam.ts`)
+- ✅ Rejet silencieux des bots (faux succès pour ne pas alerter)
 
-### Protections actuelles
-- ✅ Honeypot (champ invisible)
-- ✅ Rate limiting (5 req/min)
-- ✅ Validation Zod client/serveur
-
-### Protections à ajouter
-
-| # | Fichier à créer/modifier | Description |
-|---|--------------------------|-------------|
-| 1 | `lib/antispam.ts` | Utilitaires anti-spam centralisés |
-| 2 | `components/ui/Turnstile.tsx` | Composant Cloudflare Turnstile (captcha invisible) + HoneypotField amélioré |
-| 3 | `components/forms/VisitorForm.tsx` | Ajouter `<Turnstile />` et passer le token |
-| 4 | `components/forms/ExhibitorForm.tsx` | Ajouter `<Turnstile />` et passer le token |
-| 5 | `components/forms/ContactForm.tsx` | Ajouter `<Turnstile />` et passer le token |
-| 6 | `app/api/visitor/route.ts` | Utiliser `validateSubmission()` + `isObviousSpam()` |
-| 7 | `app/api/exhibitor/route.ts` | Utiliser `validateSubmission()` + `isObviousSpam()` |
-| 8 | `app/api/contact/route.ts` | Utiliser `validateSubmission()` + `isObviousSpam()` |
-| 9 | `.env.example` | Ajouter les variables Turnstile |
-
-### Fonctions à implémenter dans `lib/antispam.ts`
+### Fonctions disponibles dans `lib/antispam.ts`
 
 ```typescript
-// Validation combinée honeypot + Turnstile
+// Validation honeypot
 validateSubmission(honeypot, turnstileToken): Promise<ValidationResult>
 
-// Détection de patterns suspects (consonnes, liens, injections HTML)
+// Détection de patterns suspects (consonnes excessives, liens spam, injections HTML)
 isObviousSpam(data): boolean
 
-// Réponse silencieuse pour ne pas alerter les bots
+// Réponse silencieuse pour tromper les bots
 silentRejectResponse(): { success: true, message: string }
 ```
-
-### Variables d'environnement à ajouter
-
-```bash
-# Cloudflare Turnstile (captcha invisible)
-NEXT_PUBLIC_TURNSTILE_SITE_KEY=0x4AAAAAAA...  # Côté client
-TURNSTILE_SECRET_KEY=0x4AAAAAAA...            # Côté serveur
-```
-
-### Création du widget Turnstile
-
-1. Aller sur [dash.cloudflare.com](https://dash.cloudflare.com) → Turnstile
-2. **Add widget**
-3. Nom : "Salon CSE Martinique"
-4. Domaines autorisés : `salondescsemartinique.com`, `salon-cse-martinique.vercel.app`, `localhost`
-5. Mode : **Managed** (invisible pour la plupart des utilisateurs)
-6. Récupérer Site Key + Secret Key
 
 ### Comportement anti-spam
 
 1. **Honeypot rempli** → Rejet silencieux (retourne succès pour tromper le bot)
-2. **Turnstile invalide** → Erreur "Vérification de sécurité requise"
-3. **Patterns suspects détectés** → Rejet silencieux
+2. **Patterns suspects détectés** → Rejet silencieux
+3. **Rate limit dépassé** → Erreur 429 avec header `Retry-After`
 4. **Tout OK** → Traitement normal du formulaire
 
-> **Note** : Turnstile est 100% gratuit et illimité sur Cloudflare.
+> **Note** : Turnstile (CAPTCHA) a été désactivé pour simplifier l'expérience utilisateur. Le honeypot + détection de patterns est suffisant.
