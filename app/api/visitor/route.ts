@@ -14,7 +14,7 @@ const visitorSchema = z.object({
   email: z.string().email().max(254),
   phone: z.string().min(10).max(20),
   website: z.string().optional(), // Honeypot
-  turnstileToken: z.string().optional(),
+  participants: z.string().optional(),
 })
 
 export async function POST(request: Request) {
@@ -40,8 +40,8 @@ export async function POST(request: Request) {
 
     const data = await request.json()
 
-    // Anti-spam validation (honeypot + Turnstile)
-    const spamCheck = await validateSubmission(data.website, data.turnstileToken)
+    // Anti-spam validation (honeypot)
+    const spamCheck = await validateSubmission(data.website, undefined)
     if (!spamCheck.success) {
       if (spamCheck.isSpam) {
         // Silent reject for bots

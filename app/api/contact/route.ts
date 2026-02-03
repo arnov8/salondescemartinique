@@ -13,7 +13,6 @@ const contactSchema = z.object({
   subject: z.string().min(1).max(100),
   message: z.string().min(10).max(5000),
   company: z.string().optional(), // Honeypot
-  turnstileToken: z.string().optional(),
 })
 
 export async function POST(request: Request) {
@@ -39,8 +38,8 @@ export async function POST(request: Request) {
 
     const data = await request.json()
 
-    // Anti-spam validation (honeypot + Turnstile)
-    const spamCheck = await validateSubmission(data.company, data.turnstileToken)
+    // Anti-spam validation (honeypot)
+    const spamCheck = await validateSubmission(data.company, undefined)
     if (!spamCheck.success) {
       if (spamCheck.isSpam) {
         // Silent reject for bots

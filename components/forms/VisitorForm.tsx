@@ -1,82 +1,62 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { Send, CheckCircle, Loader2, AlertCircle } from 'lucide-react'
-import Turnstile from '@/components/ui/Turnstile'
 
-const visitorSchema = z.object({
-  fullName: z.string().min(2, 'Nom requis (minimum 2 caractères)'),
+const schema = z.object({
+  fullName: z.string().min(2, 'Nom requis'),
   position: z.string().min(2, 'Fonction requise'),
   company: z.string().min(2, 'Entreprise requise'),
   cseName: z.string().min(2, 'Nom du CSE/COS requis'),
   email: z.string().email('Email invalide'),
-  phone: z.string().min(10, 'Numéro de téléphone invalide'),
-  participants: z.string().min(1, 'Nombre de participants requis'),
-  // Honeypot field - should remain empty
-  website: z.string().max(0, 'Ce champ doit rester vide').optional(),
+  phone: z.string().min(10, 'Téléphone invalide'),
+  participants: z.string().min(1, 'Sélectionnez le nombre'),
+  website: z.string().max(0).optional(), // honeypot
 })
 
-type VisitorFormData = z.infer<typeof visitorSchema>
+type FormData = z.infer<typeof schema>
 
 export default function VisitorForm() {
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const [serverError, setServerError] = useState<string | null>(null)
-  const [turnstileToken, setTurnstileToken] = useState<string | null>(null)
+  const [error, setError] = useState<string | null>(null)
 
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<VisitorFormData>({
-    resolver: zodResolver(visitorSchema),
+  } = useForm<FormData>({
+    resolver: zodResolver(schema),
   })
 
-  const handleTurnstileVerify = useCallback((token: string) => {
-    setTurnstileToken(token)
-  }, [])
-
-  const onSubmit = async (data: VisitorFormData) => {
-    // Check honeypot
+  const onSubmit = async (data: FormData) => {
     if (data.website) {
-      // Bot detected, silently reject
       setIsSubmitted(true)
       return
     }
 
-    // Turnstile temporairement désactivé
-    // if (!turnstileToken) {
-    //   setServerError('Veuillez compléter la vérification de sécurité.')
-    //   return
-    // }
-
     setIsLoading(true)
-    setServerError(null)
+    setError(null)
 
     try {
-      const response = await fetch('/api/visitor', {
+      const res = await fetch('/api/visitor', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...data,
-          turnstileToken,
-        }),
+        body: JSON.stringify(data),
       })
 
-      const result = await response.json()
-
-      if (response.ok) {
+      if (res.ok) {
         setIsSubmitted(true)
         reset()
       } else {
-        setServerError(result.error || 'Une erreur est survenue. Veuillez réessayer.')
+        const result = await res.json()
+        setError(result.error || 'Une erreur est survenue')
       }
     } catch {
-      setServerError('Erreur de connexion. Vérifiez votre connexion internet.')
+      setError('Erreur de connexion')
     } finally {
       setIsLoading(false)
     }
@@ -84,18 +64,17 @@ export default function VisitorForm() {
 
   if (isSubmitted) {
     return (
-      <div className="text-center py-12" role="status" aria-live="polite">
-        <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-          <CheckCircle className="w-10 h-10 text-green-600" aria-hidden="true" />
+      <div className="text-center py-12 px-4">
+        <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+          </svg>
         </div>
-        <h3 className="text-2xl font-bold text-primary mb-4">Inscription enregistrée !</h3>
-        <p className="text-gray-600 mb-6">
-          Merci pour votre inscription. Vous recevrez bientôt un email de confirmation
-          avec votre badge visiteur.
-        </p>
+        <h3 className="text-xl font-bold text-gray-900 mb-2">Inscription confirmée !</h3>
+        <p className="text-gray-600 mb-6">Vous recevrez votre badge par email.</p>
         <button
           onClick={() => setIsSubmitted(false)}
-          className="btn-outline-primary"
+          className="text-blue-600 hover:text-blue-800 font-medium"
         >
           Nouvelle inscription
         </button>
@@ -104,225 +83,141 @@ export default function VisitorForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6" noValidate>
-      {/* Server Error Alert */}
-      {serverError && (
-        <div
-          className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg flex items-start gap-3"
-          role="alert"
-          aria-live="assertive"
-        >
-          <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5" aria-hidden="true" />
-          <p>{serverError}</p>
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      {error && (
+        <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded">
+          <p className="text-red-700 text-sm">{error}</p>
         </div>
       )}
 
-      {/* Honeypot - hidden from users */}
-      <div className="hidden" aria-hidden="true">
-        <label htmlFor="website">Site web (ne pas remplir)</label>
-        <input
-          type="text"
-          id="website"
-          {...register('website')}
-          tabIndex={-1}
-          autoComplete="off"
-        />
+      {/* Honeypot */}
+      <input type="text" {...register('website')} className="hidden" tabIndex={-1} autoComplete="off" />
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Nom & Prénom <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            {...register('fullName')}
+            className={`w-full px-4 py-3 rounded-lg border ${errors.fullName ? 'border-red-500' : 'border-gray-300'} focus:ring-2 focus:ring-blue-500 focus:border-transparent transition`}
+            placeholder="Jean Dupont"
+          />
+          {errors.fullName && <p className="text-red-500 text-xs mt-1">{errors.fullName.message}</p>}
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Fonction <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            {...register('position')}
+            className={`w-full px-4 py-3 rounded-lg border ${errors.position ? 'border-red-500' : 'border-gray-300'} focus:ring-2 focus:ring-blue-500 focus:border-transparent transition`}
+            placeholder="Secrétaire CSE"
+          />
+          {errors.position && <p className="text-red-500 text-xs mt-1">{errors.position.message}</p>}
+        </div>
       </div>
 
-      {/* Nom & Prénom */}
-      <div>
-        <label htmlFor="fullName" className="label-field">
-          Nom &amp; Prénom <span className="text-red-500" aria-hidden="true">*</span>
-          <span className="sr-only">(requis)</span>
-        </label>
-        <input
-          type="text"
-          id="fullName"
-          {...register('fullName')}
-          className="input-field"
-          placeholder="Jean Dupont"
-          aria-required="true"
-          aria-invalid={errors.fullName ? 'true' : 'false'}
-          aria-describedby={errors.fullName ? 'fullName-error' : undefined}
-        />
-        {errors.fullName && (
-          <p id="fullName-error" className="text-red-500 text-sm mt-1" role="alert">
-            {errors.fullName.message}
-          </p>
-        )}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Entreprise <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            {...register('company')}
+            className={`w-full px-4 py-3 rounded-lg border ${errors.company ? 'border-red-500' : 'border-gray-300'} focus:ring-2 focus:ring-blue-500 focus:border-transparent transition`}
+            placeholder="Nom de l'entreprise"
+          />
+          {errors.company && <p className="text-red-500 text-xs mt-1">{errors.company.message}</p>}
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            CSE / COS <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            {...register('cseName')}
+            className={`w-full px-4 py-3 rounded-lg border ${errors.cseName ? 'border-red-500' : 'border-gray-300'} focus:ring-2 focus:ring-blue-500 focus:border-transparent transition`}
+            placeholder="Nom du CSE"
+          />
+          {errors.cseName && <p className="text-red-500 text-xs mt-1">{errors.cseName.message}</p>}
+        </div>
       </div>
 
-      {/* Fonction */}
-      <div>
-        <label htmlFor="position" className="label-field">
-          Fonction / Poste <span className="text-red-500" aria-hidden="true">*</span>
-          <span className="sr-only">(requis)</span>
-        </label>
-        <input
-          type="text"
-          id="position"
-          {...register('position')}
-          className="input-field"
-          placeholder="Secrétaire CSE, Trésorier, etc."
-          aria-required="true"
-          aria-invalid={errors.position ? 'true' : 'false'}
-          aria-describedby={errors.position ? 'position-error' : undefined}
-        />
-        {errors.position && (
-          <p id="position-error" className="text-red-500 text-sm mt-1" role="alert">
-            {errors.position.message}
-          </p>
-        )}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Email <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="email"
+            {...register('email')}
+            className={`w-full px-4 py-3 rounded-lg border ${errors.email ? 'border-red-500' : 'border-gray-300'} focus:ring-2 focus:ring-blue-500 focus:border-transparent transition`}
+            placeholder="email@exemple.com"
+          />
+          {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Téléphone <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="tel"
+            {...register('phone')}
+            className={`w-full px-4 py-3 rounded-lg border ${errors.phone ? 'border-red-500' : 'border-gray-300'} focus:ring-2 focus:ring-blue-500 focus:border-transparent transition`}
+            placeholder="0696 XX XX XX"
+          />
+          {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone.message}</p>}
+        </div>
       </div>
 
-      {/* Entreprise */}
       <div>
-        <label htmlFor="company" className="label-field">
-          Entreprise / Organisation <span className="text-red-500" aria-hidden="true">*</span>
-          <span className="sr-only">(requis)</span>
-        </label>
-        <input
-          type="text"
-          id="company"
-          {...register('company')}
-          className="input-field"
-          placeholder="Nom de votre entreprise"
-          aria-required="true"
-          aria-invalid={errors.company ? 'true' : 'false'}
-          aria-describedby={errors.company ? 'company-error' : undefined}
-        />
-        {errors.company && (
-          <p id="company-error" className="text-red-500 text-sm mt-1" role="alert">
-            {errors.company.message}
-          </p>
-        )}
-      </div>
-
-      {/* Nom du CSE/COS */}
-      <div>
-        <label htmlFor="cseName" className="label-field">
-          Nom du CSE / COS <span className="text-red-500" aria-hidden="true">*</span>
-          <span className="sr-only">(requis)</span>
-        </label>
-        <input
-          type="text"
-          id="cseName"
-          {...register('cseName')}
-          className="input-field"
-          placeholder="CSE de votre entreprise"
-          aria-required="true"
-          aria-invalid={errors.cseName ? 'true' : 'false'}
-          aria-describedby={errors.cseName ? 'cseName-error' : undefined}
-        />
-        {errors.cseName && (
-          <p id="cseName-error" className="text-red-500 text-sm mt-1" role="alert">
-            {errors.cseName.message}
-          </p>
-        )}
-      </div>
-
-      {/* Email */}
-      <div>
-        <label htmlFor="email" className="label-field">
-          Email <span className="text-red-500" aria-hidden="true">*</span>
-          <span className="sr-only">(requis)</span>
-        </label>
-        <input
-          type="email"
-          id="email"
-          {...register('email')}
-          className="input-field"
-          placeholder="jean.dupont@entreprise.com"
-          aria-required="true"
-          aria-invalid={errors.email ? 'true' : 'false'}
-          aria-describedby={errors.email ? 'email-error' : undefined}
-        />
-        {errors.email && (
-          <p id="email-error" className="text-red-500 text-sm mt-1" role="alert">
-            {errors.email.message}
-          </p>
-        )}
-      </div>
-
-      {/* Téléphone */}
-      <div>
-        <label htmlFor="phone" className="label-field">
-          Téléphone <span className="text-red-500" aria-hidden="true">*</span>
-          <span className="sr-only">(requis)</span>
-        </label>
-        <input
-          type="tel"
-          id="phone"
-          {...register('phone')}
-          className="input-field"
-          placeholder="0696 XX XX XX"
-          aria-required="true"
-          aria-invalid={errors.phone ? 'true' : 'false'}
-          aria-describedby={errors.phone ? 'phone-error' : undefined}
-        />
-        {errors.phone && (
-          <p id="phone-error" className="text-red-500 text-sm mt-1" role="alert">
-            {errors.phone.message}
-          </p>
-        )}
-      </div>
-
-      {/* Nombre de participants */}
-      <div>
-        <label htmlFor="participants" className="label-field">
-          Nombre de participants <span className="text-red-500" aria-hidden="true">*</span>
-          <span className="sr-only">(requis)</span>
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          Nombre de participants <span className="text-red-500">*</span>
         </label>
         <select
-          id="participants"
           {...register('participants')}
-          className="input-field"
-          aria-required="true"
-          aria-invalid={errors.participants ? 'true' : 'false'}
-          aria-describedby={errors.participants ? 'participants-error' : undefined}
+          className={`w-full px-4 py-3 rounded-lg border ${errors.participants ? 'border-red-500' : 'border-gray-300'} focus:ring-2 focus:ring-blue-500 focus:border-transparent transition bg-white`}
         >
-          <option value="">Sélectionnez le nombre</option>
-          <option value="1">1 participant</option>
-          <option value="2">2 participants</option>
-          <option value="3">3 participants</option>
-          <option value="4">4 participants</option>
-          <option value="5">5 participants</option>
-          <option value="6">6 participants</option>
-          <option value="7">7 participants</option>
+          <option value="">Sélectionnez</option>
+          {[1, 2, 3, 4, 5, 6, 7].map((n) => (
+            <option key={n} value={n}>{n} participant{n > 1 ? 's' : ''}</option>
+          ))}
         </select>
-        {errors.participants && (
-          <p id="participants-error" className="text-red-500 text-sm mt-1" role="alert">
-            {errors.participants.message}
-          </p>
-        )}
+        {errors.participants && <p className="text-red-500 text-xs mt-1">{errors.participants.message}</p>}
       </div>
 
-      {/* Turnstile CAPTCHA */}
-      <Turnstile onVerify={handleTurnstileVerify} />
-
-      {/* Submit */}
       <button
         type="submit"
         disabled={isLoading}
-        className="btn-accent w-full flex items-center justify-center gap-2"
-        aria-busy={isLoading}
+        className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-semibold py-3 px-6 rounded-lg transition flex items-center justify-center gap-2"
       >
         {isLoading ? (
           <>
-            <Loader2 className="w-5 h-5 animate-spin" aria-hidden="true" />
-            <span>Envoi en cours...</span>
+            <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+            </svg>
+            Envoi...
           </>
         ) : (
           <>
-            <Send className="w-5 h-5" aria-hidden="true" />
-            <span>S&apos;inscrire gratuitement</span>
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+            </svg>
+            S'inscrire gratuitement
           </>
         )}
       </button>
 
       <p className="text-xs text-gray-500 text-center">
-        Entrée réservée aux membres de CSE et COS inscrits et enregistrés uniquement.
-        Badge visiteur envoyé par email après validation.
+        Réservé aux membres de CSE et COS. Badge envoyé par email.
       </p>
     </form>
   )

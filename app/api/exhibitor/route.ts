@@ -15,7 +15,6 @@ const exhibitorSchema = z.object({
   address: z.string().min(5).max(300),
   message: z.string().max(2000).optional(),
   fax: z.string().optional(), // Honeypot
-  turnstileToken: z.string().optional(),
 })
 
 export async function POST(request: Request) {
@@ -41,8 +40,8 @@ export async function POST(request: Request) {
 
     const data = await request.json()
 
-    // Anti-spam validation (honeypot + Turnstile)
-    const spamCheck = await validateSubmission(data.fax, data.turnstileToken)
+    // Anti-spam validation (honeypot)
+    const spamCheck = await validateSubmission(data.fax, undefined)
     if (!spamCheck.success) {
       if (spamCheck.isSpam) {
         // Silent reject for bots
