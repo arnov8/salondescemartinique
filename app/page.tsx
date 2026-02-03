@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { Calendar, MapPin, Users, Store, Briefcase, Gift, Plane, GraduationCap, ArrowRight, CheckCircle, Award, Clock, Building2, PartyPopper, CreditCard } from 'lucide-react'
-import VideoBackground from '@/components/VideoBackground'
+import YouTubeBackground from '@/components/YouTubeBackground'
 
 const stats = [
   { icon: Store, value: '+60', label: 'Exposants' },
@@ -49,11 +49,10 @@ export default function HomePage() {
     <>
       {/* Hero Section */}
       <section className="relative min-h-[100svh] flex items-center overflow-hidden">
-        {/* Video Background */}
-        <VideoBackground
-          src="/videos/hero-background.mp4"
-          poster="/images/video-poster.jpg"
-          className="absolute inset-0 w-full h-full object-cover scale-105"
+        {/* YouTube Video Background */}
+        <YouTubeBackground
+          videoId="1fL1FFOIZMw"
+          className="absolute inset-0 w-full h-full"
         />
 
         {/* Color Overlay - Éclairci pour mieux voir la vidéo */}

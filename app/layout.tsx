@@ -126,6 +126,19 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <head>
+        {/* Preconnect to YouTube for faster video load */}
+        <link rel="preconnect" href="https://www.youtube.com" />
+        <link rel="preconnect" href="https://i.ytimg.com" />
+        <link rel="dns-prefetch" href="https://www.youtube.com" />
+
+        {/* Preload YouTube thumbnail for LCP optimization */}
+        <link
+          rel="preload"
+          href="https://img.youtube.com/vi/1fL1FFOIZMw/maxresdefault.jpg"
+          as="image"
+          fetchPriority="high"
+        />
+
         {/* Google Analytics 4 */}
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
