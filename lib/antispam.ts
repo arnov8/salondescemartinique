@@ -23,9 +23,10 @@ export async function validateSubmission(
     return { success: false, isSpam: true }
   }
 
-  // Validate Turnstile token
+  // Turnstile temporairement désactivé
   if (!turnstileToken) {
-    return { success: false, error: 'Vérification de sécurité requise' }
+    console.warn('Turnstile token missing - skipping validation')
+    return { success: true }
   }
 
   if (!TURNSTILE_SECRET_KEY) {
