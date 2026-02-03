@@ -150,60 +150,86 @@ export async function POST(request: Request) {
         `,
       })
 
-      // Email de confirmation avec invitation
+      // Email de confirmation au visiteur
       await resend.emails.send({
         from: FROM_EMAIL,
         to: validData.email,
-        subject: 'Votre inscription au Salon des CSE Martinique',
+        subject: 'Inscription confirmée - Salon des CSE Martinique',
         html: `
           <!DOCTYPE html>
           <html>
           <head>
             <meta charset="utf-8">
             <style>
-              body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #1a1a1a; }
+              body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #1a1a1a; margin: 0; padding: 0; background: #f5f5f5; }
               .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-              .header { background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%); color: white; padding: 30px; text-align: center; border-radius: 8px 8px 0 0; }
-              .header h1 { margin: 0; font-size: 20px; }
-              .content { background: #f8f9fa; padding: 30px; border: 1px solid #e5e5e5; border-top: none; border-radius: 0 0 8px 8px; }
-              .badge-box { background: white; padding: 20px; border-radius: 8px; margin: 20px 0; border: 2px dashed #1e3a5f; text-align: center; }
-              .badge-title { color: #1e3a5f; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; }
-              .badge-name { font-size: 24px; font-weight: bold; color: #1a1a1a; margin: 10px 0; }
-              .badge-info { color: #666; font-size: 14px; }
-              .highlight { background: #e8f4fc; padding: 15px; border-radius: 8px; text-align: center; margin: 20px 0; }
-              .footer { text-align: center; margin-top: 20px; color: #888; font-size: 12px; }
+              .header { background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%); color: white; padding: 40px 30px; text-align: center; border-radius: 12px 12px 0 0; }
+              .header h1 { margin: 0; font-size: 24px; font-weight: 600; }
+              .header p { margin: 10px 0 0; opacity: 0.9; font-size: 14px; }
+              .content { background: white; padding: 40px 30px; border-radius: 0 0 12px 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+              .success-icon { width: 70px; height: 70px; background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%); border-radius: 50%; margin: 0 auto 25px; display: flex; align-items: center; justify-content: center; }
+              .success-icon svg { width: 35px; height: 35px; }
+              .recap { background: #f8f9fa; border-radius: 8px; padding: 20px; margin: 25px 0; border-left: 4px solid #1e3a5f; }
+              .recap-title { font-size: 12px; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+              .recap-item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #eee; }
+              .recap-item:last-child { border-bottom: none; }
+              .recap-label { color: #666; }
+              .recap-value { font-weight: 600; color: #1a1a1a; }
+              .info-box { background: #e8f4fc; border-radius: 8px; padding: 20px; margin: 25px 0; text-align: center; }
+              .info-box p { margin: 0; color: #1e3a5f; }
+              .footer { text-align: center; padding: 25px; color: #888; font-size: 12px; }
+              .footer a { color: #1e3a5f; text-decoration: none; }
             </style>
           </head>
           <body>
             <div class="container">
               <div class="header">
-                <h1>SALON DES CSE MARTINIQUE</h1>
+                <h1>Salon des CSE Martinique</h1>
+                <p>L'événement de référence pour les Comités Sociaux et Économiques</p>
               </div>
               <div class="content">
-                <p>Bonjour <strong>${validData.fullName}</strong>,</p>
-                <p>Votre inscription au Salon des CSE Martinique est confirmée !</p>
-
-                <div class="badge-box">
-                  <div class="badge-title">Votre badge visiteur</div>
-                  <div class="badge-name">${validData.fullName}</div>
-                  <div class="badge-info">${validData.position} - ${validData.company}</div>
-                  <div class="badge-info" style="margin-top: 5px;">${validData.cseName}</div>
+                <div class="success-icon">
+                  <svg fill="white" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
                 </div>
 
-                <div class="highlight">
-                  <strong>Présentez cet email à l'entrée du salon</strong><br>
-                  <span style="font-size: 14px; color: #666;">pour retirer votre badge</span>
+                <h2 style="text-align: center; color: #1a1a1a; margin: 0 0 10px;">Inscription enregistrée !</h2>
+                <p style="text-align: center; color: #666; margin: 0 0 25px;">Bonjour <strong>${validData.fullName}</strong>, nous avons bien reçu votre demande d'inscription.</p>
+
+                <div class="recap">
+                  <div class="recap-title">Récapitulatif de votre inscription</div>
+                  <div class="recap-item">
+                    <span class="recap-label">Nom</span>
+                    <span class="recap-value">${validData.fullName}</span>
+                  </div>
+                  <div class="recap-item">
+                    <span class="recap-label">Fonction</span>
+                    <span class="recap-value">${validData.position}</span>
+                  </div>
+                  <div class="recap-item">
+                    <span class="recap-label">Entreprise</span>
+                    <span class="recap-value">${validData.company}</span>
+                  </div>
+                  <div class="recap-item">
+                    <span class="recap-label">CSE / COS</span>
+                    <span class="recap-value">${validData.cseName}</span>
+                  </div>
                 </div>
 
-                <p>Nous avons hâte de vous accueillir !</p>
+                <div class="info-box">
+                  <p><strong>📬 Restez connecté !</strong></p>
+                  <p style="margin-top: 8px; font-size: 14px;">Vous recevrez prochainement par email toutes les informations pratiques concernant l'événement : date, lieu, programme et modalités d'accès.</p>
+                </div>
 
-                <p style="margin-top: 30px;">
-                  Cordialement,<br>
+                <p style="margin-top: 30px;">Nous vous remercions pour votre intérêt et avons hâte de vous accueillir !</p>
+
+                <p style="margin-top: 25px;">
+                  À très bientôt,<br>
                   <strong>L'équipe du Salon des CSE Martinique</strong>
                 </p>
               </div>
               <div class="footer">
-                <p>Salon des CSE Martinique - L'événement de référence pour les CSE</p>
+                <p>Salon des CSE Martinique<br>
+                <a href="https://salondescemartinique.com">salondescemartinique.com</a></p>
               </div>
             </div>
           </body>
