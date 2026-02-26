@@ -70,8 +70,8 @@ Sections détaillées :
 - **Les exposants que vous rencontrerez** - 15 secteurs d'activité listés
 - **La Conférence CSE/COS** - Expert en droit du travail
 - **La Grande Tombola des Comités** - Cadeaux à gagner (présence obligatoire)
-- **Comment participer ?** - Processus en 3 étapes (inscription → badge → jour J)
-- **Qui peut visiter ?** - Public cible + formulaire d'inscription
+- **Comment participer ?** - Processus en 3 étapes (inscription → confirmation email → présentation le Jour J)
+- **Qui peut visiter ?** - Public cible (réservé aux membres de Comités uniquement)
 
 ### Page Exposer (`/exposer`)
 Sections détaillées :
@@ -414,7 +414,7 @@ ADMIN_EMAIL=votre-email@exemple.com
 ## Intégration Google Sheets
 
 Les données des formulaires sont stockées dans une Google Sheet avec 3 onglets :
-- **Visiteurs** : Date | Nom | Fonction | Entreprise | CSE | Email | Téléphone
+- **Visiteurs** : Date | Nom | Fonction | Entreprise | CSE | Email | Téléphone | Participants
 - **Exposants** : Date | Entreprise | Secteur | Contact | Email | Téléphone | Adresse | Message
 - **Contact** : Date | Nom | Email | Téléphone | Sujet | Message
 

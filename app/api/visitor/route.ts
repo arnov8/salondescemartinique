@@ -75,6 +75,7 @@ export async function POST(request: Request) {
       validData.cseName,
       validData.email,
       validData.phone,
+      validData.participants || '',
     ])
 
     // Emails

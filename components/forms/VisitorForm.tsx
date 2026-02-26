@@ -71,7 +71,7 @@ export default function VisitorForm() {
           </svg>
         </div>
         <h3 className="text-xl font-bold text-gray-900 mb-2">Inscription confirmée !</h3>
-        <p className="text-gray-600 mb-6">Vous recevrez votre badge par email.</p>
+        <p className="text-gray-600 mb-6">Après vérification, vous recevrez une confirmation d&apos;inscription par email.</p>
         <button
           onClick={() => setIsSubmitted(false)}
           className="text-blue-600 hover:text-blue-800 font-medium"
@@ -217,7 +217,7 @@ export default function VisitorForm() {
       </button>
 
       <p className="text-xs text-gray-500 text-center">
-        Réservé aux membres de CSE et COS. Badge envoyé par email.
+        Réservé aux membres de Comités uniquement.
       </p>
     </form>
   )

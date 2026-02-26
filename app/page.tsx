@@ -68,9 +68,9 @@ export default function HomePage() {
               <span className="badge mb-4 sm:mb-6">
                 32ème Édition
               </span>
-              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-6 leading-tight">
-                <span className="block">Salon des CSE &amp; COS</span>
-                <span className="text-accent">Martinique</span>
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 leading-tight">
+                <span className="block whitespace-nowrap">Salon des CSE &amp; COS</span>
+                <span className="text-accent block">Martinique</span>
               </h1>
               <p className="text-base sm:text-lg lg:text-xl text-gray-200 mb-6 sm:mb-8 max-w-lg mx-auto lg:mx-0">
                 Le rendez-vous annuel des responsables de Comités Sociaux et Économiques

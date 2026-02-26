@@ -165,7 +165,7 @@ export default function ContactPage() {
           <div className="card !p-0 overflow-hidden">
             <div className="aspect-video sm:aspect-[21/9] w-full">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3822.7489752367!2d-61.09471392394127!3d14.626080485883832!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8c6aa1f4e0c7a9f9%3A0x8d35e9b4c6e9d0a5!2sPalais%20des%20Congr%C3%A8s%20de%20Madiana!5e0!3m2!1sfr!2smq!4v1700000000000!5m2!1sfr!2smq"
+                src="https://maps.google.com/maps?q=Palais+des+Congr%C3%A8s+de+Madiana,+Schoelcher,+Martinique&t=&z=15&ie=UTF8&iwloc=&output=embed"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}

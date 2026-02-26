@@ -83,6 +83,31 @@ export default function VisiterPage() {
         </div>
       </section>
 
+      {/* Inscription Visiteur - Section prioritaire */}
+      <section className="py-10 sm:py-14 lg:py-16 bg-gradient-to-b from-accent/5 to-white relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-2xl mx-auto">
+            {/* Bandeau accrocheur */}
+            <div className="text-center mb-6 sm:mb-8">
+              <span className="inline-flex items-center gap-2 bg-accent text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg mb-4">
+                <Ticket className="w-4 h-4" />
+                Inscription gratuite & obligatoire
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-bold text-primary">Inscrivez-vous maintenant</h2>
+              <p className="text-gray-500 text-sm sm:text-base mt-2">Réservé aux membres de Comités uniquement.</p>
+            </div>
+
+            {/* Formulaire mis en avant */}
+            <div className="card !p-6 sm:!p-8 border-2 border-accent/20 shadow-xl relative">
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-accent text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
+                Entrée Gratuite
+              </div>
+              <VisitorForm />
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Benefits Section */}
       <section className="py-12 sm:py-16 lg:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -238,18 +263,18 @@ export default function VisiterPage() {
                 <div className="w-14 h-14 rounded-full bg-white/10 flex items-center justify-center mx-auto mb-4">
                   <span className="text-2xl font-bold text-accent">2</span>
                 </div>
-                <h4 className="font-semibold mb-2">Recevez votre badge</h4>
+                <h4 className="font-semibold mb-2">Confirmation par email</h4>
                 <p className="text-gray-300 text-sm">
-                  Après validation de votre inscription, vous recevrez votre badge visiteur par email.
+                  Après réception et vérification de votre inscription, nous vous enverrons une confirmation par email.
                 </p>
               </div>
               <div className="text-center">
                 <div className="w-14 h-14 rounded-full bg-white/10 flex items-center justify-center mx-auto mb-4">
                   <span className="text-2xl font-bold text-accent">3</span>
                 </div>
-                <h4 className="font-semibold mb-2">Venez le Jour J</h4>
+                <h4 className="font-semibold mb-2">Présentez-vous le Jour J</h4>
                 <p className="text-gray-300 text-sm">
-                  Présentez-vous le 2 octobre avec votre badge. Parking gratuit sur place.
+                  Rendez-vous le 2 octobre, présentez-vous à l&apos;entrée pour accéder au Salon. Parking gratuit sur place.
                 </p>
               </div>
             </div>
@@ -257,33 +282,32 @@ export default function VisiterPage() {
         </div>
       </section>
 
-      {/* Public & Form Section */}
+      {/* Public Cible Section */}
       <section className="py-12 sm:py-16 lg:py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
-            {/* Left - Public Cible */}
-            <div className="order-2 lg:order-1">
-              <h2 className="section-title text-center lg:text-left">Qui peut visiter ?</h2>
-              <p className="text-gray-600 mb-6 sm:mb-8 text-center lg:text-left text-sm sm:text-base">
-                L&apos;accès au salon est <strong>exclusivement réservé</strong> aux membres
-                de Comités Sociaux et Économiques (CSE) et Comités d&apos;Œuvres Sociales (COS).
-                L&apos;inscription est gratuite mais obligatoire.
-              </p>
+          <div className="max-w-4xl mx-auto">
+            <h2 className="section-title text-center">Qui peut visiter ?</h2>
+            <p className="text-gray-600 mb-6 sm:mb-8 text-center text-sm sm:text-base">
+              L&apos;accès au salon est <strong>exclusivement réservé</strong> aux membres
+              de Comités Sociaux et Économiques (CSE) et Comités d&apos;Œuvres Sociales (COS).
+              L&apos;inscription est gratuite mais obligatoire.
+            </p>
 
-              {/* Public cible grid */}
-              <div className="grid grid-cols-2 gap-2 sm:gap-3 mb-6 sm:mb-8">
-                {publicCible.map((item, index) => (
-                  <div key={index} className="flex items-center gap-2 sm:gap-3 p-2.5 sm:p-3 bg-white rounded-xl border border-gray-100">
-                    <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-accent flex-shrink-0" />
-                    <span className="text-gray-700 text-sm font-medium">{item}</span>
-                  </div>
-                ))}
-              </div>
+            {/* Public cible grid */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3 mb-6 sm:mb-8">
+              {publicCible.map((item, index) => (
+                <div key={index} className="flex items-center gap-2 sm:gap-3 p-2.5 sm:p-3 bg-white rounded-xl border border-gray-100">
+                  <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-accent flex-shrink-0" />
+                  <span className="text-gray-700 text-sm font-medium">{item}</span>
+                </div>
+              ))}
+            </div>
 
+            <div className="grid sm:grid-cols-2 gap-4">
               {/* Infos pratiques */}
-              <div className="p-4 sm:p-5 lg:p-6 bg-white rounded-xl border border-gray-100 shadow-sm mb-4 sm:mb-6">
+              <div className="p-4 sm:p-5 lg:p-6 bg-white rounded-xl border border-gray-100 shadow-sm">
                 <h3 className="font-bold text-primary mb-3 sm:mb-4 text-sm sm:text-base">Informations pratiques</h3>
-                <div className="grid grid-cols-2 gap-2 sm:gap-3">
+                <div className="grid gap-2 sm:gap-3">
                   {pratiques.map((item, index) => (
                     <div key={index} className="flex items-center gap-2 text-sm text-gray-600">
                       <item.icon className="w-4 h-4 text-primary flex-shrink-0" />
@@ -306,22 +330,6 @@ export default function VisiterPage() {
                     </p>
                   </div>
                 </div>
-              </div>
-            </div>
-
-            {/* Right - Form */}
-            <div className="order-1 lg:order-2">
-              <div className="card lg:sticky lg:top-24">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-primary flex items-center justify-center">
-                    <Ticket className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-                  </div>
-                  <div>
-                    <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-primary">Inscription visiteur</h2>
-                    <p className="text-gray-500 text-xs sm:text-sm">Entrée réservée aux membres de CSE et COS inscrits et enregistrés uniquement.</p>
-                  </div>
-                </div>
-                <VisitorForm />
               </div>
             </div>
           </div>
