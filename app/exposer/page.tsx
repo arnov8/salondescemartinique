@@ -48,8 +48,8 @@ const steps = [
 ]
 
 export const metadata = {
-  title: 'Exposer | Salon des CSE & COS de Martinique 2025',
-  description: 'Réservez votre stand au Salon des CSE & COS de Martinique 2025 et présentez vos produits aux décideurs des comités d\'entreprise.',
+  title: 'Exposer | Salon des CSE & COS de Martinique 2026',
+  description: 'Réservez votre stand au Salon des CSE & COS de Martinique 2026 et présentez vos produits aux décideurs des comités d\'entreprise.',
 }
 
 export default function ExposerPage() {
@@ -73,6 +73,69 @@ export default function ExposerPage() {
         </div>
       </section>
 
+      {/* Form Section - Prominent */}
+      <section className="py-12 sm:py-16 lg:py-20 bg-gradient-to-b from-gray-50 to-white">
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-6 sm:mb-8">
+            <span className="inline-flex items-center gap-2 bg-accent/10 text-accent-dark px-4 py-2 rounded-full text-sm font-semibold mb-4">
+              <Store className="w-4 h-4" />
+              Places limitées
+            </span>
+            <h2 className="section-title">Pré-inscription exposant</h2>
+            <p className="section-subtitle">
+              Remplissez le formulaire pour recevoir toutes les informations
+              sur les tarifs et les modalités de participation.
+            </p>
+          </div>
+
+          {/* Steps */}
+          <div className="flex items-center justify-center gap-2 sm:gap-3 mb-8">
+            {steps.map((step, index) => (
+              <div key={index} className="flex items-center gap-2 sm:gap-3">
+                <div className="flex items-center gap-1.5 sm:gap-2">
+                  <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-accent/10 flex items-center justify-center text-xs font-bold text-accent">
+                    {step.num}
+                  </div>
+                  <span className="text-gray-600 text-xs sm:text-sm hidden sm:block">{step.text}</span>
+                </div>
+                {index < steps.length - 1 && (
+                  <div className="w-6 sm:w-8 h-px bg-gray-300" />
+                )}
+              </div>
+            ))}
+          </div>
+
+          {/* Form Card */}
+          <div className="card ring-2 ring-accent/20 shadow-xl">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-accent flex items-center justify-center">
+                <Store className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+              </div>
+              <div>
+                <h3 className="text-lg sm:text-xl font-bold text-primary">Formulaire de pré-inscription</h3>
+                <p className="text-gray-500 text-xs sm:text-sm">Réponse sous 48h</p>
+              </div>
+            </div>
+            <ExhibitorForm />
+          </div>
+
+          {/* Contact direct */}
+          <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 text-sm text-gray-500">
+            <span>Besoin d&apos;aide ?</span>
+            <div className="flex items-center gap-4">
+              <a href="tel:0696263096" className="flex items-center gap-1.5 hover:text-accent transition-colors">
+                <Phone className="w-4 h-4" />
+                <span>06 96 26 30 96</span>
+              </a>
+              <a href="mailto:organisation@antillessalons.com" className="flex items-center gap-1.5 hover:text-accent transition-colors">
+                <Mail className="w-4 h-4" />
+                <span>Email</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Benefits Section */}
       <section className="py-12 sm:py-16 lg:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -88,8 +151,8 @@ export default function ExposerPage() {
                 <div className="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 bg-gradient-to-br from-accent/20 to-accent/10 rounded-xl flex items-center justify-center mx-auto mb-2 sm:mb-3 lg:mb-4">
                   <benefit.icon className="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 text-accent" />
                 </div>
-                <h3 className="text-sm sm:text-base lg:text-lg font-bold text-primary mb-1 sm:mb-2">{benefit.title}</h3>
-                <p className="text-gray-600 text-xs sm:text-sm hidden sm:block">{benefit.description}</p>
+                <h3 className="text-base sm:text-base lg:text-lg font-bold text-primary mb-1 sm:mb-2">{benefit.title}</h3>
+                <p className="text-gray-600 text-sm sm:text-sm">{benefit.description}</p>
               </div>
             ))}
           </div>
@@ -276,73 +339,22 @@ export default function ExposerPage() {
         </div>
       </section>
 
-      {/* Form Section */}
+      {/* CTA final */}
       <section className="py-12 sm:py-16 lg:py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
-            {/* Left - Info */}
-            <div className="order-2 lg:order-1">
-              <h2 className="section-title text-center lg:text-left">Pré-inscription exposant</h2>
-              <p className="text-gray-600 mb-6 sm:mb-8 text-center lg:text-left text-sm sm:text-base">
-                Remplissez le formulaire pour recevoir toutes les informations
-                sur les tarifs et les modalités de participation.
-              </p>
-
-              <div className="space-y-4 sm:space-y-6">
-                {/* Process steps */}
-                <div className="card !p-4 sm:!p-5 lg:!p-6 border-l-4 border-accent">
-                  <h3 className="font-bold text-primary mb-3 sm:mb-4 text-sm sm:text-base">Processus simple</h3>
-                  <div className="space-y-2 sm:space-y-3">
-                    {steps.map((step, index) => (
-                      <div key={index} className="flex items-start gap-3">
-                        <div className="w-6 h-6 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0 text-xs font-bold text-accent">
-                          {step.num}
-                        </div>
-                        <span className="text-gray-600 text-sm">{step.text}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Contact direct */}
-                <div className="card !p-4 sm:!p-5 lg:!p-6 border-l-4 border-primary">
-                  <h3 className="font-bold text-primary mb-3 text-sm sm:text-base">Contact direct</h3>
-                  <p className="text-gray-600 text-sm mb-3">
-                    Vous avez des questions ? Contactez notre équipe :
-                  </p>
-                  <div className="space-y-2">
-                    <a href="tel:0696263096" className="flex items-center gap-2 text-sm hover:text-accent transition-colors">
-                      <Phone className="w-4 h-4 text-primary" />
-                      <span>06 96 26 30 96</span>
-                    </a>
-                    <a href="tel:0696334700" className="flex items-center gap-2 text-sm hover:text-accent transition-colors">
-                      <Phone className="w-4 h-4 text-primary" />
-                      <span>06 96 33 47 00</span>
-                    </a>
-                    <a href="mailto:organisation@antillessalons.com" className="flex items-center gap-2 text-sm hover:text-accent transition-colors">
-                      <Mail className="w-4 h-4 text-primary" />
-                      <span className="break-all">organisation@antillessalons.com</span>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Right - Form */}
-            <div className="order-1 lg:order-2">
-              <div className="card lg:sticky lg:top-24">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-accent flex items-center justify-center">
-                    <Store className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg sm:text-xl font-bold text-primary">Formulaire de pré-inscription</h3>
-                    <p className="text-gray-500 text-xs sm:text-sm">Réponse sous 48h</p>
-                  </div>
-                </div>
-                <ExhibitorForm />
-              </div>
-            </div>
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="section-title">Prêt à rejoindre le salon ?</h2>
+          <p className="section-subtitle mb-6">
+            Remontez pour remplir le formulaire de pré-inscription ou contactez-nous directement.
+          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
+            <a href="#top" className="btn-primary inline-flex items-center gap-2">
+              <Store className="w-4 h-4" />
+              Pré-inscription exposant
+            </a>
+            <a href="tel:0696263096" className="btn-outline-primary inline-flex items-center gap-2">
+              <Phone className="w-4 h-4" />
+              06 96 26 30 96
+            </a>
           </div>
         </div>
       </section>

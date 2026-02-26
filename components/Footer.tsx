@@ -22,8 +22,8 @@ export default function Footer() {
               <span className="font-bold text-base sm:text-lg">Salon des CSE &amp; COS</span>
             </div>
             <p className="text-gray-300 text-sm leading-relaxed">
-              Le rendez-vous annuel des responsables de Comités Sociaux et Économiques
-              et Comités d&apos;Œuvres Sociales en Martinique.
+              Le rendez-vous des bonnes idées 💡 pour les salariés ! Dédié aux responsables de Comités Sociaux et Économiques
+              et Comités d&apos;Œuvres Sociales de Martinique.
             </p>
             {/* Social Links - Mobile visible here */}
             <div className="flex gap-3 mt-4 sm:mt-6">
@@ -84,9 +84,9 @@ export default function Footer() {
                   <Calendar className="w-4 h-4 text-accent" />
                 </div>
                 <div>
-                  <p className="text-white text-sm font-medium">Jeudi 2 Octobre 2025</p>
+                  <p className="text-white text-sm font-medium">Jeudi 1er Octobre 2026</p>
                   <p className="text-gray-400 text-xs flex items-center gap-1">
-                    <Clock className="w-3 h-3" /> 8h00 - 19h00
+                    <Clock className="w-3 h-3" /> 8h00 - 16h00
                   </p>
                 </div>
               </li>
@@ -137,10 +137,19 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="border-t border-white/10 mt-8 pt-6 sm:pt-8">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
-            <p className="text-gray-400 text-xs sm:text-sm">
+            <p className="text-gray-400 text-sm">
               Organisé par <span className="text-white font-medium">Antilles Salons</span>
             </p>
-            <p className="text-gray-500 text-xs">
+            <div className="flex items-center gap-4">
+              <Link href="/mentions-legales" className="text-gray-400 hover:text-accent transition-colors text-sm py-1">
+                Mentions légales
+              </Link>
+              <span className="text-gray-600">|</span>
+              <Link href="/politique-de-confidentialite" className="text-gray-400 hover:text-accent transition-colors text-sm py-1">
+                Politique de confidentialité
+              </Link>
+            </div>
+            <p className="text-gray-500 text-sm">
               © {new Date().getFullYear()} Salon des CSE &amp; COS de Martinique
             </p>
           </div>

@@ -1,5 +1,6 @@
-import { MapPin, Phone, Mail, Clock, Instagram, Facebook, ExternalLink, MessageCircle } from 'lucide-react'
+import { MapPin, Phone, Mail, Clock, Instagram, Facebook, ExternalLink, MessageCircle, HelpCircle } from 'lucide-react'
 import ContactForm from '@/components/forms/ContactForm'
+import FAQ from '@/components/FAQ'
 
 const contactInfo = [
   {
@@ -22,13 +23,13 @@ const contactInfo = [
   {
     icon: Clock,
     title: 'Le jour du salon',
-    lines: ['Jeudi 2 Octobre 2025', '8h00 - 19h00', 'Madiana, Palais des Congrès, Schœlcher'],
+    lines: ['Jeudi 1er Octobre 2026', '8h00 - 16h00', 'Madiana, Palais des Congrès, Schœlcher'],
   },
 ]
 
 export const metadata = {
-  title: 'Contact | Salon des CSE & COS de Martinique 2025',
-  description: 'Contactez l\'équipe du Salon des CSE & COS de Martinique 2025. Nous sommes là pour répondre à toutes vos questions.',
+  title: 'Contact | Salon des CSE & COS de Martinique 2026',
+  description: 'Contactez l\'équipe du Salon des CSE & COS de Martinique 2026. Nous sommes là pour répondre à toutes vos questions.',
 }
 
 export default function ContactPage() {
@@ -81,7 +82,7 @@ export default function ContactPage() {
                           <>
                             <a
                               href={info.href}
-                              className="font-medium text-gray-800 hover:text-accent transition-colors text-sm block truncate"
+                              className="font-medium text-gray-800 hover:text-accent transition-colors text-sm block break-all"
                             >
                               {info.content}
                             </a>
@@ -151,8 +152,24 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* Map Section */}
+      {/* FAQ Section */}
       <section className="py-12 sm:py-16 lg:py-20 bg-gray-50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-8 sm:mb-12">
+            <div className="w-14 h-14 sm:w-16 sm:h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <HelpCircle className="w-7 h-7 sm:w-8 sm:h-8 text-primary" />
+            </div>
+            <h2 className="section-title">Questions fréquentes</h2>
+            <p className="section-subtitle">
+              Retrouvez les réponses aux questions les plus posées sur le salon
+            </p>
+          </div>
+          <FAQ />
+        </div>
+      </section>
+
+      {/* Map Section */}
+      <section className="py-12 sm:py-16 lg:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8 sm:mb-12">
             <h2 className="section-title">Lieu du salon</h2>

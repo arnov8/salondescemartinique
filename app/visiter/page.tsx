@@ -20,8 +20,8 @@ const benefits = [
 ]
 
 const infoPratiques = [
-  { icon: Calendar, label: 'Date', value: 'Jeudi 2 Octobre 2025' },
-  { icon: Clock, label: 'Horaires', value: '8h00 - 19h00' },
+  { icon: Calendar, label: 'Date', value: 'Jeudi 1er Octobre 2026' },
+  { icon: Clock, label: 'Horaires', value: '8h00 - 16h00' },
   { icon: MapPin, label: 'Lieu', value: 'Palais des Congrès, Schœlcher' },
 ]
 
@@ -40,8 +40,8 @@ const pratiques = [
 ]
 
 export const metadata = {
-  title: 'Visiter | Salon des CSE & COS de Martinique 2025',
-  description: 'Inscrivez-vous gratuitement pour visiter le Salon des CSE & COS de Martinique 2025. Réservé aux membres de Comités Sociaux et Économiques.',
+  title: 'Visiter | Salon des CSE & COS de Martinique 2026',
+  description: 'Inscrivez-vous gratuitement pour visiter le Salon des CSE & COS de Martinique 2026. Réservé aux membres de Comités Sociaux et Économiques.',
 }
 
 export default function VisiterPage() {
@@ -67,14 +67,14 @@ export default function VisiterPage() {
               {infoPratiques.map((info, index) => (
                 <div
                   key={index}
-                  className="flex items-center gap-3 bg-white/10 backdrop-blur-sm px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl flex-1 xs:flex-initial min-w-0"
+                  className="flex items-center gap-3 bg-white/10 backdrop-blur-sm px-4 py-3 sm:px-4 sm:py-3 rounded-xl flex-1 xs:flex-initial min-w-0"
                 >
-                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-accent/20 flex items-center justify-center flex-shrink-0">
-                    <info.icon className="w-4 h-4 sm:w-5 sm:h-5 text-accent" />
+                  <div className="w-10 h-10 sm:w-10 sm:h-10 rounded-lg bg-accent/20 flex items-center justify-center flex-shrink-0">
+                    <info.icon className="w-5 h-5 sm:w-5 sm:h-5 text-accent" />
                   </div>
                   <div className="min-w-0">
-                    <p className="text-xs text-gray-300">{info.label}</p>
-                    <p className="font-semibold text-white text-sm truncate">{info.value}</p>
+                    <p className="text-sm text-gray-300">{info.label}</p>
+                    <p className="font-semibold text-white text-base">{info.value}</p>
                   </div>
                 </div>
               ))}
@@ -150,7 +150,7 @@ export default function VisiterPage() {
             <div className="bg-gradient-to-br from-primary/5 to-transparent p-6 sm:p-8 rounded-2xl">
               <h3 className="text-xl sm:text-2xl font-bold text-primary mb-4">Un événement conçu pour vous</h3>
               <p className="text-gray-600 mb-6 leading-relaxed">
-                Le salon se tiendra le <strong>Jeudi 2 Octobre 2025</strong>, de <strong>8h00 à 19h00</strong>,
+                Le salon se tiendra le <strong>Jeudi 1er Octobre 2026</strong>, de <strong>8h00 à 16h00</strong>,
                 au <strong>Palais des Congrès de Madiana</strong> à Schœlcher. L&apos;entrée est <strong>gratuite</strong>,
                 mais l&apos;inscription est obligatoire et réservée exclusivement aux membres de CSE et COS.
               </p>
@@ -274,7 +274,7 @@ export default function VisiterPage() {
                 </div>
                 <h4 className="font-semibold mb-2">Présentez-vous le Jour J</h4>
                 <p className="text-gray-300 text-sm">
-                  Rendez-vous le 2 octobre, présentez-vous à l&apos;entrée pour accéder au Salon. Parking gratuit sur place.
+                  Rendez-vous le 1er octobre, présentez-vous à l&apos;entrée pour accéder au Salon. Parking gratuit sur place.
                 </p>
               </div>
             </div>

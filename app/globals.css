@@ -112,7 +112,7 @@ body {
 
   /* Badge/Tag */
   .badge {
-    @apply inline-flex items-center px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-bold
+    @apply inline-flex items-center px-4 py-2 sm:px-4 sm:py-2.5 rounded-full text-sm sm:text-sm font-bold
            bg-accent text-white shadow-md;
   }
 

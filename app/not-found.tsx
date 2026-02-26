@@ -9,16 +9,16 @@ export default function NotFound() {
       <div className="text-center max-w-lg">
         {/* 404 Number */}
         <div className="relative mb-8">
-          <span className="text-[150px] md:text-[200px] font-bold text-primary/10 leading-none">
+          <span className="text-7xl sm:text-[120px] md:text-[180px] font-bold text-primary/10 leading-none select-none">
             404
           </span>
           <div className="absolute inset-0 flex items-center justify-center">
-            <Search className="w-20 h-20 md:w-24 md:h-24 text-primary" />
+            <Search className="w-14 h-14 sm:w-20 sm:h-20 md:w-24 md:h-24 text-primary" />
           </div>
         </div>
 
         {/* Message */}
-        <h1 className="text-3xl md:text-4xl font-bold text-primary mb-4">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary mb-4">
           Page introuvable
         </h1>
         <p className="text-gray-600 mb-8">

@@ -42,9 +42,9 @@ export default function Header() {
         <div className="flex items-center justify-between h-16 sm:h-20">
           {/* Logo - Salon des CSE & COS de Martinique */}
           <Link href="/" className="flex items-center group">
-            <div className="bg-gradient-to-br from-primary to-primary-dark rounded-xl shadow-lg group-hover:shadow-xl transition-shadow px-2.5 py-1.5 sm:px-3 sm:py-2">
-              <span className="text-white font-black text-xs sm:text-sm leading-tight block whitespace-nowrap">SALON DES CSE & COS</span>
-              <span className="text-accent font-bold text-[9px] sm:text-xs tracking-wide block leading-tight mt-0.5">MARTINIQUE</span>
+            <div className="bg-gradient-to-br from-primary to-primary-dark rounded-xl shadow-lg group-hover:shadow-xl transition-shadow px-3 py-2 sm:px-3.5 sm:py-2.5">
+              <span className="text-white font-black text-sm sm:text-base leading-tight block whitespace-nowrap">SALON DES CSE & COS</span>
+              <span className="text-accent font-bold text-[11px] sm:text-xs tracking-wide block leading-tight mt-0.5">MARTINIQUE</span>
             </div>
           </Link>
 
@@ -96,7 +96,7 @@ export default function Header() {
 
           {/* Mobile Menu Button */}
           <button
-            className="lg:hidden p-2 -mr-2 rounded-xl hover:bg-gray-100 active:bg-gray-200 transition-colors"
+            className="lg:hidden p-2.5 -mr-2 rounded-xl hover:bg-gray-100 active:bg-gray-200 transition-colors"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label={isMenuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
             aria-expanded={isMenuOpen}
@@ -127,13 +127,13 @@ export default function Header() {
       >
         <div className="max-w-7xl mx-auto px-4 py-4 safe-area-x">
           {/* Date badge mobile */}
-          <div className="flex items-center gap-2 bg-gradient-to-r from-accent/10 to-accent/5 text-accent-dark px-3 py-2.5 rounded-xl mb-4">
-            <div className="w-8 h-8 rounded-lg bg-accent/20 flex items-center justify-center">
-              <Calendar size={16} className="text-accent" />
+          <div className="flex items-center gap-3 bg-gradient-to-r from-accent/10 to-accent/5 text-accent-dark px-4 py-3 rounded-xl mb-4">
+            <div className="w-10 h-10 rounded-lg bg-accent/20 flex items-center justify-center">
+              <Calendar size={20} className="text-accent" />
             </div>
             <div>
-              <span className="text-sm font-semibold block">2 Octobre 2025</span>
-              <span className="text-xs text-gray-500">Palais des Congrès de Madiana</span>
+              <span className="text-base font-semibold block">1er Octobre 2026</span>
+              <span className="text-sm text-gray-500">Palais des Congrès de Madiana</span>
             </div>
           </div>
 
@@ -143,7 +143,7 @@ export default function Header() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="flex items-center text-gray-700 hover:text-primary hover:bg-primary/5 font-medium py-3 px-4 rounded-xl transition-all active:scale-[0.98]"
+                className="flex items-center text-gray-700 hover:text-primary hover:bg-primary/5 font-medium text-lg py-3.5 px-4 rounded-xl transition-all active:scale-[0.98]"
                 onClick={() => setIsMenuOpen(false)}
               >
                 {link.label}

@@ -2,7 +2,7 @@
 
 ## Description du projet
 
-Site vitrine moderne pour le **Salon des CSE & COS de Martinique** - 32ème édition.
+Site vitrine moderne pour le **Salon des CSE & COS de Martinique** - 33ème édition.
 Salon professionnel B2B dédié aux Comités Sociaux et Économiques (CSE) et Comités d'Œuvres Sociales (COS).
 
 ---
@@ -12,9 +12,9 @@ Salon professionnel B2B dédié aux Comités Sociaux et Économiques (CSE) et Co
 | Élément | Détail |
 |---------|--------|
 | **Nom** | Salon des CSE & COS de Martinique |
-| **Édition** | 32ème édition |
-| **Date** | Jeudi 2 Octobre 2025 |
-| **Horaires** | 8h00 - 19h00 |
+| **Édition** | 33ème édition |
+| **Date** | Jeudi 1er Octobre 2026 |
+| **Horaires** | 8h00 - 16h00 |
 | **Lieu** | Palais des Congrès de Madiana, Schœlcher |
 | **Entrée** | Gratuite sur inscription |
 
@@ -52,10 +52,12 @@ Salon professionnel B2B dédié aux Comités Sociaux et Économiques (CSE) et Co
 
 | Page | Route | Description |
 |------|-------|-------------|
-| Accueil | `/` | Hero vidéo, infos clés, secteurs, chiffres |
+| Accueil | `/` | Hero vidéo avec logo, infos clés, secteurs, chiffres |
 | Visiter | `/visiter` | Contenu détaillé visiteurs + formulaire inscription |
-| Exposer | `/exposer` | Contenu détaillé exposants + formulaire pré-inscription |
-| Contact | `/contact` | Formulaire contact + localisation |
+| Exposer | `/exposer` | Formulaire pré-inscription en avant + contenu détaillé exposants |
+| Contact | `/contact` | Formulaire contact + FAQ + localisation |
+| Mentions légales | `/mentions-legales` | Informations légales (éditeur, hébergeur, propriété intellectuelle) |
+| Politique de confidentialité | `/politique-de-confidentialite` | RGPD, données collectées, cookies, droits |
 | 404 | `*` | Page d'erreur personnalisée |
 
 ---
@@ -64,7 +66,7 @@ Salon professionnel B2B dédié aux Comités Sociaux et Économiques (CSE) et Co
 
 ### Page Visiter (`/visiter`)
 Sections détaillées :
-- **Découvrez le rendez-vous incontournable** - Introduction au salon (32 ans d'existence)
+- **Découvrez le rendez-vous incontournable** - Introduction au salon (33 ans d'existence)
 - **Un événement conçu pour vous** - Date, lieu, +60 exposants
 - **Faites-vous conseiller** - Comparer les offres, négocier directement
 - **Les exposants que vous rencontrerez** - 15 secteurs d'activité listés
@@ -78,7 +80,7 @@ Sections détaillées :
 - **Développez votre activité** - Introduction B2B
 - **Une opportunité commerciale unique** - +700 visiteurs qualifiés
 - **Qui sont les visiteurs ?** - Décideurs CSE/COS, budgets ASC
-- **Les chiffres clés du salon** - 32 ans, +60 exposants, ~700 visiteurs, ~200 CSE
+- **Les chiffres clés du salon** - 33 ans, +60 exposants, ~700 visiteurs, ~200 CSE
 - **Les secteurs les plus recherchés** - 12 catégories de services
 - **Visibilité médiatique** - RCI, presse locale, réseaux sociaux
 - **Contact direct avec les décideurs** - Avantage du face-à-face

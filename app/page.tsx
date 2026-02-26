@@ -65,38 +65,41 @@ export default function HomePage() {
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             {/* Left Content */}
             <div className="text-white text-center lg:text-left">
-              <span className="badge mb-4 sm:mb-6">
-                32ème Édition
-              </span>
-              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 leading-tight">
-                <span className="block whitespace-nowrap">Salon des CSE &amp; COS</span>
-                <span className="text-accent block">Martinique</span>
+              <h1 className="mb-4 sm:mb-6">
+                <Image
+                  src="/images/logo-scse-mq-blanc.png"
+                  alt="Salon des CSE & COS de Martinique"
+                  width={1000}
+                  height={600}
+                  priority
+                  className="w-full max-w-[320px] sm:max-w-[400px] md:max-w-[460px] lg:max-w-[520px] h-auto mx-auto lg:mx-0 drop-shadow-lg"
+                />
               </h1>
-              <p className="text-base sm:text-lg lg:text-xl text-gray-200 mb-6 sm:mb-8 max-w-lg mx-auto lg:mx-0">
+              <p className="text-lg sm:text-xl lg:text-2xl text-gray-200 mb-6 sm:mb-8 max-w-lg mx-auto lg:mx-0 leading-relaxed">
                 Le rendez-vous annuel des responsables de Comités Sociaux et Économiques
                 et Comités d&apos;Œuvres Sociales en Martinique.
               </p>
 
               {/* Event Info - Mobile optimized */}
               <div className="flex flex-col xs:flex-row gap-3 sm:gap-4 mb-6 sm:mb-8 justify-center lg:justify-start">
-                <div className="flex items-center gap-3 bg-white/10 backdrop-blur-sm px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl">
-                  <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-lg bg-accent/20 flex items-center justify-center flex-shrink-0">
+                <div className="flex items-center gap-3 bg-white/10 backdrop-blur-sm px-4 py-3 sm:px-4 sm:py-3 rounded-xl">
+                  <div className="w-11 h-11 sm:w-11 sm:h-11 rounded-lg bg-accent/20 flex items-center justify-center flex-shrink-0">
                     <Calendar className="w-5 h-5 sm:w-6 sm:h-6 text-accent" />
                   </div>
                   <div className="text-left">
-                    <p className="font-semibold text-sm sm:text-base">Jeudi 2 Octobre 2025</p>
-                    <p className="text-xs sm:text-sm text-gray-300 flex items-center gap-1">
-                      <Clock className="w-3 h-3" /> 8h00 - 19h00
+                    <p className="font-semibold text-base sm:text-base">Jeudi 1er Octobre 2026</p>
+                    <p className="text-sm sm:text-sm text-gray-300 flex items-center gap-1">
+                      <Clock className="w-3.5 h-3.5" /> 8h00 - 16h00
                     </p>
                   </div>
                 </div>
-                <div className="flex items-center gap-3 bg-white/10 backdrop-blur-sm px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl">
-                  <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-lg bg-accent/20 flex items-center justify-center flex-shrink-0">
+                <div className="flex items-center gap-3 bg-white/10 backdrop-blur-sm px-4 py-3 sm:px-4 sm:py-3 rounded-xl">
+                  <div className="w-11 h-11 sm:w-11 sm:h-11 rounded-lg bg-accent/20 flex items-center justify-center flex-shrink-0">
                     <MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-accent" />
                   </div>
                   <div className="text-left">
-                    <p className="font-semibold text-sm sm:text-base">Palais des Congrès</p>
-                    <p className="text-xs sm:text-sm text-gray-300">Madiana, Schœlcher</p>
+                    <p className="font-semibold text-base sm:text-base">Palais des Congrès</p>
+                    <p className="text-sm sm:text-sm text-gray-300">Madiana, Schœlcher</p>
                   </div>
                 </div>
               </div>
@@ -161,8 +164,8 @@ export default function HomePage() {
                 <div className="w-11 h-11 sm:w-12 sm:h-12 md:w-14 md:h-14 bg-gradient-to-br from-primary/10 to-primary/5 rounded-xl flex items-center justify-center mx-auto mb-2 sm:mb-3 group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
                   <sector.icon className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-primary group-hover:text-white transition-colors" />
                 </div>
-                <h3 className="font-bold text-gray-800 text-sm sm:text-base">{sector.name}</h3>
-                <p className="text-gray-500 text-xs mt-0.5 hidden sm:block">{sector.desc}</p>
+                <h3 className="font-bold text-gray-800 text-base sm:text-base">{sector.name}</h3>
+                <p className="text-gray-500 text-sm mt-0.5">{sector.desc}</p>
               </div>
             ))}
           </div>
@@ -293,8 +296,8 @@ export default function HomePage() {
                 <div className="flex items-start gap-3 p-3 bg-gray-50 rounded-xl">
                   <Calendar className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
                   <div>
-                    <p className="font-semibold text-sm sm:text-base">Jeudi 2 Octobre 2025</p>
-                    <p className="text-gray-600 text-sm">De 8h00 à 19h00</p>
+                    <p className="font-semibold text-sm sm:text-base">Jeudi 1er Octobre 2026</p>
+                    <p className="text-gray-600 text-sm">De 8h00 à 16h00</p>
                   </div>
                 </div>
               </div>
