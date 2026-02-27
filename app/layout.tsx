@@ -23,15 +23,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/',
   },
-  icons: {
-    icon: [
-      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
-      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
-    ],
-    apple: [
-      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
-    ],
-  },
+  icons: null,
   openGraph: {
     title: 'Salon des CSE & COS de Martinique 2026 | 33ème Édition',
     description: 'Le rendez-vous annuel des responsables CSE & COS en Martinique. Jeudi 1er Octobre 2026 au Palais des Congrès de Madiana.',
@@ -126,6 +118,13 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <head>
+        {/* Force favicon */}
+        <link rel="icon" href="/favicon.ico?v=3" sizes="32x32" />
+        <link rel="icon" href="/favicon.svg?v=3" type="image/svg+xml" />
+        <link rel="icon" href="/favicon-32x32.png?v=3" sizes="32x32" type="image/png" />
+        <link rel="shortcut icon" href="/favicon.ico?v=3" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3" sizes="180x180" />
+
         {/* Preconnect to YouTube for faster video load */}
         <link rel="preconnect" href="https://www.youtube.com" />
         <link rel="preconnect" href="https://i.ytimg.com" />
