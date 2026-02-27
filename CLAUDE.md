@@ -289,6 +289,7 @@ salon-cse-martinique/
 ├── components/
 │   ├── Header.tsx
 │   ├── Footer.tsx
+│   ├── PhotoCarousel.tsx      # Carrousel horizontal photos galerie
 │   └── forms/
 │       ├── VisitorForm.tsx    # + honeypot + aria
 │       ├── ExhibitorForm.tsx  # + honeypot + aria
@@ -307,6 +308,8 @@ salon-cse-martinique/
 │   │   ├── favicon-16x16.png
 │   │   ├── favicon-32x32.png
 │   │   └── apple-touch-icon.png
+│   ├── images/galerie/
+│   │   ├── salon-1.jpg … salon-5.jpg  # Photos éditions précédentes
 │   └── videos/
 │       └── hero-background.mp4   # 20 Mo (optimisé CRF 23)
 ├── CLAUDE.md
@@ -356,6 +359,7 @@ salon-cse-martinique/
 | 31 | Correction dates sitemap (2026-02-01) | ✅ Fait |
 | 32 | Protection anti-spam Turnstile | ✅ Fait |
 | 33 | Configuration domaine personnalisé | ✅ Fait |
+| 34 | Carrousel photo galerie (accueil) | ✅ Fait |
 
 ---
 

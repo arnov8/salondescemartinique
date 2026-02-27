@@ -2,6 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Calendar, MapPin, Users, Store, Briefcase, Gift, Plane, GraduationCap, ArrowRight, CheckCircle, Award, Clock, Building2, PartyPopper, CreditCard } from 'lucide-react'
 import YouTubeBackground from '@/components/YouTubeBackground'
+import PhotoCarousel from '@/components/PhotoCarousel'
 
 const stats = [
   { icon: Store, value: '+60', label: 'Exposants' },
@@ -265,6 +266,9 @@ export default function HomePage() {
           </Link>
         </div>
       </section>
+
+      {/* Photo Carousel */}
+      <PhotoCarousel />
 
       {/* Location Section */}
       <section className="py-12 sm:py-16 lg:py-20 bg-gray-50">
