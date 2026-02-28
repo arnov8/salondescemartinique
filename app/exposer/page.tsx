@@ -66,7 +66,7 @@ export default function ExposerPage() {
               Exposer
             </h1>
             <p className="text-base sm:text-lg lg:text-xl text-gray-200">
-              Rejoignez les +60 exposants et présentez vos produits et services
+              Rejoignez les 70 exposants et présentez vos produits et services
               aux décideurs CSE &amp; COS de Martinique.
             </p>
           </div>
@@ -211,7 +211,7 @@ export default function ExposerPage() {
                 <p className="text-gray-300 text-sm sm:text-base">années d&apos;existence</p>
               </div>
               <div className="text-center">
-                <div className="text-3xl sm:text-4xl lg:text-5xl font-bold text-accent mb-2">+60</div>
+                <div className="text-3xl sm:text-4xl lg:text-5xl font-bold text-accent mb-2">70</div>
                 <p className="text-gray-300 text-sm sm:text-base">exposants partenaires</p>
               </div>
               <div className="text-center">

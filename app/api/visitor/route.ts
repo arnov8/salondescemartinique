@@ -155,7 +155,7 @@ export async function POST(request: Request) {
       await resend.emails.send({
         from: FROM_EMAIL,
         to: validData.email,
-        subject: 'Inscription confirmée - Salon des CSE Martinique',
+        subject: 'Demande d\'inscription reçue - Salon des CSE Martinique',
         html: `
           <!DOCTYPE html>
           <html>
@@ -193,8 +193,8 @@ export async function POST(request: Request) {
                   <svg fill="white" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
                 </div>
 
-                <h2 style="text-align: center; color: #1a1a1a; margin: 0 0 10px;">Inscription enregistrée !</h2>
-                <p style="text-align: center; color: #666; margin: 0 0 25px;">Bonjour <strong>${validData.fullName}</strong>, nous avons bien reçu votre demande d'inscription.</p>
+                <h2 style="text-align: center; color: #1a1a1a; margin: 0 0 10px;">Demande d'inscription transmise !</h2>
+                <p style="text-align: center; color: #666; margin: 0 0 25px;">Bonjour <strong>${validData.fullName}</strong>, votre demande d'inscription a bien été transmise à notre équipe organisatrice.</p>
 
                 <div class="recap">
                   <div class="recap-title">Récapitulatif de votre inscription</div>
@@ -217,11 +217,11 @@ export async function POST(request: Request) {
                 </div>
 
                 <div class="info-box">
-                  <p><strong>📬 Restez connecté !</strong></p>
-                  <p style="margin-top: 8px; font-size: 14px;">Vous recevrez prochainement par email toutes les informations pratiques concernant l'événement : date, lieu, programme et modalités d'accès.</p>
+                  <p><strong>📬 Prochaine étape</strong></p>
+                  <p style="margin-top: 8px; font-size: 14px;">L'équipe organisatrice du Salon va vérifier votre inscription et reviendra vers vous dès que possible pour vous confirmer votre participation.</p>
                 </div>
 
-                <p style="margin-top: 30px;">Nous vous remercions pour votre intérêt et avons hâte de vous accueillir !</p>
+                <p style="margin-top: 30px;">Nous vous remercions pour votre intérêt et restons à votre disposition pour toute question.</p>
 
                 <p style="margin-top: 25px;">
                   À très bientôt,<br>

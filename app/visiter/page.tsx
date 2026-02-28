@@ -155,7 +155,7 @@ export default function VisiterPage() {
                 mais l&apos;inscription est obligatoire et réservée exclusivement aux membres de CSE et COS.
               </p>
               <p className="text-gray-600 leading-relaxed">
-                Cette journée unique vous permettra de rencontrer <strong>plus de 60 exposants</strong> soigneusement
+                Cette journée unique vous permettra de rencontrer <strong>70 exposants</strong> soigneusement
                 sélectionnés, représentant l&apos;ensemble des secteurs d&apos;activité utiles à vos missions :
                 voyages, loisirs, billetterie, chèques cadeaux, formation, assurance, bien-être, et bien d&apos;autres encore.
               </p>

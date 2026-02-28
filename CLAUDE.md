@@ -41,7 +41,7 @@ Salon professionnel B2B dédié aux Comités Sociaux et Économiques (CSE) et Co
 
 ## Chiffres clés
 
-- **+60** exposants prestataires/fournisseurs
+- **70** exposants prestataires/fournisseurs
 - **~700** visiteurs (responsables CSE/COS)
 - **~200** CSE/COS représentés
 - **32** années d'existence
@@ -67,7 +67,7 @@ Salon professionnel B2B dédié aux Comités Sociaux et Économiques (CSE) et Co
 ### Page Visiter (`/visiter`)
 Sections détaillées :
 - **Découvrez le rendez-vous incontournable** - Introduction au salon (33 ans d'existence)
-- **Un événement conçu pour vous** - Date, lieu, +60 exposants
+- **Un événement conçu pour vous** - Date, lieu, 70 exposants
 - **Faites-vous conseiller** - Comparer les offres, négocier directement
 - **Les exposants que vous rencontrerez** - 15 secteurs d'activité listés
 - **La Conférence CSE/COS** - Expert en droit du travail
@@ -80,7 +80,7 @@ Sections détaillées :
 - **Développez votre activité** - Introduction B2B
 - **Une opportunité commerciale unique** - +700 visiteurs qualifiés
 - **Qui sont les visiteurs ?** - Décideurs CSE/COS, budgets ASC
-- **Les chiffres clés du salon** - 33 ans, +60 exposants, ~700 visiteurs, ~200 CSE
+- **Les chiffres clés du salon** - 33 ans, 70 exposants, ~700 visiteurs, ~200 CSE
 - **Les secteurs les plus recherchés** - 12 catégories de services
 - **Visibilité médiatique** - RCI, presse locale, réseaux sociaux
 - **Contact direct avec les décideurs** - Avantage du face-à-face
