@@ -76,7 +76,7 @@ export default function PhotoCarousel() {
                   fill
                   className="object-cover pointer-events-none"
                   sizes="(max-width: 640px) 45vw, (max-width: 768px) 30vw, 23vw"
-                  priority={index < 4}
+                  priority={index === 0}
                   draggable={false}
                 />
               </div>

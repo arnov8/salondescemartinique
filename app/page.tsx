@@ -7,7 +7,7 @@ import PhotoCarousel from '@/components/PhotoCarousel'
 const stats = [
   { icon: Store, value: '70', label: 'Exposants' },
   { icon: Users, value: '+700', label: 'Visiteurs' },
-  { icon: Award, value: '32ème', label: 'Édition' },
+  { icon: Award, value: '33ème', label: 'Édition' },
 ]
 
 const sectors = [
