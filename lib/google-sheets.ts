@@ -4,6 +4,7 @@ export const SHEET_TABS = {
   CONTACT: 'Contact',
   EXPOSANTS: 'Exposants',
   VISITEURS: 'Visiteurs',
+  INSCRIPTIONS: 'Inscriptions',
 } as const
 
 type SheetTab = (typeof SHEET_TABS)[keyof typeof SHEET_TABS]

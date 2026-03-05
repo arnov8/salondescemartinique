@@ -121,6 +121,15 @@ body {
     @apply flex items-center gap-3 sm:flex-col sm:text-center bg-white/10 backdrop-blur-md
            rounded-xl p-3 sm:p-4 md:p-6 border border-white/20;
   }
+
+  /* A4 page container */
+  .a4-page {
+    width: 210mm;
+    min-height: 297mm;
+    max-height: 297mm;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
 }
 
 /* Custom scrollbar */
@@ -192,3 +201,50 @@ body {
 .stagger-2 { animation-delay: 0.2s; }
 .stagger-3 { animation-delay: 0.3s; }
 .stagger-4 { animation-delay: 0.4s; }
+
+/* Responsive: shrink A4 on small screens */
+@media (max-width: 850px) {
+  .a4-page {
+    width: 100%;
+    min-height: auto;
+    max-height: none;
+  }
+}
+
+/* --- Print styles for inscription page --- */
+@media print {
+  header, footer, .no-print {
+    display: none !important;
+  }
+
+  body {
+    background: white !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .a4-page {
+    width: 100%;
+    max-height: none;
+    min-height: auto;
+    box-shadow: none !important;
+    border: none !important;
+    margin: 0 !important;
+  }
+
+  .page-break-before {
+    page-break-before: always;
+    break-before: page;
+    margin-top: 0 !important;
+  }
+
+  input[type="checkbox"], canvas {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  @page {
+    margin: 0;
+    size: A4;
+  }
+}
