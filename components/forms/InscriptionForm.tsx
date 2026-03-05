@@ -136,9 +136,9 @@ export default function InscriptionForm() {
     )
   }
 
-  const inp = "w-full bg-gray-50 border border-gray-300 rounded px-2 py-[3px] text-[10px] text-gray-900 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary placeholder:text-gray-400"
-  const errS = "text-red-500 text-[8px]"
-  const lbl = "text-[9px] font-bold text-gray-700 w-[110px] shrink-0"
+  // Mobile-friendly + print-compact inputs
+  const inp = "w-full bg-gray-50 border border-gray-300 rounded px-3 py-2.5 sm:px-2 sm:py-[3px] text-sm sm:text-[10px] text-gray-900 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary placeholder:text-gray-400"
+  const errS = "text-red-500 text-xs sm:text-[8px]"
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -148,43 +148,43 @@ export default function InscriptionForm() {
 
         {/* ==================== PAGE 1 : CONTRAT ==================== */}
         <div className={PAGE}>
-          <div className="p-[12mm]">
+          <div className="a4-inner p-5 sm:px-[9mm] sm:py-[5mm]">
 
             {/* En-tête avec vrai logo */}
-            <div className="flex items-start justify-between mb-3 border-b-2 border-primary pb-3">
+            <div className="flex flex-col sm:flex-row items-center sm:items-start sm:justify-between gap-3 sm:gap-0 mb-4 sm:mb-1.5 border-b-2 border-primary pb-3 sm:pb-1.5">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/images/logo-scse-mq-bleu.png" alt="Le Salon des CSE & COS de Martinique" className="h-[55px] w-auto" />
-              <div className="text-right">
-                <h1 className="text-[18px] font-black text-primary leading-tight tracking-tight">CONTRAT DE PARTICIPATION</h1>
-                <p className="text-[11px] text-gray-700 font-semibold mt-0.5">Salon des CSE &amp; COS de Martinique 2026</p>
-                <p className="text-[10px] text-gray-500">Jeudi 1er Octobre 2026 &middot; Madiana Schœlcher</p>
+              <img src="/images/logo-scse-mq-bleu.png" alt="Le Salon des CSE & COS de Martinique" className="h-[45px] sm:h-[45px] w-auto" />
+              <div className="text-center sm:text-right">
+                <h1 className="text-base sm:text-[18px] font-black text-primary leading-tight tracking-tight">CONTRAT DE PARTICIPATION</h1>
+                <p className="text-xs sm:text-[11px] text-gray-700 font-semibold mt-0.5">Salon des CSE &amp; COS de Martinique 2026</p>
+                <p className="text-[11px] sm:text-[10px] text-gray-500">Jeudi 1er Octobre 2026 &middot; Madiana Schœlcher</p>
               </div>
             </div>
 
             {/* Champs entreprise */}
-            <div className="space-y-[5px] mb-2">
-              <Field label="L'Entreprise" lbl={lbl} inp={inp} reg={register('entreprise')} ph="Nom de votre entreprise" err={errors.entreprise?.message} errS={errS} />
-              <Field label="N°SIRET (obligatoire)*" lbl={lbl} inp={inp} reg={register('siret')} ph="14 chiffres" err={errors.siret?.message} errS={errS} max={14} />
-              <Field label="Adresse" lbl={lbl} inp={inp} reg={register('adresse')} ph="Adresse complète" err={errors.adresse?.message} errS={errS} />
-              <Field label="Représentée par" lbl={lbl} inp={inp} reg={register('representant')} ph="Nom et prénom" err={errors.representant?.message} errS={errS} />
+            <div className="space-y-3 sm:space-y-[4px] mb-4 sm:mb-1">
+              <MobileField label="L'Entreprise" inp={inp} reg={register('entreprise')} ph="Nom de votre entreprise" err={errors.entreprise?.message} errS={errS} />
+              <MobileField label="N°SIRET (obligatoire)*" inp={inp} reg={register('siret')} ph="14 chiffres" err={errors.siret?.message} errS={errS} max={14} />
+              <MobileField label="Adresse" inp={inp} reg={register('adresse')} ph="Adresse complète" err={errors.adresse?.message} errS={errS} />
+              <MobileField label="Représentée par" inp={inp} reg={register('representant')} ph="Nom et prénom" err={errors.representant?.message} errS={errS} />
 
-              <div className="grid grid-cols-2 gap-2">
-                <Field label="Tel Bureau" lbl={lbl} inp={inp} reg={register('telBureau')} ph="0596 XX XX XX" err={errors.telBureau?.message} errS={errS} />
-                <Field label="Tel Portable" lbl="text-[9px] font-bold text-gray-700 w-[80px] shrink-0" inp={inp} reg={register('telPortable')} ph="0696 XX XX XX" err={errors.telPortable?.message} errS={errS} />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-2 print-grid-2">
+                <MobileField label="Tel Bureau" inp={inp} reg={register('telBureau')} ph="0596 XX XX XX" err={errors.telBureau?.message} errS={errS} type="tel" />
+                <MobileField label="Tel Portable" inp={inp} reg={register('telPortable')} ph="0696 XX XX XX" err={errors.telPortable?.message} errS={errS} type="tel" />
               </div>
-              <div className="grid grid-cols-2 gap-2">
-                <Field label="Email" lbl={lbl} inp={inp} reg={register('email')} ph="email@exemple.com" err={errors.email?.message} errS={errS} type="email" />
-                <Field label="Page Facebook" lbl="text-[9px] font-bold text-gray-700 w-[80px] shrink-0" inp={inp} reg={register('facebook')} ph="(optionnel)" errS={errS} />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-2 print-grid-2">
+                <MobileField label="Email" inp={inp} reg={register('email')} ph="email@exemple.com" err={errors.email?.message} errS={errS} type="email" />
+                <MobileField label="Page Facebook" inp={inp} reg={register('facebook')} ph="(optionnel)" errS={errS} />
               </div>
-              <div className="grid grid-cols-2 gap-2">
-                <Field label="Site web" lbl={lbl} inp={inp} reg={register('siteWeb')} ph="(optionnel)" errS={errS} />
-                <Field label="Page Instagram" lbl="text-[9px] font-bold text-gray-700 w-[80px] shrink-0" inp={inp} reg={register('instagram')} ph="(optionnel)" errS={errS} />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-2 print-grid-2">
+                <MobileField label="Site web" inp={inp} reg={register('siteWeb')} ph="(optionnel)" errS={errS} />
+                <MobileField label="Page Instagram" inp={inp} reg={register('instagram')} ph="(optionnel)" errS={errS} />
               </div>
-              <Field label="Produits/services" lbl={lbl} inp={inp} reg={register('produits')} ph="Décrivez vos produits ou services" err={errors.produits?.message} errS={errS} />
+              <MobileField label="Produits/services" inp={inp} reg={register('produits')} ph="Décrivez vos produits ou services" err={errors.produits?.message} errS={errS} />
             </div>
 
             {/* Clauses */}
-            <div className="text-[8px] leading-snug text-gray-500 mb-2 space-y-[1px]">
+            <div className="text-xs sm:text-[7.5px] leading-snug text-gray-500 mb-3 sm:mb-1 space-y-1 sm:space-y-0 print-text-compact">
               <p>1. Nous confirmons par la présente notre participation au Salon des CSE &amp; COS de Martinique 2026.</p>
               <p>2. Nous confirmons avoir pris connaissance des conditions générales et acceptons les termes sans réserve.</p>
               <p>3. Nous nous engageons à remettre à ANTILLES SALONS tous règlements et documents nécessaires.</p>
@@ -192,26 +192,26 @@ export default function InscriptionForm() {
             </div>
 
             {/* TABLEAU TARIFS */}
-            <table className="w-full border-collapse border border-gray-400 text-[8px] mb-2">
+            <table className="w-full border-collapse border border-gray-400 text-xs sm:text-[8px] mb-3 sm:mb-1">
               <thead>
                 <tr className="bg-gray-100">
-                  <th className="border border-gray-400 px-1.5 py-1 text-left text-[8px] font-bold"></th>
-                  <th className="border border-gray-400 px-1 py-1 text-center text-[8px] font-bold w-[75px]">TARIF</th>
-                  <th className="border border-gray-400 px-1 py-1 text-center text-[8px] font-bold w-[40px]">CHOIX</th>
+                  <th className="border border-gray-400 px-2 sm:px-1.5 py-2 sm:py-1 text-left font-bold"></th>
+                  <th className="border border-gray-400 px-2 sm:px-1 py-2 sm:py-1 text-center font-bold w-[90px] sm:w-[75px]">TARIF</th>
+                  <th className="border border-gray-400 px-2 sm:px-1 py-2 sm:py-1 text-center font-bold w-[50px] sm:w-[40px]">CHOIX</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td className="border border-gray-400 px-1.5 py-1">
-                    <span className="font-bold text-[9px]">LOCATION EMPLACEMENT + ELECTRICITE (SANS CLOISON)</span><br />
+                  <td className="border border-gray-400 px-2 sm:px-1.5 py-2 sm:py-1">
+                    <span className="font-bold text-sm sm:text-[9px]">LOCATION EMPLACEMENT + ELECTRICITE (SANS CLOISON)</span><br />
                     <span className="text-gray-500">Espace de 5m², livré avec 1 table et 4 chaises avec accès électrique</span>
                   </td>
-                  <td className="border border-gray-400 px-1 py-1 text-center font-bold text-[9px]">905,00€ HT</td>
-                  <td className="border border-gray-400 px-1 py-1 text-center"><input type="checkbox" {...register('emplacement')} checked disabled className="w-3.5 h-3.5 accent-primary" /></td>
+                  <td className="border border-gray-400 px-2 sm:px-1 py-2 sm:py-1 text-center font-bold text-sm sm:text-[9px]">905,00€ HT</td>
+                  <td className="border border-gray-400 px-2 sm:px-1 py-2 sm:py-1 text-center"><input type="checkbox" {...register('emplacement')} checked disabled className="w-5 h-5 sm:w-3.5 sm:h-3.5 accent-primary" /></td>
                 </tr>
                 <tr className="bg-amber-50">
-                  <td className="border border-gray-400 px-1.5 py-1" colSpan={3}>
-                    <span className="font-bold text-[9px]">CADEAU DE TOMBOLA* <span className="text-red-600">(OBLIGATOIRE)</span></span><br />
+                  <td className="border border-gray-400 px-2 sm:px-1.5 py-2 sm:py-1" colSpan={3}>
+                    <span className="font-bold text-sm sm:text-[9px]">CADEAU DE TOMBOLA* <span className="text-red-600">(OBLIGATOIRE)</span></span><br />
                     <span className="text-gray-500">Cadeau pour la Tombola des Comités (valeur mini 120€) :</span>
                     <input {...register('cadeauTombola')} className={inp + " !bg-white mt-1"} placeholder="Décrivez le cadeau..." />
                     {errors.cadeauTombola && <span className={errS}> {errors.cadeauTombola.message}</span>}
@@ -226,37 +226,37 @@ export default function InscriptionForm() {
             </table>
 
             {/* Totaux + Paiement */}
-            <div className="grid grid-cols-2 gap-2 mb-2">
-              <div className="text-[8px] text-gray-700 border border-gray-400 rounded p-2 space-y-[1px]">
-                <p className="font-bold text-[9px]">Modalité de paiement : 2 virements</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-1.5 mb-3 sm:mb-1.5 print-grid-2">
+              <div className="text-xs sm:text-[8px] text-gray-700 border border-gray-400 rounded p-3 sm:p-1.5 space-y-1 sm:space-y-0">
+                <p className="font-bold text-sm sm:text-[9px]">Modalité de paiement : 2 virements</p>
                 <p>– 1<sup>er</sup> virement à la réservation</p>
                 <p>– 2<sup>e</sup> virement au <u>15 septembre 2026</u></p>
-                <p className="mt-1 font-bold text-[9px]"><u>Clôture des inscriptions : 1er juillet 2026</u></p>
+                <p className="mt-1 font-bold text-sm sm:text-[9px]"><u>Clôture des inscriptions : 1er juillet 2026</u></p>
                 <p className="mt-1">5. Nous émettons 1 virement de 50% d&apos;acompte.</p>
               </div>
-              <table className="border-collapse border border-gray-400 text-[9px] h-fit">
+              <table className="border-collapse border border-gray-400 text-sm sm:text-[9px] h-fit">
                 <tbody>
-                  <tr><td className="border border-gray-400 px-2 py-1.5 font-semibold text-gray-600">Total HT</td><td className="border border-gray-400 px-2 py-1.5 text-right font-bold">{fmt(totals.totalHT)}€</td></tr>
-                  <tr><td className="border border-gray-400 px-2 py-1.5 font-semibold text-gray-600">TVA 8,5%</td><td className="border border-gray-400 px-2 py-1.5 text-right font-bold">{fmt(totals.tva)}€</td></tr>
-                  <tr className="bg-primary/5"><td className="border border-gray-400 px-2 py-1.5 font-bold text-primary">Total TTC</td><td className="border border-gray-400 px-2 py-1.5 text-right font-black text-primary text-[11px]">{fmt(totals.totalTTC)}€</td></tr>
+                  <tr><td className="border border-gray-400 px-3 sm:px-2 py-2 sm:py-1.5 font-semibold text-gray-600">Total HT</td><td className="border border-gray-400 px-3 sm:px-2 py-2 sm:py-1.5 text-right font-bold">{fmt(totals.totalHT)}€</td></tr>
+                  <tr><td className="border border-gray-400 px-3 sm:px-2 py-2 sm:py-1.5 font-semibold text-gray-600">TVA 8,5%</td><td className="border border-gray-400 px-3 sm:px-2 py-2 sm:py-1.5 text-right font-bold">{fmt(totals.tva)}€</td></tr>
+                  <tr className="bg-primary/5"><td className="border border-gray-400 px-3 sm:px-2 py-2 sm:py-1.5 font-bold text-primary">Total TTC</td><td className="border border-gray-400 px-3 sm:px-2 py-2 sm:py-1.5 text-right font-black text-primary text-base sm:text-[11px]">{fmt(totals.totalTTC)}€</td></tr>
                 </tbody>
               </table>
             </div>
 
             {/* Date + Signature */}
-            <div className="grid grid-cols-2 gap-2">
-              <div className="text-[9px] text-gray-600 self-end">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-1.5 print-grid-2">
+              <div className="text-sm sm:text-[9px] text-gray-600 self-end">
                 <p>Fait le {new Date().toLocaleDateString('fr-FR')} à Fort-de-France</p>
               </div>
-              <div className="border border-gray-400 rounded p-2">
-                <p className="text-[8px] font-bold text-gray-600">CACHET, SIGNATURE &amp; NOM DU RESPONSABLE</p>
-                <p className="text-[7px] text-gray-400 italic mb-1">+ En mention manuscrite « lu et approuvé »</p>
+              <div className="border border-gray-400 rounded p-3 sm:p-2">
+                <p className="text-xs sm:text-[8px] font-bold text-gray-600">CACHET, SIGNATURE &amp; NOM DU RESPONSABLE</p>
+                <p className="text-[11px] sm:text-[7px] text-gray-400 italic mb-1">+ En mention manuscrite « lu et approuvé »</p>
                 <SignaturePad onSignatureChange={(sig) => { setSignature(sig); setSignatureAlert(null) }} label="Votre signature" />
               </div>
             </div>
 
             {/* Pied de page */}
-            <div className="mt-2 pt-1 border-t border-gray-200 text-center text-[6.5px] text-gray-400 leading-snug">
+            <div className="mt-3 sm:mt-2 pt-1 border-t border-gray-200 text-center text-[6.5px] text-gray-400 leading-snug">
               {FOOTER}
             </div>
 
@@ -266,9 +266,9 @@ export default function InscriptionForm() {
 
         {/* ==================== PAGE 2 : CGV (partie 1) ==================== */}
         <div className={PAGE + " page-break-before mt-6"}>
-          <div className="p-[12mm]">
+          <div className="a4-inner p-5 sm:p-[12mm]">
             <CGVPage1 />
-            <div className="mt-2 pt-1 border-t border-gray-200 text-center text-[6.5px] text-gray-400 leading-snug">
+            <div className="mt-3 sm:mt-2 pt-1 border-t border-gray-200 text-center text-[6.5px] text-gray-400 leading-snug">
               {FOOTER}
             </div>
           </div>
@@ -277,25 +277,25 @@ export default function InscriptionForm() {
 
         {/* ==================== PAGE 3 : CGV (partie 2) + signatures ==================== */}
         <div className={PAGE + " page-break-before mt-6"}>
-          <div className="p-[12mm]">
+          <div className="a4-inner p-5 sm:p-[12mm]">
             <CGVPage2 />
 
             {/* Acceptation + Signature CGV */}
-            <div className="mt-4 pt-3 border-t-2 border-primary">
-              <div className="flex items-start gap-2 mb-3">
-                <input type="checkbox" {...register('luEtApprouve')} id="luEtApprouve" className="w-4 h-4 mt-0.5 accent-primary shrink-0" />
-                <label htmlFor="luEtApprouve" className="text-[10px] text-gray-700 cursor-pointer leading-snug">
+            <div className="mt-5 sm:mt-4 pt-3 border-t-2 border-primary">
+              <div className="flex items-start gap-3 sm:gap-2 mb-3">
+                <input type="checkbox" {...register('luEtApprouve')} id="luEtApprouve" className="w-5 h-5 sm:w-4 sm:h-4 mt-0.5 accent-primary shrink-0" />
+                <label htmlFor="luEtApprouve" className="text-sm sm:text-[10px] text-gray-700 cursor-pointer leading-snug">
                   <strong>Lu et approuvé.</strong> Je confirme avoir pris connaissance des conditions générales de vente et de participation au Salon des CSE &amp; COS de Martinique 2026 et en accepte les termes sans réserve.
                 </label>
               </div>
               {errors.luEtApprouve && <p className={errS}>{errors.luEtApprouve.message}</p>}
 
-              <div className="max-w-[220px]">
+              <div className="sm:max-w-[220px]">
                 <SignaturePad onSignatureChange={(sig) => { setSignatureCGV(sig); setSignatureAlert(null) }} label="Signature CGV (lu et approuvé)" />
               </div>
             </div>
 
-            <div className="mt-2 pt-1 border-t border-gray-200 text-center text-[6.5px] text-gray-400 leading-snug">
+            <div className="mt-3 sm:mt-2 pt-1 border-t border-gray-200 text-center text-[6.5px] text-gray-400 leading-snug">
               {FOOTER}
             </div>
           </div>
@@ -305,7 +305,7 @@ export default function InscriptionForm() {
       </div>
 
       {/* Boutons d'action */}
-      <div className="max-w-[210mm] mx-auto mt-6 no-print">
+      <div className="max-w-[210mm] mx-auto mt-6 px-4 sm:px-0 no-print">
         {signatureAlert && (
           <div className="flex items-center gap-2 bg-amber-50 border border-amber-300 rounded-xl p-3 mb-3 animate-fade-up">
             <AlertCircle className="w-5 h-5 text-amber-600 shrink-0" />
@@ -326,7 +326,7 @@ export default function InscriptionForm() {
             {isSubmitting ? <><Loader2 className="w-4 h-4 animate-spin" /> Envoi en cours...</> : <><Send className="w-4 h-4" /> Signer et envoyer mon inscription</>}
           </button>
         </div>
-        <p className="text-[9px] text-gray-400 text-center mt-3">
+        <p className="text-xs sm:text-[9px] text-gray-400 text-center mt-3">
           En soumettant ce formulaire, votre bulletin sera envoyé à l&apos;équipe du Salon. Vous recevrez une confirmation par email.
         </p>
       </div>
@@ -338,17 +338,17 @@ function PageNumber({ n, total }: { n: number; total: number }) {
   return <div className="absolute bottom-2 right-4 text-[8px] text-gray-400">Page {n} sur {total}</div>
 }
 
-function Field({ label, lbl, inp, reg, ph, err, errS, type, max }: {
-  label: string; lbl: string; inp: string; reg: ReturnType<typeof useForm<InscriptionData>>['register'] extends (...args: infer A) => infer R ? R : never
+function MobileField({ label, inp, reg, ph, err, errS, type, max }: {
+  label: string; inp: string; reg: ReturnType<typeof useForm<InscriptionData>>['register'] extends (...args: infer A) => infer R ? R : never
   ph: string; err?: string; errS: string; type?: string; max?: number
 }) {
   return (
     <div>
-      <div className="flex items-center gap-1.5">
-        <label className={lbl}>{label} :</label>
+      <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-1.5 print-field-inline">
+        <label className="text-sm sm:text-[9px] font-bold text-gray-700 sm:w-[110px] sm:shrink-0">{label} :</label>
         <input {...reg} type={type || 'text'} className={inp} placeholder={ph} maxLength={max} />
       </div>
-      {err && <p className={errS + " ml-[115px]"}>{err}</p>}
+      {err && <p className={errS + " sm:ml-[115px]"}>{err}</p>}
     </div>
   )
 }
@@ -360,9 +360,9 @@ function OptRow({ reg, name, t, d, p }: {
 }) {
   return (
     <tr>
-      <td className="border border-gray-400 px-1.5 py-1"><span className="font-bold text-[8px] underline">{t}</span><br /><span className="text-gray-500">{d}</span></td>
-      <td className="border border-gray-400 px-1 py-1 text-center font-bold text-[9px]">{p}</td>
-      <td className="border border-gray-400 px-1 py-1 text-center"><input type="checkbox" {...reg(name)} className="w-3.5 h-3.5 accent-primary cursor-pointer" /></td>
+      <td className="border border-gray-400 px-2 sm:px-1.5 py-2 sm:py-1"><span className="font-bold text-sm sm:text-[8px] underline">{t}</span><br /><span className="text-gray-500">{d}</span></td>
+      <td className="border border-gray-400 px-2 sm:px-1 py-2 sm:py-1 text-center font-bold text-sm sm:text-[9px]">{p}</td>
+      <td className="border border-gray-400 px-2 sm:px-1 py-2 sm:py-1 text-center"><input type="checkbox" {...reg(name)} className="w-5 h-5 sm:w-3.5 sm:h-3.5 accent-primary cursor-pointer" /></td>
     </tr>
   )
 }
