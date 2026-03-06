@@ -62,7 +62,9 @@ export async function POST(request: Request) {
       if (spamCheck.isSpam) return NextResponse.json(silentRejectResponse(), { status: 200 })
       return NextResponse.json({ error: spamCheck.error }, { status: 400 })
     }
-    if (isObviousSpam(data)) {
+    // Exclude base64 fields from spam check (signatures + PDF contain base64 that triggers false positives)
+    const { pdfBase64: _pdf, signature: _sig, signatureCGV: _sigCgv, ...spamCheckData } = data
+    if (isObviousSpam(spamCheckData)) {
       return NextResponse.json(silentRejectResponse(), { status: 200 })
     }
 

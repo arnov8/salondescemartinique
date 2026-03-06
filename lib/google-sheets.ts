@@ -4,31 +4,10 @@ export const SHEET_TABS = {
   CONTACT: 'Contact',
   EXPOSANTS: 'Exposants',
   VISITEURS: 'Visiteurs',
-  INSCRIPTIONS: '2026',
+  INSCRIPTIONS: 'Inscriptions',
 } as const
 
 type SheetTab = (typeof SHEET_TABS)[keyof typeof SHEET_TABS]
-
-interface SheetConfig {
-  sheetId: string
-  credentials: string
-}
-
-function getSheetConfig(sheetTab: SheetTab): SheetConfig | null {
-  // Inscriptions use a dedicated Google Sheet
-  if (sheetTab === SHEET_TABS.INSCRIPTIONS) {
-    const sheetId = process.env.INSCRIPTION_SHEET_ID
-    const credentials = process.env.INSCRIPTION_GOOGLE_CREDENTIALS
-    if (sheetId && credentials) {
-      return { sheetId, credentials }
-    }
-  }
-  // Default config
-  const sheetId = process.env.SHEET_ID
-  const credentials = process.env.GOOGLE_CREDENTIALS
-  if (!sheetId || !credentials) return null
-  return { sheetId, credentials }
-}
 
 async function getAuthClient(credentialsJson: string) {
   const credentials = JSON.parse(credentialsJson)
@@ -43,14 +22,27 @@ export async function appendToSheet(
   sheetTab: SheetTab,
   values: (string | number | null | undefined)[]
 ) {
-  const config = getSheetConfig(sheetTab)
-  if (!config) {
-    console.warn(`Sheet config non configuré pour "${sheetTab}" - écriture ignorée`)
+  const credentials = process.env.GOOGLE_CREDENTIALS
+  if (!credentials) {
+    console.warn(`GOOGLE_CREDENTIALS non configuré - écriture ignorée`)
+    return null
+  }
+
+  // Inscriptions use a separate sheet if INSCRIPTION_SHEET_ID is set
+  let sheetId: string | undefined
+  if (sheetTab === SHEET_TABS.INSCRIPTIONS) {
+    sheetId = process.env.INSCRIPTION_SHEET_ID || process.env.SHEET_ID
+  } else {
+    sheetId = process.env.SHEET_ID
+  }
+
+  if (!sheetId) {
+    console.warn(`SHEET_ID non configuré pour "${sheetTab}" - écriture ignorée`)
     return null
   }
 
   try {
-    const auth = await getAuthClient(config.credentials)
+    const auth = await getAuthClient(credentials)
     const sheets = google.sheets({ version: 'v4', auth })
 
     const timestamp = new Date().toLocaleString('fr-FR', {
@@ -62,7 +54,7 @@ export async function appendToSheet(
     const rowValues = [timestamp, ...values.map((v) => v ?? '')]
 
     const response = await sheets.spreadsheets.values.append({
-      spreadsheetId: config.sheetId,
+      spreadsheetId: sheetId,
       range: `${sheetTab}!A:Z`,
       valueInputOption: 'USER_ENTERED',
       requestBody: {
@@ -70,7 +62,7 @@ export async function appendToSheet(
       },
     })
 
-    console.log(`[Google Sheets] Données ajoutées dans "${sheetTab}"`)
+    console.log(`[Google Sheets] Données ajoutées dans "${sheetTab}" (sheet: ${sheetId.slice(0, 8)}...)`)
     return response.data
   } catch (error) {
     console.error(`[Google Sheets] Erreur écriture (${sheetTab}):`, error)
