@@ -4,7 +4,7 @@ import { useState, useRef, useCallback, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { CheckCircle, Printer, Send, AlertCircle, Loader2 } from 'lucide-react'
+import { CheckCircle, Download, Send, AlertCircle, Loader2 } from 'lucide-react'
 import SignaturePad from '../SignaturePad'
 import CGVPage1 from '../CGVPage1'
 import CGVPage2 from '../CGVPage2'
@@ -86,10 +86,71 @@ export default function InscriptionForm() {
     return true
   }, [signature, signatureCGV])
 
-  const handlePrint = useCallback(() => {
+  const generatePdf = useCallback(async (): Promise<Blob | null> => {
+    if (!contractRef.current) return null
+    const container = contractRef.current
+    container.classList.add('pdf-mode')
+
+    // Replace inputs/selects with visible spans so html2canvas captures the values
+    const replacements: { el: HTMLElement; span: HTMLSpanElement }[] = []
+    container.querySelectorAll<HTMLInputElement>('input[type="text"], input[type="email"], input[type="tel"]').forEach(input => {
+      const span = document.createElement('span')
+      span.textContent = input.value || ''
+      const h = input.offsetHeight
+      span.style.cssText = `display:inline-flex;align-items:center;font-size:11px;font-weight:400;color:#000;padding:2px 6px;border:1px solid #ccc;border-radius:3px;background:#fff;min-height:${h}px;height:${h}px;line-height:${h}px;word-break:break-word;white-space:normal;vertical-align:middle;`
+      input.style.display = 'none'
+      input.parentNode?.insertBefore(span, input.nextSibling)
+      replacements.push({ el: input, span })
+    })
+    container.querySelectorAll<HTMLSelectElement>('select').forEach(select => {
+      const span = document.createElement('span')
+      span.textContent = select.options[select.selectedIndex]?.text || select.value
+      span.style.cssText = `display:inline-flex;align-items:center;font-size:9px;font-weight:500;color:#000;padding:0 3px;border:1px solid #999;border-radius:3px;background:#f9fafb;`
+      select.style.display = 'none'
+      select.parentNode?.insertBefore(span, select.nextSibling)
+      replacements.push({ el: select, span })
+    })
+
+    await new Promise(r => setTimeout(r, 50))
+
+    // Render each .a4-page individually to avoid blank page artifacts
+    const html2canvas = (await import('html2canvas')).default
+    const { jsPDF } = await import('jspdf')
+    const pdf = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' })
+    const pages = container.querySelectorAll<HTMLElement>('.a4-page')
+
+    for (let i = 0; i < pages.length; i++) {
+      if (i > 0) pdf.addPage()
+      const canvas = await html2canvas(pages[i], { scale: 2, useCORS: true, logging: false })
+      const imgData = canvas.toDataURL('image/jpeg', 0.98)
+      pdf.addImage(imgData, 'JPEG', 0, 0, 210, 297)
+    }
+
+    // Restore original elements
+    replacements.forEach(({ el, span }) => {
+      el.style.display = ''
+      span.remove()
+    })
+    container.classList.remove('pdf-mode')
+    return pdf.output('blob')
+  }, [])
+
+  const [isDownloading, setIsDownloading] = useState(false)
+
+  const handleDownload = useCallback(async () => {
     if (!checkSignatures()) return
-    window.print()
-  }, [checkSignatures])
+    setIsDownloading(true)
+    try {
+      const blob = await generatePdf()
+      if (!blob) return
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = 'bulletin-inscription-salon-cse-2026.pdf'
+      a.click()
+      URL.revokeObjectURL(url)
+    } finally { setIsDownloading(false) }
+  }, [checkSignatures, generatePdf])
 
   const onSubmit = useCallback(async (data: InscriptionData) => {
     if (!checkSignatures()) return
@@ -97,40 +158,8 @@ export default function InscriptionForm() {
     setIsSubmitting(true); setSubmitError(null)
     try {
       let pdfBase64: string | null = null
-      if (contractRef.current) {
-        const container = contractRef.current
-        container.classList.add('pdf-mode')
-
-        // Replace inputs with visible spans so html2canvas captures the values
-        const replacements: { input: HTMLInputElement; span: HTMLSpanElement }[] = []
-        container.querySelectorAll<HTMLInputElement>('input[type="text"], input[type="email"], input[type="tel"]').forEach(input => {
-          const span = document.createElement('span')
-          span.textContent = input.value || ''
-          const h = input.offsetHeight
-          span.style.cssText = `display:flex;align-items:center;font-size:11px;font-weight:400;color:#000;padding:2px 6px;border:1px solid #ccc;border-radius:3px;background:#fff;min-height:${h}px;line-height:1.3;word-break:break-word;white-space:normal;`
-          input.style.display = 'none'
-          input.parentNode?.insertBefore(span, input.nextSibling)
-          replacements.push({ input, span })
-        })
-
-        await new Promise(r => setTimeout(r, 50))
-
-        const html2pdf = (await import('html2pdf.js')).default
-        const pdfBlob = await html2pdf().set({
-          margin: 0, filename: 'bulletin-inscription.pdf',
-          image: { type: 'jpeg', quality: 0.98 },
-          html2canvas: { scale: 2, useCORS: true, logging: false },
-          jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-          pagebreak: { mode: ['css'], before: '.page-break-before' },
-        }).from(container).outputPdf('blob')
-
-        // Restore original inputs
-        replacements.forEach(({ input, span }) => {
-          input.style.display = ''
-          span.remove()
-        })
-        container.classList.remove('pdf-mode')
-
+      const pdfBlob = await generatePdf()
+      if (pdfBlob) {
         const reader = new FileReader()
         pdfBase64 = await new Promise<string>((resolve) => {
           reader.onloadend = () => resolve((reader.result as string).split(',')[1])
@@ -148,7 +177,7 @@ export default function InscriptionForm() {
     } catch (err) {
       setSubmitError(err instanceof Error ? err.message : 'Erreur lors de l\'envoi.')
     } finally { setIsSubmitting(false) }
-  }, [signature, signatureCGV, totals, checkSignatures])
+  }, [signature, signatureCGV, totals, checkSignatures, generatePdf])
 
   if (isSubmitted) {
     return (
@@ -387,8 +416,8 @@ export default function InscriptionForm() {
           </div>
         )}
         <div className="flex flex-col sm:flex-row gap-3">
-          <button type="button" onClick={handlePrint} className="flex items-center justify-center gap-2 btn-outline-primary flex-1">
-            <Printer className="w-4 h-4" /> Imprimer le bulletin + CGV
+          <button type="button" onClick={handleDownload} disabled={isDownloading} className="flex items-center justify-center gap-2 btn-outline-primary flex-1 disabled:opacity-50 disabled:cursor-not-allowed">
+            {isDownloading ? <><Loader2 className="w-4 h-4 animate-spin" /> Génération...</> : <><Download className="w-4 h-4" /> Télécharger le bulletin PDF</>}
           </button>
           <button type="submit" disabled={isSubmitting} className="flex items-center justify-center gap-2 btn-accent flex-1 disabled:opacity-50 disabled:cursor-not-allowed">
             {isSubmitting ? <><Loader2 className="w-4 h-4 animate-spin" /> Envoi en cours...</> : <><Send className="w-4 h-4" /> Signer et envoyer mon inscription</>}

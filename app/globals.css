@@ -212,14 +212,26 @@ body {
 }
 
 /* --- PDF generation mode (temporary class applied during html2pdf capture) --- */
+.pdf-mode {
+  /* Remove any gaps between child elements that html2pdf might interpret as extra pages */
+  line-height: 0;
+}
+
 .pdf-mode .a4-page {
-  max-height: none !important;
-  min-height: auto !important;
-  overflow: visible !important;
+  width: 210mm !important;
+  height: 297mm !important;
+  max-height: 297mm !important;
+  min-height: 297mm !important;
+  overflow: hidden !important;
   box-shadow: none !important;
   border: none !important;
   margin: 0 !important;
   padding: 0 !important;
+  line-height: normal;
+}
+
+.pdf-mode .a4-inner {
+  line-height: normal;
 }
 
 .pdf-mode .page-break-before {
