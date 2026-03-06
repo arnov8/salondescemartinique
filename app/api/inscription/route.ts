@@ -109,9 +109,11 @@ export async function POST(request: Request) {
       ])
     } catch (sheetError) {
       const errMsg = sheetError instanceof Error ? sheetError.message : String(sheetError)
-      console.error('[INSCRIPTION] Google Sheets FAILED:', errMsg)
-      console.error('[INSCRIPTION] INSCRIPTION_SHEET_ID set?', !!process.env.INSCRIPTION_SHEET_ID, 'SHEET_ID set?', !!process.env.SHEET_ID)
-      sheetWarning = `Google Sheets: ${errMsg}`
+      const sheetId = (process.env.INSCRIPTION_SHEET_ID || process.env.SHEET_ID || '').trim()
+      let account = 'unknown'
+      try { account = JSON.parse(process.env.GOOGLE_CREDENTIALS || '{}').client_email || 'missing' } catch { /* ignore */ }
+      console.error('[INSCRIPTION] Google Sheets FAILED:', errMsg, 'sheet:', sheetId.slice(0, 12), 'account:', account)
+      sheetWarning = `${errMsg} | sheet=${sheetId.slice(0, 15)}... | account=${account}`
       // Continue to send emails even if sheet fails
     }
 

@@ -41,7 +41,8 @@ export async function appendToSheet(
     return null
   }
 
-  console.log(`[Google Sheets] Writing to tab="${sheetTab}" sheet="${sheetId.slice(0, 12)}..."`)
+  const parsedCreds = JSON.parse(credentials)
+  console.log(`[Google Sheets] Writing to tab="${sheetTab}" sheet="${sheetId.slice(0, 12)}..." account="${parsedCreds.client_email}"`)
 
   const auth = await getAuthClient(credentials)
   const sheets = google.sheets({ version: 'v4', auth })
