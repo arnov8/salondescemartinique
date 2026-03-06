@@ -122,15 +122,32 @@ export default function InscriptionForm() {
 
   if (isSubmitted) {
     return (
-      <div className="max-w-2xl mx-auto py-20 px-4 text-center">
-        <div className="bg-white rounded-2xl shadow-lg p-10 border border-gray-100">
-          <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-6" />
-          <h2 className="text-2xl font-bold text-primary mb-4">Inscription enregistrée !</h2>
-          <p className="text-gray-600 mb-2">Votre bulletin a bien été envoyé.</p>
-          <p className="text-gray-600 mb-6">Vous recevrez un email de confirmation avec votre bulletin en pièce jointe.</p>
-          <div className="bg-blue-50 rounded-xl p-4 text-sm text-primary">
-            <strong>Prochaine étape :</strong> Virement de 50% d&apos;acompte ({fmt(totals.totalTTC / 2)}€ TTC).
+      <div className="max-w-2xl mx-auto py-16 px-4 text-center">
+        <div className="bg-white rounded-2xl shadow-lg p-8 sm:p-10 border border-gray-100">
+          <CheckCircle className="w-20 h-20 text-green-500 mx-auto mb-6" />
+          <h2 className="text-2xl sm:text-3xl font-bold text-primary mb-3">Bulletin d&apos;inscription envoyé !</h2>
+          <p className="text-gray-600 text-lg mb-1">Merci pour votre inscription au Salon des CSE &amp; COS de Martinique 2026.</p>
+          <p className="text-gray-500 mb-8">Un email de confirmation avec votre bulletin en pièce jointe vous sera envoyé sous quelques minutes.</p>
+
+          <div className="bg-amber-50 border border-amber-200 rounded-xl p-5 text-left mb-6">
+            <h3 className="font-bold text-amber-900 mb-2 text-base">Prochaine étape — Validez votre inscription :</h3>
+            <p className="text-amber-800 text-sm leading-relaxed">
+              Votre inscription sera définitive une fois que vous aurez procédé au <strong>virement d&apos;acompte de 50%</strong>, soit <strong>{fmt(totals.totalTTC / 2)}€ TTC</strong>.<br />
+              Les virements doivent être émis à l&apos;ordre de <strong>ANTILLES SALONS</strong>.
+            </p>
+            <a href="/docs/rib-antilles-salons.pdf" download className="inline-block mt-3 bg-primary text-white px-5 py-2.5 rounded-lg font-semibold text-sm hover:bg-primary-dark transition-colors">
+              Télécharger notre RIB
+            </a>
           </div>
+
+          <div className="bg-blue-50 rounded-xl p-4 text-sm text-primary">
+            <strong>Jeudi 1er Octobre 2026</strong> — Palais des Congrès de Madiana, Schœlcher<br />
+            <span className="text-xs text-gray-500">Installation : Mercredi 30 Septembre de 15h à 18h</span>
+          </div>
+
+          <p className="mt-6 text-sm text-gray-400">
+            Une question ? Contactez-nous au 05 96 61 21 21 ou 06 96 26 30 96
+          </p>
         </div>
       </div>
     )
@@ -207,7 +224,7 @@ export default function InscriptionForm() {
                     <span className="text-gray-500">Espace de 5m², livré avec 1 table et 4 chaises avec accès électrique</span>
                   </td>
                   <td className="border border-gray-400 px-2 sm:px-1 py-2 sm:py-1 text-center font-bold text-sm sm:text-[11px]">905,00€ HT</td>
-                  <td className="border border-gray-400 px-2 sm:px-1 py-2 sm:py-1 text-center"><input type="checkbox" {...register('emplacement')} checked disabled className="w-5 h-5 sm:w-3.5 sm:h-3.5 accent-primary" /></td>
+                  <td className="border border-gray-400 px-2 sm:px-1 py-2 sm:py-1 text-center"><input type="checkbox" {...register('emplacement')} className="w-5 h-5 sm:w-3.5 sm:h-3.5 accent-primary pointer-events-none" tabIndex={-1} /></td>
                 </tr>
                 <tr className="bg-amber-50">
                   <td className="border border-gray-400 px-2 sm:px-1.5 py-2 sm:py-1" colSpan={3}>
@@ -309,6 +326,12 @@ export default function InscriptionForm() {
           <div className="flex items-center gap-2 bg-amber-50 border border-amber-300 rounded-xl p-3 mb-3 animate-fade-up">
             <AlertCircle className="w-5 h-5 text-amber-600 shrink-0" />
             <p className="text-sm text-amber-800 font-medium">{signatureAlert}</p>
+          </div>
+        )}
+        {Object.keys(errors).length > 0 && (
+          <div className="flex items-center gap-2 bg-red-50 border border-red-200 rounded-xl p-3 mb-3 animate-fade-up">
+            <AlertCircle className="w-5 h-5 text-red-500 shrink-0" />
+            <p className="text-sm text-red-700 font-medium">Veuillez compléter tous les champs obligatoires avant d&apos;envoyer.</p>
           </div>
         )}
         {submitError && (

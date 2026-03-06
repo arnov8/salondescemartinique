@@ -205,6 +205,8 @@ function buildAdminEmail(d: z.infer<typeof inscriptionSchema>, options: string[]
       </div>
     </div>
 
+    ${d.pdfBase64 ? '<p style="margin-bottom:20px;padding:12px;background:#e8f4fc;border-radius:8px;font-size:13px;color:#1e3a5f;"><strong>📎 Le bulletin d\'inscription complété est joint à cet email en pièce jointe.</strong></p>' : ''}
+
     <a href="mailto:${d.email}" style="display:inline-block;background:#1e3a5f;color:white;padding:12px 24px;border-radius:6px;text-decoration:none;font-weight:600;">Répondre à ${d.representant}</a>
   </div>
   <div class="footer">Inscription reçue depuis salondescemartinique.com</div>
