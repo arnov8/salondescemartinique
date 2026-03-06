@@ -256,6 +256,15 @@ body {
   display: none !important;
 }
 
+.pdf-mode select {
+  font-size: 9px !important;
+  padding: 0 2px !important;
+  height: auto !important;
+  border: 1px solid #999 !important;
+  -webkit-appearance: none !important;
+  appearance: none !important;
+}
+
 /* --- Print styles for inscription page --- */
 @media print {
   header, footer, .no-print {
@@ -329,6 +338,14 @@ body {
     page-break-before: always;
     break-before: page;
     margin-top: 0 !important;
+  }
+
+  /* Compact the stands quantity selector in print */
+  select {
+    font-size: 9px !important;
+    padding: 0 2px !important;
+    height: auto !important;
+    border: 1px solid #999 !important;
   }
 
   input[type="checkbox"], canvas {

@@ -23,6 +23,7 @@ const inscriptionSchema = z.object({
   siteWeb: z.string().max(200).optional().or(z.literal('')),
   produits: z.string().min(2, 'Requis').max(500),
   emplacement: z.literal(true, { errorMap: () => ({ message: 'Obligatoire' }) }),
+  nombreStands: z.number().min(1).max(10).default(1),
   cadeauTombola: z.string().min(2, 'Cadeau tombola obligatoire (valeur mini 120€)').max(300),
   optionLogo: z.boolean().optional(),
   optionFacebook: z.boolean().optional(),
@@ -56,16 +57,17 @@ export default function InscriptionForm() {
 
   const { register, handleSubmit, watch, formState: { errors } } = useForm<InscriptionData>({
     resolver: zodResolver(inscriptionSchema),
-    defaultValues: { emplacement: true, optionLogo: false, optionFacebook: false, optionRadio: false, optionEmailing: false, optionSacs: false, luEtApprouve: undefined },
+    defaultValues: { emplacement: true, nombreStands: 1, optionLogo: false, optionFacebook: false, optionRadio: false, optionEmailing: false, optionSacs: false, luEtApprouve: undefined },
   })
 
   const w = watch(['optionLogo', 'optionFacebook', 'optionRadio', 'optionEmailing', 'optionSacs'])
+  const nbStands = watch('nombreStands') || 1
   const totals = useMemo(() => {
-    let ht = PRICES.emplacement
+    let ht = PRICES.emplacement * nbStands
     if (w[0]) ht += PRICES.logo; if (w[1]) ht += PRICES.facebook; if (w[2]) ht += PRICES.radio; if (w[3]) ht += PRICES.emailing; if (w[4]) ht += PRICES.sacs
     const tva = Math.round(ht * TVA_RATE * 100) / 100
     return { totalHT: ht, tva, totalTTC: Math.round((ht + tva) * 100) / 100 }
-  }, [w])
+  }, [w, nbStands])
 
   const checkSignatures = useCallback(() => {
     if (!signature && !signatureCGV) {
@@ -202,7 +204,7 @@ export default function InscriptionForm() {
           <div className="a4-inner p-5 sm:px-[9mm] sm:py-[5mm]">
 
             {/* En-tête avec vrai logo */}
-            <div className="flex flex-col sm:flex-row items-center sm:items-start sm:justify-between gap-3 sm:gap-0 mb-4 sm:mb-1.5 border-b-2 border-primary pb-3 sm:pb-1.5">
+            <div className="flex flex-col sm:flex-row items-center sm:items-start sm:justify-between gap-3 sm:gap-0 mb-4 sm:mb-1 border-b-2 border-primary pb-3 sm:pb-1">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/images/logo-scse-mq-bleu.png" alt="Le Salon des CSE & COS de Martinique" className="h-[45px] sm:h-[45px] w-auto" />
               <div className="text-center sm:text-right">
@@ -235,7 +237,7 @@ export default function InscriptionForm() {
             </div>
 
             {/* Clauses */}
-            <div className="text-xs sm:text-[9px] leading-snug text-gray-500 mb-3 sm:mb-1 space-y-1 sm:space-y-0 print-text-compact">
+            <div className="text-xs sm:text-[9px] leading-snug text-gray-500 mb-3 sm:mb-0.5 space-y-1 sm:space-y-0 print-text-compact">
               <p>1. Nous confirmons par la présente notre participation au Salon des CSE &amp; COS de Martinique 2026.</p>
               <p>2. Nous confirmons avoir pris connaissance des conditions générales et acceptons les termes sans réserve.</p>
               <p>3. Nous nous engageons à remettre à ANTILLES SALONS tous règlements et documents nécessaires.</p>
@@ -243,7 +245,7 @@ export default function InscriptionForm() {
             </div>
 
             {/* TABLEAU TARIFS */}
-            <table className="w-full border-collapse border border-gray-400 text-xs sm:text-[10px] mb-3 sm:mb-1">
+            <table className="w-full border-collapse border border-gray-400 text-xs sm:text-[10px] mb-3 sm:mb-0.5">
               <thead>
                 <tr className="bg-gray-100">
                   <th className="border border-gray-400 px-2 sm:px-1.5 py-2 sm:py-1 text-left font-bold"></th>
@@ -256,8 +258,18 @@ export default function InscriptionForm() {
                   <td className="border border-gray-400 px-2 sm:px-1.5 py-2 sm:py-1">
                     <span className="font-bold text-sm sm:text-[11px]">LOCATION EMPLACEMENT + ELECTRICITE (SANS CLOISON)</span><br />
                     <span className="text-gray-500">Espace de 5m², livré avec 1 table et 4 chaises avec accès électrique</span>
+                    {' — '}
+                    <span className="inline-flex items-center gap-1 text-gray-400 text-[10px] sm:text-[9px] italic">Qté :
+                      <select
+                        {...register('nombreStands', { valueAsNumber: true })}
+                        className="bg-gray-50 border border-gray-300 rounded text-[11px] sm:text-[9px] px-1 py-0 w-10 text-center focus:outline-none focus:ring-1 focus:ring-primary/30 not-italic"
+                      >
+                        {[1, 2, 3, 4, 5].map(n => <option key={n} value={n}>{n}</option>)}
+                      </select>
+                      {nbStands > 1 && <span className="text-primary font-medium not-italic">({nbStands} × 905€)</span>}
+                    </span>
                   </td>
-                  <td className="border border-gray-400 px-2 sm:px-1 py-2 sm:py-1 text-center font-bold text-sm sm:text-[11px]">905,00€ HT</td>
+                  <td className="border border-gray-400 px-2 sm:px-1 py-2 sm:py-1 text-center font-bold text-sm sm:text-[11px]">{fmt(PRICES.emplacement * nbStands)}€ HT</td>
                   <td className="border border-gray-400 px-2 sm:px-1 py-2 sm:py-1 text-center"><input type="checkbox" {...register('emplacement')} className="w-5 h-5 sm:w-3.5 sm:h-3.5 accent-primary pointer-events-none" tabIndex={-1} /></td>
                 </tr>
                 <tr className="bg-amber-50">
@@ -277,7 +289,7 @@ export default function InscriptionForm() {
             </table>
 
             {/* Totaux + Paiement */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-1.5 mb-3 sm:mb-1.5 print-grid-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-1.5 mb-3 sm:mb-1 print-grid-2">
               <div className="text-xs sm:text-[10px] text-gray-700 border border-gray-400 rounded p-3 sm:p-1.5 space-y-1 sm:space-y-0">
                 <p className="font-bold text-sm sm:text-[11px]">Modalité de paiement : 2 virements</p>
                 <p>– 1<sup>er</sup> virement à la réservation</p>
@@ -295,7 +307,7 @@ export default function InscriptionForm() {
             </div>
 
             {/* Date + Signature */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-1.5 print-grid-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-1 print-grid-2">
               <div className="text-sm sm:text-[11px] text-gray-600 self-end">
                 <p>Fait le {new Date().toLocaleDateString('fr-FR')} à Fort-de-France</p>
               </div>
@@ -306,7 +318,7 @@ export default function InscriptionForm() {
             </div>
 
             {/* Pied de page */}
-            <div className="mt-3 sm:mt-2 pt-1 border-t border-gray-200 text-center text-[6.5px] sm:text-[8px] text-gray-400 leading-snug">
+            <div className="mt-3 sm:mt-1.5 pt-1 border-t border-gray-200 text-center text-[6.5px] sm:text-[8px] text-gray-400 leading-snug">
               {FOOTER}
             </div>
 

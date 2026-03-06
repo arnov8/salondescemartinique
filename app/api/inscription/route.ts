@@ -18,6 +18,7 @@ const inscriptionSchema = z.object({
   siteWeb: z.string().max(200).optional().or(z.literal('')),
   produits: z.string().min(2).max(500),
   emplacement: z.literal(true),
+  nombreStands: z.number().min(1).max(10).default(1),
   cadeauTombola: z.string().min(2).max(300),
   optionLogo: z.boolean().optional(),
   optionFacebook: z.boolean().optional(),
@@ -100,7 +101,7 @@ export async function POST(request: Request) {
         d.instagram || '',
         d.siteWeb || '',
         d.produits,
-        'Emplacement 5m² (905€)',
+        d.nombreStands > 1 ? `${d.nombreStands} emplacements 5m² (${d.nombreStands} × 905€)` : 'Emplacement 5m² (905€)',
         d.cadeauTombola,
         options.join(' | ') || 'Aucune',
         formatPrice(d.totalHT) + '€',
@@ -208,7 +209,7 @@ function buildAdminEmail(d: z.infer<typeof inscriptionSchema>, options: string[]
 
     <div class="section">
       <div class="section-title">Prestations réservées</div>
-      <div class="field"><div class="label">Emplacement</div><div class="value">5m² + table + 4 chaises + électricité — 905,00€ HT</div></div>
+      <div class="field"><div class="label">Emplacement</div><div class="value">${d.nombreStands > 1 ? `${d.nombreStands} stands de 5m² — ${formatPrice(905 * d.nombreStands)}€ HT` : '5m² + table + 4 chaises + électricité — 905,00€ HT'}</div></div>
       <div class="field"><div class="label">Cadeau Tombola</div><div class="value">${d.cadeauTombola}</div></div>
       ${options.length > 0 ? `<div class="field"><div class="label">Options</div><div class="value">${options.join('<br>')}</div></div>` : ''}
       <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #e5e5e5;">
@@ -255,7 +256,7 @@ function buildConfirmationEmail(d: z.infer<typeof inscriptionSchema>, options: s
 
     <div class="recap">
       <div class="recap-item"><span style="color:#888;">Entreprise</span><strong>${d.entreprise}</strong></div>
-      <div class="recap-item"><span style="color:#888;">Emplacement</span><strong>5m² équipé — 905,00€ HT</strong></div>
+      <div class="recap-item"><span style="color:#888;">Emplacement</span><strong>${d.nombreStands > 1 ? `${d.nombreStands} stands de 5m² — ${formatPrice(905 * d.nombreStands)}€ HT` : '5m² équipé — 905,00€ HT'}</strong></div>
       <div class="recap-item"><span style="color:#888;">Cadeau Tombola</span><strong>${d.cadeauTombola}</strong></div>
       ${options.map(o => `<div class="recap-item"><span style="color:#888;">Option</span><strong>${o}</strong></div>`).join('')}
       <div class="recap-item" style="border-top:2px solid #1e3a5f;margin-top:10px;padding-top:12px;">
