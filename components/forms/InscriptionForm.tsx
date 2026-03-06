@@ -137,8 +137,8 @@ export default function InscriptionForm() {
   }
 
   // Mobile-friendly + print-compact inputs
-  const inp = "w-full bg-gray-50 border border-gray-300 rounded px-3 py-2.5 sm:px-2 sm:py-[3px] text-sm sm:text-[10px] text-gray-900 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary placeholder:text-gray-400"
-  const errS = "text-red-500 text-xs sm:text-[8px]"
+  const inp = "w-full bg-gray-50 border border-gray-300 rounded px-3 py-2.5 sm:px-2 sm:py-[3px] text-sm sm:text-[12px] text-gray-900 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary placeholder:text-gray-400"
+  const errS = "text-red-500 text-xs sm:text-[9px]"
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -184,7 +184,7 @@ export default function InscriptionForm() {
             </div>
 
             {/* Clauses */}
-            <div className="text-xs sm:text-[7.5px] leading-snug text-gray-500 mb-3 sm:mb-1 space-y-1 sm:space-y-0 print-text-compact">
+            <div className="text-xs sm:text-[9px] leading-snug text-gray-500 mb-3 sm:mb-1 space-y-1 sm:space-y-0 print-text-compact">
               <p>1. Nous confirmons par la présente notre participation au Salon des CSE &amp; COS de Martinique 2026.</p>
               <p>2. Nous confirmons avoir pris connaissance des conditions générales et acceptons les termes sans réserve.</p>
               <p>3. Nous nous engageons à remettre à ANTILLES SALONS tous règlements et documents nécessaires.</p>
@@ -192,7 +192,7 @@ export default function InscriptionForm() {
             </div>
 
             {/* TABLEAU TARIFS */}
-            <table className="w-full border-collapse border border-gray-400 text-xs sm:text-[8px] mb-3 sm:mb-1">
+            <table className="w-full border-collapse border border-gray-400 text-xs sm:text-[10px] mb-3 sm:mb-1">
               <thead>
                 <tr className="bg-gray-100">
                   <th className="border border-gray-400 px-2 sm:px-1.5 py-2 sm:py-1 text-left font-bold"></th>
@@ -203,17 +203,17 @@ export default function InscriptionForm() {
               <tbody>
                 <tr>
                   <td className="border border-gray-400 px-2 sm:px-1.5 py-2 sm:py-1">
-                    <span className="font-bold text-sm sm:text-[9px]">LOCATION EMPLACEMENT + ELECTRICITE (SANS CLOISON)</span><br />
+                    <span className="font-bold text-sm sm:text-[11px]">LOCATION EMPLACEMENT + ELECTRICITE (SANS CLOISON)</span><br />
                     <span className="text-gray-500">Espace de 5m², livré avec 1 table et 4 chaises avec accès électrique</span>
                   </td>
-                  <td className="border border-gray-400 px-2 sm:px-1 py-2 sm:py-1 text-center font-bold text-sm sm:text-[9px]">905,00€ HT</td>
+                  <td className="border border-gray-400 px-2 sm:px-1 py-2 sm:py-1 text-center font-bold text-sm sm:text-[11px]">905,00€ HT</td>
                   <td className="border border-gray-400 px-2 sm:px-1 py-2 sm:py-1 text-center"><input type="checkbox" {...register('emplacement')} checked disabled className="w-5 h-5 sm:w-3.5 sm:h-3.5 accent-primary" /></td>
                 </tr>
                 <tr className="bg-amber-50">
                   <td className="border border-gray-400 px-2 sm:px-1.5 py-2 sm:py-1" colSpan={3}>
-                    <span className="font-bold text-sm sm:text-[9px]">CADEAU DE TOMBOLA* <span className="text-red-600">(OBLIGATOIRE)</span></span><br />
+                    <span className="font-bold text-sm sm:text-[11px]">CADEAU DE TOMBOLA* <span className="text-red-600">(OBLIGATOIRE)</span></span><br />
                     <span className="text-gray-500">Cadeau pour la Tombola des Comités (valeur mini 120€) :</span>
-                    <input {...register('cadeauTombola')} className={inp + " !bg-white mt-1"} placeholder="Décrivez le cadeau..." />
+                    <input {...register('cadeauTombola')} className={inp + " !bg-white mt-1"} placeholder="Merci de décrire le cadeau offert par vos soins..." />
                     {errors.cadeauTombola && <span className={errS}> {errors.cadeauTombola.message}</span>}
                   </td>
                 </tr>
@@ -227,36 +227,35 @@ export default function InscriptionForm() {
 
             {/* Totaux + Paiement */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-1.5 mb-3 sm:mb-1.5 print-grid-2">
-              <div className="text-xs sm:text-[8px] text-gray-700 border border-gray-400 rounded p-3 sm:p-1.5 space-y-1 sm:space-y-0">
-                <p className="font-bold text-sm sm:text-[9px]">Modalité de paiement : 2 virements</p>
+              <div className="text-xs sm:text-[10px] text-gray-700 border border-gray-400 rounded p-3 sm:p-1.5 space-y-1 sm:space-y-0">
+                <p className="font-bold text-sm sm:text-[11px]">Modalité de paiement : 2 virements</p>
                 <p>– 1<sup>er</sup> virement à la réservation</p>
                 <p>– 2<sup>e</sup> virement au <u>15 septembre 2026</u></p>
-                <p className="mt-1 font-bold text-sm sm:text-[9px]"><u>Clôture des inscriptions : 1er juillet 2026</u></p>
+                <p className="mt-1 font-bold text-sm sm:text-[11px]"><u>Clôture des inscriptions : 1er juillet 2026</u></p>
                 <p className="mt-1">5. Nous émettons 1 virement de 50% d&apos;acompte.</p>
               </div>
-              <table className="border-collapse border border-gray-400 text-sm sm:text-[9px] h-fit">
+              <table className="border-collapse border border-gray-400 text-sm sm:text-[11px] h-fit">
                 <tbody>
                   <tr><td className="border border-gray-400 px-3 sm:px-2 py-2 sm:py-1.5 font-semibold text-gray-600">Total HT</td><td className="border border-gray-400 px-3 sm:px-2 py-2 sm:py-1.5 text-right font-bold">{fmt(totals.totalHT)}€</td></tr>
                   <tr><td className="border border-gray-400 px-3 sm:px-2 py-2 sm:py-1.5 font-semibold text-gray-600">TVA 8,5%</td><td className="border border-gray-400 px-3 sm:px-2 py-2 sm:py-1.5 text-right font-bold">{fmt(totals.tva)}€</td></tr>
-                  <tr className="bg-primary/5"><td className="border border-gray-400 px-3 sm:px-2 py-2 sm:py-1.5 font-bold text-primary">Total TTC</td><td className="border border-gray-400 px-3 sm:px-2 py-2 sm:py-1.5 text-right font-black text-primary text-base sm:text-[11px]">{fmt(totals.totalTTC)}€</td></tr>
+                  <tr className="bg-primary/5"><td className="border border-gray-400 px-3 sm:px-2 py-2 sm:py-1.5 font-bold text-primary">Total TTC</td><td className="border border-gray-400 px-3 sm:px-2 py-2 sm:py-1.5 text-right font-black text-primary text-base sm:text-[13px]">{fmt(totals.totalTTC)}€</td></tr>
                 </tbody>
               </table>
             </div>
 
             {/* Date + Signature */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-1.5 print-grid-2">
-              <div className="text-sm sm:text-[9px] text-gray-600 self-end">
+              <div className="text-sm sm:text-[11px] text-gray-600 self-end">
                 <p>Fait le {new Date().toLocaleDateString('fr-FR')} à Fort-de-France</p>
               </div>
               <div className="border border-gray-400 rounded p-3 sm:p-2">
-                <p className="text-xs sm:text-[8px] font-bold text-gray-600">CACHET, SIGNATURE &amp; NOM DU RESPONSABLE</p>
-                <p className="text-[11px] sm:text-[7px] text-gray-400 italic mb-1">+ En mention manuscrite « lu et approuvé »</p>
+                <p className="text-xs sm:text-[10px] font-bold text-gray-600">SIGNATURE DU RESPONSABLE</p>
                 <SignaturePad onSignatureChange={(sig) => { setSignature(sig); setSignatureAlert(null) }} label="Votre signature" />
               </div>
             </div>
 
             {/* Pied de page */}
-            <div className="mt-3 sm:mt-2 pt-1 border-t border-gray-200 text-center text-[6.5px] text-gray-400 leading-snug">
+            <div className="mt-3 sm:mt-2 pt-1 border-t border-gray-200 text-center text-[6.5px] sm:text-[8px] text-gray-400 leading-snug">
               {FOOTER}
             </div>
 
@@ -268,7 +267,7 @@ export default function InscriptionForm() {
         <div className={PAGE + " page-break-before mt-6"}>
           <div className="a4-inner p-5 sm:p-[12mm]">
             <CGVPage1 />
-            <div className="mt-3 sm:mt-2 pt-1 border-t border-gray-200 text-center text-[6.5px] text-gray-400 leading-snug">
+            <div className="mt-3 sm:mt-2 pt-1 border-t border-gray-200 text-center text-[6.5px] sm:text-[8px] text-gray-400 leading-snug">
               {FOOTER}
             </div>
           </div>
@@ -284,18 +283,18 @@ export default function InscriptionForm() {
             <div className="mt-5 sm:mt-4 pt-3 border-t-2 border-primary">
               <div className="flex items-start gap-3 sm:gap-2 mb-3">
                 <input type="checkbox" {...register('luEtApprouve')} id="luEtApprouve" className="w-5 h-5 sm:w-4 sm:h-4 mt-0.5 accent-primary shrink-0" />
-                <label htmlFor="luEtApprouve" className="text-sm sm:text-[10px] text-gray-700 cursor-pointer leading-snug">
+                <label htmlFor="luEtApprouve" className="text-sm sm:text-[12px] text-gray-700 cursor-pointer leading-snug">
                   <strong>Lu et approuvé.</strong> Je confirme avoir pris connaissance des conditions générales de vente et de participation au Salon des CSE &amp; COS de Martinique 2026 et en accepte les termes sans réserve.
                 </label>
               </div>
               {errors.luEtApprouve && <p className={errS}>{errors.luEtApprouve.message}</p>}
 
               <div className="sm:max-w-[220px]">
-                <SignaturePad onSignatureChange={(sig) => { setSignatureCGV(sig); setSignatureAlert(null) }} label="Signature CGV (lu et approuvé)" />
+                <SignaturePad onSignatureChange={(sig) => { setSignatureCGV(sig); setSignatureAlert(null) }} label="SIGNATURE DU RESPONSABLE" />
               </div>
             </div>
 
-            <div className="mt-3 sm:mt-2 pt-1 border-t border-gray-200 text-center text-[6.5px] text-gray-400 leading-snug">
+            <div className="mt-3 sm:mt-2 pt-1 border-t border-gray-200 text-center text-[6.5px] sm:text-[8px] text-gray-400 leading-snug">
               {FOOTER}
             </div>
           </div>
@@ -326,8 +325,11 @@ export default function InscriptionForm() {
             {isSubmitting ? <><Loader2 className="w-4 h-4 animate-spin" /> Envoi en cours...</> : <><Send className="w-4 h-4" /> Signer et envoyer mon inscription</>}
           </button>
         </div>
-        <p className="text-xs sm:text-[9px] text-gray-400 text-center mt-3">
-          En soumettant ce formulaire, votre bulletin sera envoyé à l&apos;équipe du Salon. Vous recevrez une confirmation par email.
+        <p className="text-sm sm:text-base text-gray-600 text-center mt-4 leading-relaxed">
+          En soumettant ce formulaire d&apos;inscription, votre bulletin sera envoyé à l&apos;équipe du Salon des CSE &amp; COS de Martinique. Après réception et vérification, vous recevrez une confirmation par email.
+        </p>
+        <p className="text-sm sm:text-base text-gray-600 text-center mt-2 leading-relaxed">
+          Votre inscription sera définitive une fois que vous aurez procédé au virement d&apos;acompte de 50%. Les virements doivent être émis à l&apos;ordre de ANTILLES SALONS (<a href="/docs/rib-antilles-salons.pdf" download className="text-primary underline hover:text-accent font-semibold">voir notre RIB</a>).
         </p>
       </div>
     </form>
@@ -345,7 +347,7 @@ function MobileField({ label, inp, reg, ph, err, errS, type, max }: {
   return (
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-1.5 print-field-inline">
-        <label className="text-sm sm:text-[9px] font-bold text-gray-700 sm:w-[110px] sm:shrink-0">{label} :</label>
+        <label className="text-sm sm:text-[11px] font-bold text-gray-700 sm:w-[130px] sm:shrink-0">{label} :</label>
         <input {...reg} type={type || 'text'} className={inp} placeholder={ph} maxLength={max} />
       </div>
       {err && <p className={errS + " sm:ml-[115px]"}>{err}</p>}
@@ -360,8 +362,8 @@ function OptRow({ reg, name, t, d, p }: {
 }) {
   return (
     <tr>
-      <td className="border border-gray-400 px-2 sm:px-1.5 py-2 sm:py-1"><span className="font-bold text-sm sm:text-[8px] underline">{t}</span><br /><span className="text-gray-500">{d}</span></td>
-      <td className="border border-gray-400 px-2 sm:px-1 py-2 sm:py-1 text-center font-bold text-sm sm:text-[9px]">{p}</td>
+      <td className="border border-gray-400 px-2 sm:px-1.5 py-2 sm:py-1"><span className="font-bold text-sm sm:text-[10px] underline">{t}</span><br /><span className="text-gray-500">{d}</span></td>
+      <td className="border border-gray-400 px-2 sm:px-1 py-2 sm:py-1 text-center font-bold text-sm sm:text-[11px]">{p}</td>
       <td className="border border-gray-400 px-2 sm:px-1 py-2 sm:py-1 text-center"><input type="checkbox" {...reg(name)} className="w-5 h-5 sm:w-3.5 sm:h-3.5 accent-primary cursor-pointer" /></td>
     </tr>
   )

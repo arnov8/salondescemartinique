@@ -4,16 +4,34 @@ export const SHEET_TABS = {
   CONTACT: 'Contact',
   EXPOSANTS: 'Exposants',
   VISITEURS: 'Visiteurs',
-  INSCRIPTIONS: 'Inscriptions',
+  INSCRIPTIONS: '2026',
 } as const
 
 type SheetTab = (typeof SHEET_TABS)[keyof typeof SHEET_TABS]
 
-async function getAuthClient() {
-  if (!process.env.GOOGLE_CREDENTIALS) {
-    throw new Error('GOOGLE_CREDENTIALS non configuré')
+interface SheetConfig {
+  sheetId: string
+  credentials: string
+}
+
+function getSheetConfig(sheetTab: SheetTab): SheetConfig | null {
+  // Inscriptions use a dedicated Google Sheet
+  if (sheetTab === SHEET_TABS.INSCRIPTIONS) {
+    const sheetId = process.env.INSCRIPTION_SHEET_ID
+    const credentials = process.env.INSCRIPTION_GOOGLE_CREDENTIALS
+    if (sheetId && credentials) {
+      return { sheetId, credentials }
+    }
   }
-  const credentials = JSON.parse(process.env.GOOGLE_CREDENTIALS)
+  // Default config
+  const sheetId = process.env.SHEET_ID
+  const credentials = process.env.GOOGLE_CREDENTIALS
+  if (!sheetId || !credentials) return null
+  return { sheetId, credentials }
+}
+
+async function getAuthClient(credentialsJson: string) {
+  const credentials = JSON.parse(credentialsJson)
   const auth = new google.auth.GoogleAuth({
     credentials,
     scopes: ['https://www.googleapis.com/auth/spreadsheets'],
@@ -25,13 +43,14 @@ export async function appendToSheet(
   sheetTab: SheetTab,
   values: (string | number | null | undefined)[]
 ) {
-  if (!process.env.SHEET_ID) {
-    console.warn('SHEET_ID non configuré - écriture Google Sheets ignorée')
+  const config = getSheetConfig(sheetTab)
+  if (!config) {
+    console.warn(`Sheet config non configuré pour "${sheetTab}" - écriture ignorée`)
     return null
   }
 
   try {
-    const auth = await getAuthClient()
+    const auth = await getAuthClient(config.credentials)
     const sheets = google.sheets({ version: 'v4', auth })
 
     const timestamp = new Date().toLocaleString('fr-FR', {
@@ -43,7 +62,7 @@ export async function appendToSheet(
     const rowValues = [timestamp, ...values.map((v) => v ?? '')]
 
     const response = await sheets.spreadsheets.values.append({
-      spreadsheetId: process.env.SHEET_ID,
+      spreadsheetId: config.sheetId,
       range: `${sheetTab}!A:Z`,
       valueInputOption: 'USER_ENTERED',
       requestBody: {

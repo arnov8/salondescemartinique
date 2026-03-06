@@ -250,9 +250,11 @@ function buildConfirmationEmail(d: z.infer<typeof inscriptionSchema>, options: s
     </div>
 
     <div class="warning">
-      <strong>Prochaine étape :</strong><br>
-      Pour confirmer votre réservation, merci d'effectuer un virement de <strong>${acompte}€ TTC</strong> (50% d'acompte).<br>
-      <small>Le solde sera dû au 15 septembre 2026.</small>
+      <strong>Prochaine étape — Validation définitive de votre inscription :</strong><br><br>
+      Votre inscription sera définitive une fois que vous aurez procédé au virement d'acompte de 50%, soit <strong>${acompte}€ TTC</strong>.<br>
+      Les virements doivent être émis à l'ordre de <strong>ANTILLES SALONS</strong>.<br><br>
+      <a href="https://www.salondescemartinique.com/docs/rib-antilles-salons.pdf" style="display:inline-block;background:#1e3a5f;color:white;padding:8px 18px;border-radius:6px;text-decoration:none;font-weight:600;font-size:13px;">Télécharger notre RIB</a><br><br>
+      <small>Acompte à signature et transmission de bulletin - Solde dû au 15 septembre 2026.</small>
     </div>
 
     <div class="highlight">

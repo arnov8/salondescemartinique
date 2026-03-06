@@ -43,6 +43,7 @@ export default function SignaturePad({ onSignatureChange, label = 'Signature' }:
           Effacer
         </button>
       </div>
+      <p className="text-[10px] text-gray-400 italic mt-1">Signer électroniquement avec votre doigt ou votre souris.</p>
     </div>
   )
 }
