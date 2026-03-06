@@ -304,7 +304,7 @@ export default function InscriptionForm() {
                   <td className="border border-gray-400 px-2 sm:px-1.5 py-2 sm:py-1" colSpan={3}>
                     <span className="font-bold text-sm sm:text-[11px]">CADEAU DE TOMBOLA* <span className="text-red-600">(OBLIGATOIRE)</span></span><br />
                     <span className="text-gray-500">Cadeau pour la Tombola des Comités (valeur mini 120€) :</span>
-                    <input {...register('cadeauTombola')} className={inp + " !bg-white mt-1"} placeholder="Merci de décrire le cadeau offert par vos soins..." />
+                    <input {...register('cadeauTombola')} className={inp + " !bg-white !py-2 sm:!py-1.5 mt-1"} placeholder="Merci de décrire le cadeau offert par vos soins..." />
                     {errors.cadeauTombola && <span className={errS}> {errors.cadeauTombola.message}</span>}
                   </td>
                 </tr>
