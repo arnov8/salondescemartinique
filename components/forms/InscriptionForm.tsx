@@ -96,8 +96,7 @@ export default function InscriptionForm() {
     container.querySelectorAll<HTMLInputElement>('input[type="text"], input[type="email"], input[type="tel"]').forEach(input => {
       const span = document.createElement('span')
       span.textContent = input.value || ''
-      const h = input.offsetHeight
-      span.style.cssText = `display:inline-flex;align-items:center;font-size:11px;font-weight:400;color:#000;padding:2px 6px;border:1px solid #ccc;border-radius:3px;background:#fff;min-height:${h}px;height:${h}px;line-height:${h}px;word-break:break-word;white-space:normal;vertical-align:middle;`
+      span.style.cssText = `display:flex;align-items:center;font-size:11px;font-weight:400;color:#000;padding:4px 6px;border:1px solid #ccc;border-radius:3px;background:#fff;min-height:22px;line-height:1.4;word-break:break-word;white-space:normal;`
       input.style.display = 'none'
       input.parentNode?.insertBefore(span, input.nextSibling)
       replacements.push({ el: input, span })
