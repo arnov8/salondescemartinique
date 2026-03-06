@@ -85,26 +85,31 @@ export async function POST(request: Request) {
     if (d.optionEmailing) options.push('Emailing (400€)')
     if (d.optionSacs) options.push('Sacs (800€)')
 
-    // Google Sheets - new tab "Inscriptions"
-    await appendToSheet(SHEET_TABS.INSCRIPTIONS, [
-      d.entreprise,
-      d.siret,
-      d.adresse,
-      d.representant,
-      d.telBureau,
-      d.telPortable,
-      d.email,
-      d.facebook || '',
-      d.instagram || '',
-      d.siteWeb || '',
-      d.produits,
-      'Emplacement 5m² (905€)',
-      d.cadeauTombola,
-      options.join(' | ') || 'Aucune',
-      formatPrice(d.totalHT) + '€',
-      formatPrice(d.tva) + '€',
-      formatPrice(d.totalTTC) + '€',
-    ])
+    // Google Sheets - tab "Inscriptions" in dedicated sheet
+    try {
+      await appendToSheet(SHEET_TABS.INSCRIPTIONS, [
+        d.entreprise,
+        d.siret,
+        d.adresse,
+        d.representant,
+        d.telBureau,
+        d.telPortable,
+        d.email,
+        d.facebook || '',
+        d.instagram || '',
+        d.siteWeb || '',
+        d.produits,
+        'Emplacement 5m² (905€)',
+        d.cadeauTombola,
+        options.join(' | ') || 'Aucune',
+        formatPrice(d.totalHT) + '€',
+        formatPrice(d.tva) + '€',
+        formatPrice(d.totalTTC) + '€',
+      ])
+    } catch (sheetError) {
+      console.error('[INSCRIPTION] Google Sheets FAILED:', sheetError)
+      // Continue to send emails even if sheet fails
+    }
 
     // Emails
     if (resend) {

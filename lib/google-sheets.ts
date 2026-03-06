@@ -41,31 +41,28 @@ export async function appendToSheet(
     return null
   }
 
-  try {
-    const auth = await getAuthClient(credentials)
-    const sheets = google.sheets({ version: 'v4', auth })
+  console.log(`[Google Sheets] Writing to tab="${sheetTab}" sheet="${sheetId.slice(0, 12)}..."`)
 
-    const timestamp = new Date().toLocaleString('fr-FR', {
-      timeZone: 'America/Martinique',
-      dateStyle: 'short',
-      timeStyle: 'short',
-    })
+  const auth = await getAuthClient(credentials)
+  const sheets = google.sheets({ version: 'v4', auth })
 
-    const rowValues = [timestamp, ...values.map((v) => v ?? '')]
+  const timestamp = new Date().toLocaleString('fr-FR', {
+    timeZone: 'America/Martinique',
+    dateStyle: 'short',
+    timeStyle: 'short',
+  })
 
-    const response = await sheets.spreadsheets.values.append({
-      spreadsheetId: sheetId,
-      range: `${sheetTab}!A:Z`,
-      valueInputOption: 'USER_ENTERED',
-      requestBody: {
-        values: [rowValues],
-      },
-    })
+  const rowValues = [timestamp, ...values.map((v) => v ?? '')]
 
-    console.log(`[Google Sheets] Données ajoutées dans "${sheetTab}" (sheet: ${sheetId.slice(0, 8)}...)`)
-    return response.data
-  } catch (error) {
-    console.error(`[Google Sheets] Erreur écriture (${sheetTab}):`, error)
-    return null
-  }
+  const response = await sheets.spreadsheets.values.append({
+    spreadsheetId: sheetId,
+    range: `${sheetTab}!A:Z`,
+    valueInputOption: 'USER_ENTERED',
+    requestBody: {
+      values: [rowValues],
+    },
+  })
+
+  console.log(`[Google Sheets] OK - données ajoutées dans "${sheetTab}"`)
+  return response.data
 }

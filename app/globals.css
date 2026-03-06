@@ -212,25 +212,32 @@ body {
 }
 
 /* --- PDF generation mode (temporary class applied during html2pdf capture) --- */
+.pdf-mode .a4-page {
+  max-height: none !important;
+  min-height: auto !important;
+  overflow: visible !important;
+  box-shadow: none !important;
+  border: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
 .pdf-mode .page-break-before {
   margin-top: 0 !important;
 }
 
-.pdf-mode .a4-page {
-  box-shadow: none !important;
-  border: none !important;
-}
-
+/* Make form inputs clearly readable in PDF */
 .pdf-mode input[type="text"],
 .pdf-mode input[type="email"],
 .pdf-mode input[type="tel"] {
-  background: #ffffff !important;
+  background-color: #ffffff !important;
   color: #000000 !important;
   font-weight: 700 !important;
-  border: 1px solid #999 !important;
+  font-size: 11px !important;
+  border: 1px solid #666 !important;
   -webkit-text-fill-color: #000000 !important;
   opacity: 1 !important;
-  font-size: 12px !important;
+  padding: 4px 8px !important;
 }
 
 .pdf-mode input[type="checkbox"] {
@@ -238,12 +245,7 @@ body {
   print-color-adjust: exact !important;
 }
 
-.pdf-mode .no-print,
-.pdf-mode button[data-clear] {
-  display: none !important;
-}
-
-/* Hide "Effacer" buttons and hint text in signature pads during PDF */
+/* Hide interactive elements in PDF */
 .pdf-mode .signature-clear-btn,
 .pdf-mode .signature-hint {
   display: none !important;
