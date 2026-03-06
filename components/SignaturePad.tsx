@@ -38,12 +38,12 @@ export default function SignaturePad({ onSignatureChange, label = 'Signature' }:
         <button
           type="button"
           onClick={handleClear}
-          className="absolute top-1 right-1 text-xs text-gray-400 hover:text-red-500 transition-colors px-2 py-0.5 rounded"
+          className="signature-clear-btn absolute top-1 right-1 text-xs text-gray-400 hover:text-red-500 transition-colors px-2 py-0.5 rounded"
         >
           Effacer
         </button>
       </div>
-      <p className="text-[10px] text-gray-400 italic mt-1">Signer électroniquement avec votre doigt ou votre souris.</p>
+      <p className="signature-hint text-[10px] text-gray-400 italic mt-1">Signer électroniquement avec votre doigt ou votre souris.</p>
     </div>
   )
 }

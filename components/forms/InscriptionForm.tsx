@@ -95,14 +95,22 @@ export default function InscriptionForm() {
     try {
       let pdfBase64: string | null = null
       if (contractRef.current) {
+        // Apply PDF mode styles for clean rendering
+        contractRef.current.classList.add('pdf-mode')
+        // Small delay to let styles apply before html2canvas capture
+        await new Promise(r => setTimeout(r, 100))
+
         const html2pdf = (await import('html2pdf.js')).default
         const pdfBlob = await html2pdf().set({
           margin: 0, filename: 'bulletin-inscription.pdf',
-          image: { type: 'jpeg', quality: 0.95 },
+          image: { type: 'jpeg', quality: 0.98 },
           html2canvas: { scale: 2, useCORS: true, logging: false },
           jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
           pagebreak: { mode: ['css'], before: '.page-break-before' },
         }).from(contractRef.current).outputPdf('blob')
+
+        contractRef.current.classList.remove('pdf-mode')
+
         const reader = new FileReader()
         pdfBase64 = await new Promise<string>((resolve) => {
           reader.onloadend = () => resolve((reader.result as string).split(',')[1])

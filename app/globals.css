@@ -211,6 +211,44 @@ body {
   }
 }
 
+/* --- PDF generation mode (temporary class applied during html2pdf capture) --- */
+.pdf-mode .page-break-before {
+  margin-top: 0 !important;
+}
+
+.pdf-mode .a4-page {
+  box-shadow: none !important;
+  border: none !important;
+}
+
+.pdf-mode input[type="text"],
+.pdf-mode input[type="email"],
+.pdf-mode input[type="tel"] {
+  background: #ffffff !important;
+  color: #000000 !important;
+  font-weight: 700 !important;
+  border: 1px solid #999 !important;
+  -webkit-text-fill-color: #000000 !important;
+  opacity: 1 !important;
+  font-size: 12px !important;
+}
+
+.pdf-mode input[type="checkbox"] {
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+
+.pdf-mode .no-print,
+.pdf-mode button[data-clear] {
+  display: none !important;
+}
+
+/* Hide "Effacer" buttons and hint text in signature pads during PDF */
+.pdf-mode .signature-clear-btn,
+.pdf-mode .signature-hint {
+  display: none !important;
+}
+
 /* --- Print styles for inscription page --- */
 @media print {
   header, footer, .no-print {
