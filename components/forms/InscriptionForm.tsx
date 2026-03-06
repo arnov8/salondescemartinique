@@ -48,6 +48,7 @@ export default function InscriptionForm() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
+  const [sheetWarning, setSheetWarning] = useState<string | null>(null)
   const [signatureAlert, setSignatureAlert] = useState<string | null>(null)
   const [signature, setSignature] = useState<string | null>(null)
   const [signatureCGV, setSignatureCGV] = useState<string | null>(null)
@@ -95,10 +96,21 @@ export default function InscriptionForm() {
     try {
       let pdfBase64: string | null = null
       if (contractRef.current) {
-        // Apply PDF mode styles for clean rendering
-        contractRef.current.classList.add('pdf-mode')
-        // Small delay to let styles apply before html2canvas capture
-        await new Promise(r => setTimeout(r, 100))
+        const container = contractRef.current
+        container.classList.add('pdf-mode')
+
+        // Replace inputs with visible spans so html2canvas captures the values
+        const replacements: { input: HTMLInputElement; span: HTMLSpanElement }[] = []
+        container.querySelectorAll<HTMLInputElement>('input[type="text"], input[type="email"], input[type="tel"]').forEach(input => {
+          const span = document.createElement('span')
+          span.textContent = input.value || ''
+          span.style.cssText = 'display:block;font-size:11px;font-weight:700;color:#000;padding:3px 6px;border:1px solid #999;border-radius:3px;background:#fff;min-height:18px;line-height:1.4;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;'
+          input.style.display = 'none'
+          input.parentNode?.insertBefore(span, input.nextSibling)
+          replacements.push({ input, span })
+        })
+
+        await new Promise(r => setTimeout(r, 50))
 
         const html2pdf = (await import('html2pdf.js')).default
         const pdfBlob = await html2pdf().set({
@@ -107,9 +119,14 @@ export default function InscriptionForm() {
           html2canvas: { scale: 2, useCORS: true, logging: false },
           jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
           pagebreak: { mode: ['css'], before: '.page-break-before' },
-        }).from(contractRef.current).outputPdf('blob')
+        }).from(container).outputPdf('blob')
 
-        contractRef.current.classList.remove('pdf-mode')
+        // Restore original inputs
+        replacements.forEach(({ input, span }) => {
+          input.style.display = ''
+          span.remove()
+        })
+        container.classList.remove('pdf-mode')
 
         const reader = new FileReader()
         pdfBase64 = await new Promise<string>((resolve) => {
@@ -121,7 +138,9 @@ export default function InscriptionForm() {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...data, signature, signatureCGV, pdfBase64, totalHT: totals.totalHT, tva: totals.tva, totalTTC: totals.totalTTC }),
       })
-      if (!res.ok) { const err = await res.json(); throw new Error(err.error || 'Erreur') }
+      const resData = await res.json()
+      if (!res.ok) throw new Error(resData.error || 'Erreur')
+      if (resData.sheetWarning) setSheetWarning(resData.sheetWarning)
       setIsSubmitted(true)
     } catch (err) {
       setSubmitError(err instanceof Error ? err.message : 'Erreur lors de l\'envoi.')
@@ -152,6 +171,12 @@ export default function InscriptionForm() {
             <strong>Jeudi 1er Octobre 2026</strong> — Palais des Congrès de Madiana, Schœlcher<br />
             <span className="text-xs text-gray-500">Installation : Mercredi 30 Septembre de 15h à 18h</span>
           </div>
+
+          {sheetWarning && (
+            <div className="bg-red-50 border border-red-200 rounded-xl p-3 mt-4 text-left">
+              <p className="text-xs text-red-600 font-mono break-all">[DEBUG] {sheetWarning}</p>
+            </div>
+          )}
 
           <p className="mt-6 text-sm text-gray-400">
             Une question ? Contactez-nous au 05 96 61 21 21 ou 06 96 26 30 96

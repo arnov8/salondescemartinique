@@ -22,7 +22,7 @@ export async function appendToSheet(
   sheetTab: SheetTab,
   values: (string | number | null | undefined)[]
 ) {
-  const credentials = process.env.GOOGLE_CREDENTIALS
+  const credentials = process.env.GOOGLE_CREDENTIALS?.trim()
   if (!credentials) {
     console.warn(`GOOGLE_CREDENTIALS non configuré - écriture ignorée`)
     return null
@@ -31,9 +31,9 @@ export async function appendToSheet(
   // Inscriptions use a separate sheet if INSCRIPTION_SHEET_ID is set
   let sheetId: string | undefined
   if (sheetTab === SHEET_TABS.INSCRIPTIONS) {
-    sheetId = process.env.INSCRIPTION_SHEET_ID || process.env.SHEET_ID
+    sheetId = (process.env.INSCRIPTION_SHEET_ID || process.env.SHEET_ID)?.trim()
   } else {
-    sheetId = process.env.SHEET_ID
+    sheetId = process.env.SHEET_ID?.trim()
   }
 
   if (!sheetId) {

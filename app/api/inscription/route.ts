@@ -86,6 +86,7 @@ export async function POST(request: Request) {
     if (d.optionSacs) options.push('Sacs (800€)')
 
     // Google Sheets - tab "Inscriptions" in dedicated sheet
+    let sheetWarning: string | undefined
     try {
       await appendToSheet(SHEET_TABS.INSCRIPTIONS, [
         d.entreprise,
@@ -107,7 +108,10 @@ export async function POST(request: Request) {
         formatPrice(d.totalTTC) + '€',
       ])
     } catch (sheetError) {
-      console.error('[INSCRIPTION] Google Sheets FAILED:', sheetError)
+      const errMsg = sheetError instanceof Error ? sheetError.message : String(sheetError)
+      console.error('[INSCRIPTION] Google Sheets FAILED:', errMsg)
+      console.error('[INSCRIPTION] INSCRIPTION_SHEET_ID set?', !!process.env.INSCRIPTION_SHEET_ID, 'SHEET_ID set?', !!process.env.SHEET_ID)
+      sheetWarning = `Google Sheets: ${errMsg}`
       // Continue to send emails even if sheet fails
     }
 
@@ -137,7 +141,7 @@ export async function POST(request: Request) {
       })
     }
 
-    return NextResponse.json({ message: 'Inscription enregistrée avec succès' }, { status: 200 })
+    return NextResponse.json({ message: 'Inscription enregistrée avec succès', ...(sheetWarning && { sheetWarning }) }, { status: 200 })
   } catch (error) {
     console.error('Erreur API inscription:', error)
     return NextResponse.json(
