@@ -105,7 +105,7 @@ export default function InscriptionForm() {
           const span = document.createElement('span')
           span.textContent = input.value || ''
           const h = input.offsetHeight
-          span.style.cssText = `display:flex;align-items:center;font-size:11px;font-weight:400;color:#000;padding:0 6px;border:1px solid #ccc;border-radius:3px;background:#fff;height:${h}px;line-height:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;`
+          span.style.cssText = `display:flex;align-items:center;font-size:11px;font-weight:400;color:#000;padding:2px 6px;border:1px solid #ccc;border-radius:3px;background:#fff;min-height:${h}px;line-height:1.3;word-break:break-word;white-space:normal;`
           input.style.display = 'none'
           input.parentNode?.insertBefore(span, input.nextSibling)
           replacements.push({ input, span })

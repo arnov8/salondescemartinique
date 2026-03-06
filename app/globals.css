@@ -226,6 +226,11 @@ body {
   margin-top: 0 !important;
 }
 
+/* Kill ALL spacing/gaps between pages in pdf capture */
+.pdf-mode .mt-6 {
+  margin-top: 0 !important;
+}
+
 /* Make form inputs clearly readable in PDF */
 .pdf-mode input[type="text"],
 .pdf-mode input[type="email"],
