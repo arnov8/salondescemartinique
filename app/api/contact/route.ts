@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
 import { rateLimit, getClientIP } from '@/lib/rate-limit'
-import { resend, FROM_EMAIL, ADMIN_EMAIL } from '@/lib/resend'
+import { sendEmail, FROM_EMAIL, ADMIN_EMAIL } from '@/lib/resend'
 import { appendToSheet, SHEET_TABS } from '@/lib/google-sheets'
 import { validateSubmission, isObviousSpam, silentRejectResponse } from '@/lib/antispam'
 
@@ -66,23 +66,27 @@ export async function POST(request: Request) {
     const validData = validationResult.data
 
     // Écriture dans Google Sheets
-    await appendToSheet(SHEET_TABS.CONTACT, [
+    const sheetResult = await appendToSheet(SHEET_TABS.CONTACT, [
       validData.name,
       validData.email,
       validData.phone || '',
       validData.subject,
       validData.message,
     ])
+    if (!sheetResult) {
+      console.warn('[Contact] Google Sheets: écriture ignorée ou échouée')
+    }
 
     // Emails
-    if (resend) {
-      // Email notification à l'équipe
-      await resend.emails.send({
-        from: FROM_EMAIL,
-        to: ADMIN_EMAIL,
-        replyTo: validData.email,
-        subject: `[Contact] ${validData.subject}`,
-        html: `
+    const emailErrors: string[] = []
+
+    // Email notification à l'équipe
+    const adminResult = await sendEmail({
+      from: FROM_EMAIL,
+      to: ADMIN_EMAIL,
+      replyTo: validData.email,
+      subject: `[Contact] ${validData.subject}`,
+      html: `
           <!DOCTYPE html>
           <html>
           <head>
@@ -139,14 +143,17 @@ export async function POST(request: Request) {
           </body>
           </html>
         `,
-      })
+    })
+    if (!adminResult.success) {
+      emailErrors.push(`Admin: ${adminResult.error}`)
+    }
 
-      // Email de confirmation
-      await resend.emails.send({
-        from: FROM_EMAIL,
-        to: validData.email,
-        subject: 'Merci pour votre message - Salon des CSE Martinique',
-        html: `
+    // Email de confirmation
+    const confirmResult = await sendEmail({
+      from: FROM_EMAIL,
+      to: validData.email,
+      subject: 'Merci pour votre message - Salon des CSE Martinique',
+      html: `
           <!DOCTYPE html>
           <html>
           <head>
@@ -181,11 +188,21 @@ export async function POST(request: Request) {
           </body>
           </html>
         `,
-      })
+    })
+    if (!confirmResult.success) {
+      emailErrors.push(`Confirmation: ${confirmResult.error}`)
+    }
+
+    if (emailErrors.length > 0) {
+      console.error(`[Contact] Erreurs email: ${emailErrors.join(' | ')}`)
     }
 
     return NextResponse.json(
-      { message: 'Message envoyé avec succès' },
+      {
+        message: 'Message envoyé avec succès',
+        ...(emailErrors.length > 0 && { emailWarning: 'Certains emails n\'ont pas pu être envoyés' }),
+        ...(!sheetResult && { sheetWarning: 'Données non enregistrées dans le tableur' }),
+      },
       { status: 200 }
     )
   } catch (error) {
