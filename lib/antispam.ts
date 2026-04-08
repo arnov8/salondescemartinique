@@ -64,57 +64,78 @@ export async function validateSubmission(
 
 /**
  * Detects obvious spam patterns in form data
+ * Returns the matched pattern name for logging, or null if not spam
  */
-export function isObviousSpam(data: Record<string, unknown>): boolean {
-  const textFields = Object.values(data)
-    .filter((v): v is string => typeof v === 'string')
+export function detectSpamPattern(data: Record<string, unknown>): string | null {
+  // Only check user-entered text fields, skip emails and phone numbers
+  const skipKeys = new Set(['email', 'phone', 'honeypot', 'fax', 'website'])
+  const textFields = Object.entries(data)
+    .filter(([key, v]) =>
+      typeof v === 'string' &&
+      !skipKeys.has(key)
+    )
+    .map(([, v]) => v as string)
     .join(' ')
 
-  // Check for excessive consonants (gibberish)
-  const consonantPattern = /[bcdfghjklmnpqrstvwxz]{6,}/i
+  // Check for excessive consonants (gibberish) - raised to 8+ to avoid French acronyms
+  const consonantPattern = /[bcdfghjklmnpqrstvwxz]{8,}/i
   if (consonantPattern.test(textFields)) {
-    return true
+    const match = textFields.match(consonantPattern)
+    return `consonants: "${match?.[0]}"`
   }
 
   // Check for suspicious URLs/links
-  const urlPatterns = [
-    /\[url=/i,
-    /\[link=/i,
-    /<a\s+href=/i,
-    /http[s]?:\/\/[^\s]+\.(ru|cn|tk|ml|ga|cf|gq|top|xyz|click|link|work)/i,
+  const urlPatterns: [RegExp, string][] = [
+    [/\[url=/i, '[url='],
+    [/\[link=/i, '[link='],
+    [/<a\s+href=/i, '<a href='],
+    [/http[s]?:\/\/[^\s]+\.(ru|cn|tk|ml|ga|cf|gq|top|xyz|click|link|work)/i, 'suspicious URL'],
   ]
-  if (urlPatterns.some((p) => p.test(textFields))) {
-    return true
+  for (const [pattern, name] of urlPatterns) {
+    if (pattern.test(textFields)) {
+      return `url: "${name}"`
+    }
   }
 
   // Check for HTML injection attempts
-  const htmlPatterns = [
-    /<script/i,
-    /<iframe/i,
-    /javascript:/i,
-    /onclick=/i,
-    /onerror=/i,
+  const htmlPatterns: [RegExp, string][] = [
+    [/<script/i, '<script'],
+    [/<iframe/i, '<iframe'],
+    [/javascript:/i, 'javascript:'],
+    [/onclick=/i, 'onclick='],
+    [/onerror=/i, 'onerror='],
   ]
-  if (htmlPatterns.some((p) => p.test(textFields))) {
-    return true
+  for (const [pattern, name] of htmlPatterns) {
+    if (pattern.test(textFields)) {
+      return `html: "${name}"`
+    }
   }
 
   // Check for common spam keywords
-  const spamKeywords = [
-    /\bcasino\b/i,
-    /\bpoker\b/i,
-    /\bviagra\b/i,
-    /\bcrypto\s*currency/i,
-    /\bbitcoin\s*invest/i,
-    /\bmake\s*money\s*fast/i,
-    /\bsex\s*video/i,
-    /\bporn/i,
+  const spamKeywords: [RegExp, string][] = [
+    [/\bcasino\b/i, 'casino'],
+    [/\bpoker\b/i, 'poker'],
+    [/\bviagra\b/i, 'viagra'],
+    [/\bcrypto\s*currency/i, 'cryptocurrency'],
+    [/\bbitcoin\s*invest/i, 'bitcoin invest'],
+    [/\bmake\s*money\s*fast/i, 'make money fast'],
+    [/\bsex\s*video/i, 'sex video'],
+    [/\bporn/i, 'porn'],
   ]
-  if (spamKeywords.some((p) => p.test(textFields))) {
-    return true
+  for (const [pattern, name] of spamKeywords) {
+    if (pattern.test(textFields)) {
+      return `keyword: "${name}"`
+    }
   }
 
-  return false
+  return null
+}
+
+/**
+ * @deprecated Use detectSpamPattern() instead for better logging
+ */
+export function isObviousSpam(data: Record<string, unknown>): boolean {
+  return detectSpamPattern(data) !== null
 }
 
 /**

@@ -3,7 +3,7 @@ import { z } from 'zod'
 import { rateLimit, getClientIP } from '@/lib/rate-limit'
 import { sendEmail, FROM_EMAIL, ADMIN_EMAIL } from '@/lib/resend'
 import { appendToSheet, SHEET_TABS } from '@/lib/google-sheets'
-import { validateSubmission, isObviousSpam, silentRejectResponse } from '@/lib/antispam'
+import { validateSubmission, detectSpamPattern, silentRejectResponse } from '@/lib/antispam'
 
 // Server-side validation schema
 const visitorSchema = z.object({
@@ -51,7 +51,9 @@ export async function POST(request: Request) {
     }
 
     // Check for obvious spam patterns
-    if (isObviousSpam(data)) {
+    const spamReason = detectSpamPattern(data)
+    if (spamReason) {
+      console.warn(`[Visitor] Spam détecté (${spamReason}) - rejet silencieux`)
       return NextResponse.json(silentRejectResponse(), { status: 200 })
     }
 
