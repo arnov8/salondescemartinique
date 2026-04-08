@@ -360,6 +360,11 @@ salon-cse-martinique/
 | 32 | Protection anti-spam Turnstile | ✅ Fait |
 | 33 | Configuration domaine personnalisé | ✅ Fait |
 | 34 | Carrousel photo galerie (accueil) | ✅ Fait |
+| 35 | Fix: gestion erreurs Resend SDK v6 (retours `{ data, error }` ignorés) | ✅ Fait |
+| 36 | Fix: anti-spam faux positifs (consonnes 6→8, exclusion email/phone) | ✅ Fait |
+| 37 | Fix: logging détaillé Resend + Google Sheets sur toutes les routes | ✅ Fait |
+| 38 | Fix: utilisation variable `FROM_EMAIL` Vercel au lieu du hardcode | ✅ Fait |
+| 39 | Ajout endpoint diagnostic `/api/health` (test Resend + Google Sheets) | ✅ Fait |
 
 ---
 
@@ -404,16 +409,22 @@ Chaque formulaire envoie :
 
 ### Configuration actuelle
 ```
-FROM_EMAIL = Salon des CSE Martinique <noreply@salondescemartinique.com>  # Hardcodé dans lib/resend.ts
+FROM_EMAIL = variable Vercel FROM_EMAIL, sinon fallback: Salon des CSE Martinique <noreply@salondescemartinique.com>
 ```
 
 ### Variables d'environnement Vercel
 ```
 RESEND_API_KEY=re_xxx
-ADMIN_EMAIL=votre-email@exemple.com
+FROM_EMAIL=noreply@salondescemartinique.com
+ADMIN_EMAIL=organisation@antillessalons.com
 ```
 
 > **Note** : Le domaine salondescemartinique.com doit être vérifié sur Resend (DNS DKIM/SPF configurés)
+
+### Gestion des erreurs emails
+- Fonction `sendEmail()` dans `lib/resend.ts` vérifie le retour `{ data, error }` du SDK Resend v6
+- Chaque envoi est loggé : `[Resend] OK - email envoyé à xxx (id: yyy)` ou `[Resend] Erreur envoi à xxx: {...}`
+- Les warnings email/sheet sont inclus dans la réponse JSON au client
 
 ---
 
@@ -453,11 +464,11 @@ GOOGLE_CREDENTIALS='{"type":"service_account",...}'
 ### Fonctions disponibles dans `lib/antispam.ts`
 
 ```typescript
+// Détection de spam avec logging (retourne le pattern matché ou null)
+detectSpamPattern(data): string | null
+
 // Validation honeypot
 validateSubmission(honeypot, turnstileToken): Promise<ValidationResult>
-
-// Détection de patterns suspects (consonnes excessives, liens spam, injections HTML)
-isObviousSpam(data): boolean
 
 // Réponse silencieuse pour tromper les bots
 silentRejectResponse(): { success: true, message: string }
@@ -466,8 +477,32 @@ silentRejectResponse(): { success: true, message: string }
 ### Comportement anti-spam
 
 1. **Honeypot rempli** → Rejet silencieux (retourne succès pour tromper le bot)
-2. **Patterns suspects détectés** → Rejet silencieux
+2. **Patterns suspects détectés** → Rejet silencieux + log du pattern matché
 3. **Rate limit dépassé** → Erreur 429 avec header `Retry-After`
 4. **Tout OK** → Traitement normal du formulaire
 
-> **Note** : Turnstile (CAPTCHA) a été désactivé pour simplifier l'expérience utilisateur. Le honeypot + détection de patterns est suffisant.
+> **Note** : Turnstile (CAPTCHA) désactivé. Le honeypot + détection de patterns est suffisant.
+> Les champs email et phone sont exclus du scan anti-spam pour éviter les faux positifs.
+> Le seuil de consonnes consécutives est à 8+ (au lieu de 6) pour éviter de bloquer les acronymes français.
+
+---
+
+## Endpoint de diagnostic
+
+**`GET /api/health`** — Teste la connectivité Resend et Google Sheets.
+
+```
+https://www.salondescemartinique.com/api/health
+```
+
+Retourne un JSON avec le statut de chaque service :
+```json
+{
+  "status": "ok",
+  "resend": { "ok": true },
+  "googleSheets": { "ok": true },
+  "env": { "RESEND_API_KEY": true, "ADMIN_EMAIL": true, "SHEET_ID": true, "GOOGLE_CREDENTIALS": true, "FROM_EMAIL": true }
+}
+```
+
+> Utiliser cet endpoint pour vérifier rapidement que les services sont opérationnels après un changement de configuration.
