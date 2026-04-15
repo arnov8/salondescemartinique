@@ -67,8 +67,42 @@ export async function POST(request: Request) {
     }
 
     // --- Test Google Sheets ---
-    // Test main sheet (Visiteurs, Exposants, Contact)
-    let sheetMain: ServiceCheck = { ok: false }
+    // Test onglet Visiteurs (SHEET_ID)
+    let sheetVisiteurs: ServiceCheck = { ok: false }
+    try {
+      const result = await appendToSheet(SHEET_TABS.VISITEURS, [
+        '[STATUT-CHECK]',
+        'Test',
+        'Test',
+        'Test',
+        'test@statut.check',
+        '0000000000',
+        '',
+      ])
+      sheetVisiteurs = { ok: !!result }
+    } catch (error) {
+      sheetVisiteurs = { ok: false, error: String(error) }
+    }
+
+    // Test onglet Exposants (SHEET_ID)
+    let sheetExposants: ServiceCheck = { ok: false }
+    try {
+      const result = await appendToSheet(SHEET_TABS.EXPOSANTS, [
+        '[STATUT-CHECK]',
+        'Test',
+        'Test',
+        'test@statut.check',
+        '0000000000',
+        'Test',
+        '',
+      ])
+      sheetExposants = { ok: !!result }
+    } catch (error) {
+      sheetExposants = { ok: false, error: String(error) }
+    }
+
+    // Test onglet Contact (SHEET_ID)
+    let sheetContact: ServiceCheck = { ok: false }
     try {
       const result = await appendToSheet(SHEET_TABS.CONTACT, [
         '[STATUT-CHECK]',
@@ -77,12 +111,12 @@ export async function POST(request: Request) {
         'Test automatique',
         'Ligne de test - peut être supprimée',
       ])
-      sheetMain = { ok: !!result }
+      sheetContact = { ok: !!result }
     } catch (error) {
-      sheetMain = { ok: false, error: String(error) }
+      sheetContact = { ok: false, error: String(error) }
     }
 
-    // Test inscription sheet
+    // Test onglet Inscriptions (INSCRIPTION_SHEET_ID - sheet séparé)
     let sheetInscription: ServiceCheck = { ok: false }
     try {
       const result = await appendToSheet(SHEET_TABS.INSCRIPTIONS, [
@@ -107,37 +141,47 @@ export async function POST(request: Request) {
       visiteur: {
         nom: 'Formulaire Visiteur',
         route: '/visiter',
+        api: '/api/visitor',
         emailAdmin: emailAdmin,
         emailConfirmation: emailConfirmation,
-        googleSheet: sheetMain,
+        googleSheet: sheetVisiteurs,
+        sheetInfo: 'Onglet "Visiteurs" du tableur principal (SHEET_ID)',
       },
       exposant: {
-        nom: 'Formulaire Exposant',
+        nom: 'Pré-inscription Exposant',
         route: '/exposer',
+        api: '/api/exhibitor',
         emailAdmin: emailAdmin,
         emailConfirmation: emailConfirmation,
-        googleSheet: sheetMain,
+        googleSheet: sheetExposants,
+        sheetInfo: 'Onglet "Exposants" du tableur principal (SHEET_ID)',
       },
       contact: {
         nom: 'Formulaire Contact',
         route: '/contact',
+        api: '/api/contact',
         emailAdmin: emailAdmin,
         emailConfirmation: emailConfirmation,
-        googleSheet: sheetMain,
+        googleSheet: sheetContact,
+        sheetInfo: 'Onglet "Contact" du tableur principal (SHEET_ID)',
       },
       inscription: {
-        nom: 'Bulletin d\'inscription',
-        route: '/exposer',
+        nom: 'Bulletin d\'inscription Exposant',
+        route: '/inscription-exposant',
+        api: '/api/inscription',
         emailAdmin: emailAdmin,
         emailConfirmation: emailConfirmation,
         googleSheet: sheetInscription,
+        sheetInfo: 'Tableur séparé Inscriptions (INSCRIPTION_SHEET_ID)',
       },
     }
 
     const allOk =
       emailAdmin.ok &&
       emailConfirmation.ok &&
-      sheetMain.ok &&
+      sheetVisiteurs.ok &&
+      sheetExposants.ok &&
+      sheetContact.ok &&
       sheetInscription.ok
 
     return NextResponse.json({

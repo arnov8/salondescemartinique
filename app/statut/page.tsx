@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useCallback, useEffect } from 'react'
 
 interface ServiceCheck {
   ok: boolean
@@ -11,9 +11,11 @@ interface ServiceCheck {
 interface FormulaireStatus {
   nom: string
   route: string
+  api: string
   emailAdmin: ServiceCheck
   emailConfirmation: ServiceCheck
   googleSheet: ServiceCheck
+  sheetInfo: string
 }
 
 interface StatusData {
@@ -32,39 +34,10 @@ export default function StatutPage() {
   const [error, setError] = useState('')
   const [data, setData] = useState<StatusData | null>(null)
   const inputRefs = useRef<(HTMLInputElement | null)[]>([])
+  const pinRef = useRef(pin)
+  pinRef.current = pin
 
-  const handlePinChange = (index: number, value: string) => {
-    if (!/^\d*$/.test(value)) return
-    const newPin = [...pin]
-    newPin[index] = value.slice(-1)
-    setPin(newPin)
-    if (value && index < 3) {
-      inputRefs.current[index + 1]?.focus()
-    }
-  }
-
-  const handleKeyDown = (index: number, e: React.KeyboardEvent) => {
-    if (e.key === 'Backspace' && !pin[index] && index > 0) {
-      inputRefs.current[index - 1]?.focus()
-    }
-    if (e.key === 'Enter') {
-      handleSubmit()
-    }
-  }
-
-  const handlePaste = (e: React.ClipboardEvent) => {
-    e.preventDefault()
-    const pasted = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, 4)
-    if (pasted.length === 4) {
-      setPin(pasted.split(''))
-      inputRefs.current[3]?.focus()
-    }
-  }
-
-  const handleSubmit = async () => {
-    const fullPin = pin.join('')
-    if (fullPin.length !== 4) return
-
+  const submitPin = useCallback(async (fullPin: string) => {
     setLoading(true)
     setError('')
 
@@ -94,21 +67,57 @@ export default function StatutPage() {
       setError('Erreur de connexion')
     }
     setLoading(false)
+  }, [])
+
+  const handlePinChange = (index: number, value: string) => {
+    if (!/^\d*$/.test(value)) return
+    const newPin = [...pinRef.current]
+    newPin[index] = value.slice(-1)
+    setPin(newPin)
+
+    if (value && index < 3) {
+      inputRefs.current[index + 1]?.focus()
+    }
+
+    // Auto-submit when 4th digit entered
+    if (value && index === 3) {
+      const fullPin = newPin.join('')
+      if (fullPin.length === 4) {
+        submitPin(fullPin)
+      }
+    }
   }
 
-  const refresh = async () => {
-    setLoading(true)
-    try {
-      const res = await fetch('/api/statut', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ pin: pin.join('') }),
-      })
-      const result = await res.json()
-      if (!result.error) setData(result)
-    } catch { /* ignore */ }
-    setLoading(false)
+  const handleKeyDown = (index: number, e: React.KeyboardEvent) => {
+    if (e.key === 'Backspace' && !pin[index] && index > 0) {
+      inputRefs.current[index - 1]?.focus()
+    }
   }
+
+  const handlePaste = (e: React.ClipboardEvent) => {
+    e.preventDefault()
+    const pasted = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, 4)
+    if (pasted.length === 4) {
+      const digits = pasted.split('')
+      setPin(digits)
+      inputRefs.current[3]?.focus()
+      submitPin(pasted)
+    }
+  }
+
+  // Also allow Enter from any field
+  useEffect(() => {
+    const handleEnter = (e: KeyboardEvent) => {
+      if (e.key === 'Enter') {
+        const fullPin = pinRef.current.join('')
+        if (fullPin.length === 4) submitPin(fullPin)
+      }
+    }
+    window.addEventListener('keydown', handleEnter)
+    return () => window.removeEventListener('keydown', handleEnter)
+  }, [submitPin])
+
+  const refresh = () => submitPin(pinRef.current.join(''))
 
   // PIN screen
   if (!authenticated) {
@@ -144,21 +153,15 @@ export default function StatutPage() {
             <p className="text-red-500 text-sm mb-4 animate-fade-in">{error}</p>
           )}
 
-          <button
-            onClick={handleSubmit}
-            disabled={loading || pin.join('').length !== 4}
-            className="w-full bg-primary hover:bg-primary-dark text-white font-semibold py-3 px-6 rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {loading ? (
-              <span className="flex items-center justify-center gap-2">
-                <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-                </svg>
-                Vérification...
-              </span>
-            ) : 'Accéder'}
-          </button>
+          {loading && (
+            <div className="flex items-center justify-center gap-2 text-primary text-sm mt-2">
+              <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+              </svg>
+              Vérification en cours...
+            </div>
+          )}
         </div>
       </div>
     )
@@ -216,7 +219,7 @@ export default function StatutPage() {
                   <FormIcon type={key} />
                   <div>
                     <h2 className="font-semibold text-gray-900">{form.nom}</h2>
-                    <p className="text-xs text-gray-400">{form.route}</p>
+                    <p className="text-xs text-gray-400">{form.route} &rarr; {form.api}</p>
                   </div>
                 </div>
                 <StatusBadge ok={allOk} />
@@ -236,7 +239,7 @@ export default function StatutPage() {
                 />
                 <ServiceRow
                   label="Google Sheets"
-                  description={key === 'inscription' ? 'Enregistre dans le tableur Inscriptions' : 'Enregistre dans le tableur principal'}
+                  description={form.sheetInfo}
                   check={form.googleSheet}
                 />
               </div>
@@ -288,28 +291,114 @@ function StatusBadge({ ok }: { ok: boolean }) {
   )
 }
 
+function getErrorDiagnostic(label: string, error?: string): { cause: string; solution: string } | null {
+  if (!error) return null
+  const e = error.toLowerCase()
+
+  // Resend / Email errors
+  if (e.includes('resend_api_key non configuré') || e.includes('api_key')) {
+    return {
+      cause: 'La clé API Resend n\'est pas configurée sur le serveur.',
+      solution: 'Aller dans Vercel > Settings > Environment Variables et vérifier que RESEND_API_KEY est bien renseignée, puis redéployer.',
+    }
+  }
+  if (e.includes('validation_error') || e.includes('not a verified') || e.includes('domain')) {
+    return {
+      cause: 'Le domaine d\'envoi n\'est pas vérifié sur Resend.',
+      solution: 'Aller sur resend.com > Domains, vérifier que salondescemartinique.com est bien vérifié (DNS DKIM/SPF configurés).',
+    }
+  }
+  if (e.includes('rate_limit') || e.includes('429') || e.includes('too many')) {
+    return {
+      cause: 'Trop d\'emails envoyés en peu de temps (limite Resend atteinte).',
+      solution: 'Attendre quelques minutes et relancer le test. Si le problème persiste, vérifier le plan Resend.',
+    }
+  }
+  if (e.includes('unauthorized') || e.includes('401') || e.includes('forbidden') || e.includes('403')) {
+    return {
+      cause: 'La clé API Resend est invalide ou expirée.',
+      solution: 'Aller sur resend.com > API Keys, générer une nouvelle clé et la mettre à jour dans Vercel > Environment Variables.',
+    }
+  }
+  if (label.toLowerCase().includes('email')) {
+    return {
+      cause: `Erreur d'envoi email : ${error}`,
+      solution: 'Vérifier la configuration Resend (clé API, domaine vérifié) et les variables FROM_EMAIL / ADMIN_EMAIL sur Vercel.',
+    }
+  }
+
+  // Google Sheets errors
+  if (e.includes('google_credentials non configuré') || e.includes('credentials')) {
+    return {
+      cause: 'Les identifiants Google (Service Account) ne sont pas configurés.',
+      solution: 'Aller dans Vercel > Environment Variables et vérifier que GOOGLE_CREDENTIALS contient bien le JSON du Service Account.',
+    }
+  }
+  if (e.includes('sheet_id non configuré') || e.includes('sheet_id')) {
+    return {
+      cause: 'L\'identifiant de la Google Sheet n\'est pas configuré.',
+      solution: 'Aller dans Vercel > Environment Variables et vérifier que SHEET_ID (et INSCRIPTION_SHEET_ID) sont renseignés.',
+    }
+  }
+  if (e.includes('permission') || e.includes('403') || e.includes('not found') || e.includes('404')) {
+    return {
+      cause: 'Le Service Account n\'a pas accès à la Google Sheet.',
+      solution: 'Ouvrir la Google Sheet > Partager, et ajouter l\'email du Service Account (xxx@xxx.iam.gserviceaccount.com) en tant qu\'éditeur.',
+    }
+  }
+  if (e.includes('invalid_grant') || e.includes('token')) {
+    return {
+      cause: 'Les identifiants Google sont invalides ou expirés.',
+      solution: 'Regénérer une clé JSON depuis Google Cloud Console > IAM > Service Accounts, et mettre à jour GOOGLE_CREDENTIALS sur Vercel.',
+    }
+  }
+  if (label.toLowerCase().includes('sheet')) {
+    return {
+      cause: `Erreur Google Sheets : ${error}`,
+      solution: 'Vérifier que SHEET_ID, GOOGLE_CREDENTIALS sont corrects et que le Service Account a accès en écriture à la feuille.',
+    }
+  }
+
+  return {
+    cause: error,
+    solution: 'Vérifier les variables d\'environnement sur Vercel et redéployer le site.',
+  }
+}
+
 function ServiceRow({ label, description, check }: { label: string; description: string; check: ServiceCheck }) {
+  const diagnostic = !check.ok ? getErrorDiagnostic(label, check.error) : null
+
   return (
-    <div className="flex items-center justify-between px-6 py-3.5">
-      <div className="flex items-center gap-3">
-        {check.ok ? (
-          <svg className="w-5 h-5 text-emerald-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-          </svg>
-        ) : (
-          <svg className="w-5 h-5 text-red-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-          </svg>
-        )}
-        <div>
-          <p className="text-sm font-medium text-gray-800">{label}</p>
-          <p className="text-xs text-gray-400">{description}</p>
+    <div>
+      <div className="flex items-center justify-between px-6 py-3.5">
+        <div className="flex items-center gap-3">
+          {check.ok ? (
+            <svg className="w-5 h-5 text-emerald-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+            </svg>
+          ) : (
+            <svg className="w-5 h-5 text-red-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+            </svg>
+          )}
+          <div>
+            <p className="text-sm font-medium text-gray-800">{label}</p>
+            <p className="text-xs text-gray-400">{description}</p>
+          </div>
         </div>
+        {!check.ok && (
+          <span className="text-xs font-medium text-red-500">En panne</span>
+        )}
       </div>
-      {!check.ok && check.error && (
-        <span className="text-xs text-red-500 max-w-[200px] truncate" title={check.error}>
-          {check.error}
-        </span>
+      {diagnostic && (
+        <div className="mx-6 mb-3 rounded-lg bg-red-50 border border-red-100 p-3">
+          <p className="text-xs text-red-700">
+            <span className="font-semibold">Problème :</span> {diagnostic.cause}
+          </p>
+          <p className="text-xs text-red-600 mt-1.5">
+            <span className="font-semibold">Solution :</span> {diagnostic.solution}
+          </p>
+        </div>
       )}
     </div>
   )
