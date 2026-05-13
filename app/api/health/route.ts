@@ -4,7 +4,15 @@ import { appendToSheet, SHEET_TABS } from '@/lib/google-sheets'
 
 export const dynamic = 'force-dynamic'
 
-export async function GET() {
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url)
+  const token = searchParams.get('token')
+  const secret = process.env.HEALTH_CHECK_SECRET
+
+  if (!secret || token !== secret) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   const results: Record<string, unknown> = {
     timestamp: new Date().toISOString(),
     env: {
