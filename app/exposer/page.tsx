@@ -66,7 +66,7 @@ export default function ExposerPage() {
               Exposer
             </h1>
             <p className="text-base sm:text-lg lg:text-xl text-gray-200">
-              Rejoignez les 70 exposants et présentez vos produits et services
+              Rejoignez les 75 exposants et présentez vos produits et services
               aux décideurs CSE &amp; COS de Martinique.
             </p>
           </div>
@@ -167,7 +167,7 @@ export default function ExposerPage() {
             <h2 className="section-title">Développez votre activité auprès des comités d&apos;entreprise</h2>
             <p className="text-gray-600 text-base sm:text-lg leading-relaxed">
               Le <strong>Salon des CSE &amp; COS de Martinique</strong> est le plus grand rassemblement de responsables
-              de comités d&apos;entreprise sur le territoire. Depuis <strong>32 ans</strong>, nous offrons aux prestataires
+              de comités d&apos;entreprise sur le territoire. Depuis <strong>35 ans</strong>, nous offrons aux prestataires
               et fournisseurs une plateforme unique pour rencontrer directement les décideurs et développer leur portefeuille clients.
             </p>
           </div>
@@ -207,11 +207,11 @@ export default function ExposerPage() {
             <h3 className="text-xl sm:text-2xl font-bold mb-8 text-center">Les chiffres clés du salon</h3>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
               <div className="text-center">
-                <div className="text-3xl sm:text-4xl lg:text-5xl font-bold text-accent mb-2">32</div>
+                <div className="text-3xl sm:text-4xl lg:text-5xl font-bold text-accent mb-2">35</div>
                 <p className="text-gray-300 text-sm sm:text-base">années d&apos;existence</p>
               </div>
               <div className="text-center">
-                <div className="text-3xl sm:text-4xl lg:text-5xl font-bold text-accent mb-2">70</div>
+                <div className="text-3xl sm:text-4xl lg:text-5xl font-bold text-accent mb-2">75</div>
                 <p className="text-gray-300 text-sm sm:text-base">exposants partenaires</p>
               </div>
               <div className="text-center">

@@ -5,9 +5,9 @@ import YouTubeBackground from '@/components/YouTubeBackground'
 import PhotoCarousel from '@/components/PhotoCarousel'
 
 const stats = [
-  { icon: Store, value: '70', label: 'Exposants' },
+  { icon: Store, value: '75', label: 'Exposants' },
   { icon: Users, value: '+700', label: 'Visiteurs' },
-  { icon: Award, value: '33ème', label: 'Édition' },
+  { icon: Award, value: '35ème', label: 'Édition' },
 ]
 
 const sectors = [
@@ -22,7 +22,7 @@ const sectors = [
 ]
 
 const advantages = [
-  'Rencontrez +60 prestataires et fournisseurs qualifiés',
+  'Rencontrez +70 prestataires et fournisseurs qualifiés',
   'Découvrez les solutions adaptées à votre CSE/COS',
   'Assistez à une conférence animée par un expert',
   'Participez à la Grande Tombola des Comités',
@@ -257,7 +257,7 @@ export default function HomePage() {
             Vous êtes prestataire ou fournisseur ?
           </h2>
           <p className="text-base sm:text-lg lg:text-xl text-gray-200 mb-6 sm:mb-8 max-w-2xl mx-auto">
-            Rejoignez les 70 exposants et présentez vos produits et services
+            Rejoignez les 75 exposants et présentez vos produits et services
             aux décideurs CSE &amp; COS de Martinique.
           </p>
           <Link href="/exposer" className="btn-accent inline-flex items-center gap-2">
