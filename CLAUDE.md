@@ -1,5 +1,29 @@
 # Salon des CSE & COS de Martinique - Site Vitrine
 
+---
+
+## ⚠️ RÈGLE DE DÉPLOIEMENT — À NE JAMAIS OUBLIER
+
+**Toujours travailler et déployer depuis ce dossier :**
+```
+/Users/arnaudvalere/salondescemartinique/
+```
+
+**Projet Vercel correct :** `salon-cse-martinique` → https://www.salondescemartinique.com
+
+**NE PAS utiliser** `/Users/arnaudvalere/Documents/Projects/salondescemartinique/` — ce dossier est lié à un mauvais projet Vercel (`salondescemartinique`) qui n'a pas le domaine custom.
+
+**Commandes correctes :**
+```bash
+cd /Users/arnaudvalere/salondescemartinique
+git pull origin main   # si modifications faites ailleurs
+npx vercel --prod      # déploiement production
+```
+
+**Vercel n'est PAS en auto-deploy.** Après chaque `git push`, déployer manuellement avec `npx vercel --prod` depuis ce dossier.
+
+---
+
 ## Description du projet
 
 Site vitrine moderne pour le **Salon des CSE & COS de Martinique** - 33ème édition.
@@ -487,22 +511,44 @@ silentRejectResponse(): { success: true, message: string }
 
 ---
 
-## Endpoint de diagnostic
+## Pages de diagnostic
 
-**`GET /api/health`** — Teste la connectivité Resend et Google Sheets.
+### Page statut visuelle — `/statut`
+
+**URL : https://www.salondescemartinique.com/statut**
+
+Page protégée par code PIN (8291) qui affiche le statut détaillé de chaque formulaire du site.
+
+#### Architecture
+- **Page** : `app/statut/page.tsx` (client-side, PIN gate + dashboard)
+- **API** : `app/api/statut/route.ts` (POST avec PIN, tests réels des services)
+
+#### Ce qui est testé par formulaire
+
+| Formulaire | Page | API | Google Sheet |
+|---|---|---|---|
+| Formulaire Visiteur | `/visiter` | `/api/visitor` | Onglet "Visiteurs" (SHEET_ID) |
+| Pré-inscription Exposant | `/exposer` | `/api/exhibitor` | Onglet "Exposants" (SHEET_ID) |
+| Formulaire Contact | `/contact` | `/api/contact` | Onglet "Contact" (SHEET_ID) |
+| Bulletin d'inscription Exposant | `/inscription-exposant` | `/api/inscription` | Onglet "Inscriptions" (INSCRIPTION_SHEET_ID — sheet séparé) |
+
+Pour chaque formulaire, 3 services sont testés :
+1. **Email notification admin** — envoi d'un email récap vers ADMIN_EMAIL via Resend
+2. **Email confirmation visiteur/exposant** — envoi d'un accusé de réception via Resend
+3. **Google Sheets** — écriture d'une ligne test dans l'onglet/sheet correspondant
+
+#### Fonctionnalités
+- Auto-submit du PIN au 4ème chiffre (pas besoin d'appuyer sur Entrée)
+- Diagnostic intelligent : en cas d'erreur, affiche la cause probable + la solution à appliquer
+- Bouton "Relancer le test" pour re-vérifier
+- Affichage des variables d'environnement configurées
+
+### Endpoint JSON — `/api/health`
+
+**`GET /api/health`** — Ancien endpoint de diagnostic simple (sans PIN, JSON brut).
 
 ```
 https://www.salondescemartinique.com/api/health
 ```
 
-Retourne un JSON avec le statut de chaque service :
-```json
-{
-  "status": "ok",
-  "resend": { "ok": true },
-  "googleSheets": { "ok": true },
-  "env": { "RESEND_API_KEY": true, "ADMIN_EMAIL": true, "SHEET_ID": true, "GOOGLE_CREDENTIALS": true, "FROM_EMAIL": true }
-}
-```
-
-> Utiliser cet endpoint pour vérifier rapidement que les services sont opérationnels après un changement de configuration.
+> Préférer `/statut` pour un diagnostic visuel complet.
