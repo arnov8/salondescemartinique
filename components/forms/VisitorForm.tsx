@@ -186,7 +186,7 @@ export default function VisitorForm() {
           className={`w-full px-4 py-3 rounded-lg border ${errors.participants ? 'border-red-500' : 'border-gray-300'} focus:ring-2 focus:ring-blue-500 focus:border-transparent transition bg-white`}
         >
           <option value="">Sélectionnez</option>
-          {[1, 2, 3, 4, 5, 6, 7].map((n) => (
+          {[1, 2, 3, 4, 5].map((n) => (
             <option key={n} value={n}>{n} participant{n > 1 ? 's' : ''}</option>
           ))}
         </select>
