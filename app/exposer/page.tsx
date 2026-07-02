@@ -26,7 +26,6 @@ const benefits = [
 
 const included = [
   'Stand équipé (table, chaises, électricité)',
-  'Badge exposant',
   'Participation à la Grande Tombola des Comités',
   'Salon mis en avant sur RCI, dans la presse et sur les réseaux sociaux',
 ]
