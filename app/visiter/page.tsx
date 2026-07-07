@@ -5,7 +5,7 @@ const benefits = [
   {
     icon: Users,
     title: 'Rencontrez les exposants',
-    description: 'Plus de 60 prestataires et fournisseurs pour répondre à tous les besoins de votre CSE/COS.',
+    description: 'Plus de 70 prestataires et fournisseurs pour répondre à tous les besoins de votre CSE/COS.',
   },
   {
     icon: Briefcase,
@@ -139,7 +139,7 @@ export default function VisiterPage() {
             <h2 className="section-title">Découvrez le rendez-vous incontournable des comités</h2>
             <p className="text-gray-600 text-base sm:text-lg leading-relaxed">
               Le <strong>Salon des CSE &amp; COS de Martinique</strong> est l&apos;événement professionnel de référence
-              pour les Comités Sociaux et Économiques et les Comités d&apos;Œuvres Sociales. Depuis <strong>32 ans</strong>,
+              pour les Comités Sociaux et Économiques et les Comités d&apos;Œuvres Sociales. Depuis <strong>35 ans</strong>,
               nous rassemblons chaque année les acteurs clés du monde des comités d&apos;entreprise autour d&apos;une journée
               riche en découvertes, en échanges et en opportunités.
             </p>
@@ -241,7 +241,7 @@ export default function VisiterPage() {
               </p>
               <p className="text-gray-600 leading-relaxed">
                 <strong>Attention :</strong> pour remporter un cadeau, vous devez impérativement être
-                présent lors du tirage au sort qui aura lieu en fin de journée.
+                présent lors des tirages au sort qui auront lieu à 11h45 et 14h30.
               </p>
             </div>
           </div>
