@@ -223,6 +223,14 @@ export async function POST(request: Request) {
                     <span class="recap-label">CSE / COS</span>
                     <span class="recap-value">${validData.cseName}</span>
                   </div>
+                  <div class="recap-item">
+                    <span class="recap-label">Nombre de participants</span>
+                    <span class="recap-value">${
+                      validData.participants
+                        ? `${validData.participants} participant${Number(validData.participants) > 1 ? 's' : ''}`
+                        : 'Non précisé'
+                    }</span>
+                  </div>
                 </div>
 
                 <div class="info-box">
