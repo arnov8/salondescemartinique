@@ -181,10 +181,11 @@ export async function POST(request: Request) {
               .success-icon svg { width: 35px; height: 35px; }
               .recap { background: #f8f9fa; border-radius: 8px; padding: 20px; margin: 25px 0; border-left: 4px solid #1e3a5f; }
               .recap-title { font-size: 12px; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
-              .recap-item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #eee; }
-              .recap-item:last-child { border-bottom: none; }
-              .recap-label { color: #666; }
-              .recap-value { font-weight: 600; color: #1a1a1a; }
+              .recap-table { width: 100%; border-collapse: collapse; }
+              .recap-table td { padding: 10px 0; border-bottom: 1px solid #eee; font-size: 14px; vertical-align: top; }
+              .recap-table tr:last-child td { border-bottom: none; }
+              .recap-label { color: #666; text-align: left; padding-right: 16px; white-space: nowrap; }
+              .recap-value { font-weight: 600; color: #1a1a1a; text-align: right; }
               .info-box { background: #e8f4fc; border-radius: 8px; padding: 20px; margin: 25px 0; text-align: center; }
               .info-box p { margin: 0; color: #1e3a5f; }
               .footer { text-align: center; padding: 25px; color: #888; font-size: 12px; }
@@ -207,30 +208,32 @@ export async function POST(request: Request) {
 
                 <div class="recap">
                   <div class="recap-title">Récapitulatif de votre inscription</div>
-                  <div class="recap-item">
-                    <span class="recap-label">Nom</span>
-                    <span class="recap-value">${validData.fullName}</span>
-                  </div>
-                  <div class="recap-item">
-                    <span class="recap-label">Fonction</span>
-                    <span class="recap-value">${validData.position}</span>
-                  </div>
-                  <div class="recap-item">
-                    <span class="recap-label">Entreprise</span>
-                    <span class="recap-value">${validData.company}</span>
-                  </div>
-                  <div class="recap-item">
-                    <span class="recap-label">CSE / COS</span>
-                    <span class="recap-value">${validData.cseName}</span>
-                  </div>
-                  <div class="recap-item">
-                    <span class="recap-label">Nombre de participants</span>
-                    <span class="recap-value">${
-                      validData.participants
-                        ? `${validData.participants} participant${Number(validData.participants) > 1 ? 's' : ''}`
-                        : 'Non précisé'
-                    }</span>
-                  </div>
+                  <table class="recap-table" width="100%" cellpadding="0" cellspacing="0" role="presentation">
+                    <tr>
+                      <td class="recap-label">Nom</td>
+                      <td class="recap-value">${validData.fullName}</td>
+                    </tr>
+                    <tr>
+                      <td class="recap-label">Fonction</td>
+                      <td class="recap-value">${validData.position}</td>
+                    </tr>
+                    <tr>
+                      <td class="recap-label">Entreprise</td>
+                      <td class="recap-value">${validData.company}</td>
+                    </tr>
+                    <tr>
+                      <td class="recap-label">CSE / COS</td>
+                      <td class="recap-value">${validData.cseName}</td>
+                    </tr>
+                    <tr>
+                      <td class="recap-label">Nombre de participants</td>
+                      <td class="recap-value">${
+                        validData.participants
+                          ? `${validData.participants} participant${Number(validData.participants) > 1 ? 's' : ''}`
+                          : 'Non précisé'
+                      }</td>
+                    </tr>
+                  </table>
                 </div>
 
                 <div class="info-box">
