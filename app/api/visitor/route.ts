@@ -195,7 +195,7 @@ export async function POST(request: Request) {
           <body>
             <div class="container">
               <div class="header">
-                <h1>Salon des CSE Martinique</h1>
+                <img src="https://www.salondescemartinique.com/images/logo-scse-mq-blanc.png" alt="Le Salon des CSE & COS de Martinique" width="300" style="width: 300px; max-width: 80%; height: auto; display: block; margin: 0 auto 4px;">
                 <p>L'événement de référence pour les Comités Sociaux et Économiques</p>
               </div>
               <div class="content">
