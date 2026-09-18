@@ -23,3 +23,7 @@ npm-debug.log*
 *.tsbuildinfo
 next-env.d.ts
 .vercel
+
+# exports Vercel CLI (vercel env pull) — jamais versionnés
+.env*
+!.env.example
