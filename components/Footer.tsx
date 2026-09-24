@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import CookieSettingsLink from '@/components/CookieSettingsLink'
 import Image from 'next/image'
 import { MapPin, Phone, Mail, Calendar, Instagram, Facebook, Clock } from 'lucide-react'
 
@@ -148,6 +149,8 @@ export default function Footer() {
               <Link href="/politique-de-confidentialite" className="text-gray-400 hover:text-accent transition-colors text-sm py-1">
                 Politique de confidentialité
               </Link>
+              <span className="text-gray-600">|</span>
+              <CookieSettingsLink />
             </div>
             <p className="text-gray-500 text-sm">
               © {new Date().getFullYear()} Salon des CSE &amp; COS de Martinique

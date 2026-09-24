@@ -552,3 +552,60 @@ https://www.salondescemartinique.com/api/health
 ```
 
 > Préférer `/statut` pour un diagnostic visuel complet.
+
+---
+
+## Pixel Meta & consentement cookies
+
+### Pixel dédié
+
+Chaque site Antilles Salons a **son propre pixel** — les publics ne se recoupent pas
+(un exposant martiniquais n'est jamais une cible guadeloupéenne, et inversement).
+Ici : **« AS — SCSE Martinique »**, sur le compte publicitaire `845998661332770`.
+
+L'ID se règle par variable d'environnement Vercel, jamais en dur :
+
+| Variable | Rôle |
+|---|---|
+| `NEXT_PUBLIC_META_PIXEL_ID` | ID du pixel. **Absente = aucun pixel chargé**, le site tourne normalement. |
+| `NEXT_PUBLIC_META_DOMAIN_VERIFICATION` | Code de vérification du domaine (Meta Business > Sécurité de la marque > Domaines). |
+
+### Consentement (CNIL)
+
+- `lib/consent.ts` — choix conservé **180 jours** en `localStorage`, puis la bannière revient.
+- `components/ConsentBanner.tsx` — « Accepter » et « Refuser » au même niveau (obligatoire).
+- `components/CookieSettingsLink.tsx` — lien « Gérer mes cookies » en pied de page (choix révocable).
+- `components/Analytics.tsx` :
+  - **Google** : chargé en *consent mode v2*, tout refusé par défaut. Aucun cookie avant acceptation ;
+    à l'acceptation, `gtag('consent','update')` passe tout en `granted`.
+  - **Meta** : `fbevents.js` **n'est pas chargé du tout** tant que l'utilisateur n'a pas accepté.
+
+Vérifié en local : avant acceptation, **zéro cookie** et pixel absent ; après, cookies GA + pixel chargé ;
+après refus, rien du tout.
+
+### Évènements envoyés
+
+Toujours branchés sur le **succès réel** (`res.ok`), jamais sur le chemin honeypot antispam
+(les formulaires simulent un succès pour les bots — y poser un évènement polluerait le pixel).
+
+| Parcours | Formulaire | Évènement | Paramètres |
+|---|---|---|---|
+| `/visiter` — élu CSE/COS | `VisitorForm` | `CompleteRegistration` | `content_category: 'visiteur'` |
+| `/exposer` — pré-inscription | `ExhibitorForm` | `Lead` | `content_category: 'exposant'` |
+| `/inscription-exposant` — bulletin signé | `InscriptionForm` | `Purchase` | `value: totalTTC`, `currency: 'EUR'` |
+| `/contact` | `ContactForm` | `Contact` | — |
+
+Tous portent `content_name: 'scse-mq'` (voir `lib/tracking.ts`), ce qui permet de découper
+les audiences par salon côté Meta sans jamais mélanger les publics.
+
+`Purchase` est le seul évènement porteur d'un montant, mais son volume annuel est trop faible
+pour servir de cible d'optimisation (Meta demande ~50 conversions/semaine par ensemble de pubs) :
+**optimiser sur `Lead` ou `CompleteRegistration`, garder `Purchase` pour la mesure.**
+
+### Audiences — flux autorisés
+
+Le seul pont avec un autre site est le **séminaire antillais** (dans les deux sens) :
+inscrits séminaire ↔ visiteurs du salon. **Jamais** de passerelle avec le salon de Guadeloupe.
+
+Les audiences issues du pixel expirent au bout de **180 jours** — insuffisant pour un salon annuel.
+L'actif durable, ce sont les **listes d'inscrits téléversées** (elles, n'expirent jamais).

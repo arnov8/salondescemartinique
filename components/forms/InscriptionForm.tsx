@@ -1,5 +1,6 @@
 'use client'
 
+import { trackConversion } from '@/lib/tracking'
 import { useState, useRef, useCallback, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -172,6 +173,11 @@ export default function InscriptionForm() {
       const resData = await res.json()
       if (!res.ok) throw new Error(resData.error || 'Erreur')
       if (resData.sheetWarning) setSheetWarning(resData.sheetWarning)
+      trackConversion('Purchase', {
+        content_category: 'exposant',
+        value: totals.totalTTC,
+        currency: 'EUR',
+      })
       setIsSubmitted(true)
     } catch (err) {
       setSubmitError(err instanceof Error ? err.message : 'Erreur lors de l\'envoi.')

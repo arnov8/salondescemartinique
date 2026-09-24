@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { trackConversion } from '@/lib/tracking'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -56,6 +57,7 @@ export default function ContactForm() {
       })
 
       if (res.ok) {
+        trackConversion('Contact')
         setIsSubmitted(true)
         reset()
       } else {

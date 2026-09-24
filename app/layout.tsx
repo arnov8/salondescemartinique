@@ -1,11 +1,10 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import Script from 'next/script'
 import './globals.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-
-const GA_MEASUREMENT_ID = 'G-XD9BL6ZMGP'
+import Analytics from '@/components/Analytics'
+import ConsentBanner from '@/components/ConsentBanner'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -46,6 +45,11 @@ export const metadata: Metadata = {
     description: 'Le rendez-vous annuel des responsables CSE & COS en Martinique.',
     images: ['/images/visuel-2025.jpg'],
   },
+  ...(process.env.NEXT_PUBLIC_META_DOMAIN_VERIFICATION && {
+    other: {
+      'facebook-domain-verification': process.env.NEXT_PUBLIC_META_DOMAIN_VERIFICATION,
+    },
+  }),
   robots: {
     index: true,
     follow: true,
@@ -138,19 +142,8 @@ export default function RootLayout({
           fetchPriority="high"
         />
 
-        {/* Google Analytics 4 */}
-        <Script
-          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-          strategy="afterInteractive"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${GA_MEASUREMENT_ID}');
-          `}
-        </Script>
+        {/* Mesure d'audience + pixel Meta, sous consentement */}
+        <Analytics />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -162,6 +155,7 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
+        <ConsentBanner />
       </body>
     </html>
   )

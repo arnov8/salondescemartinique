@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { trackConversion } from '@/lib/tracking'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -67,6 +68,7 @@ export default function ExhibitorForm() {
       })
 
       if (res.ok) {
+        trackConversion('Lead', { content_category: 'exposant' })
         setIsSubmitted(true)
         reset()
       } else {
