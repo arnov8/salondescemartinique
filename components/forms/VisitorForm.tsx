@@ -50,9 +50,9 @@ export default function VisitorForm() {
       })
 
       if (res.ok) {
-        trackConversion('CompleteRegistration', { content_category: 'visiteur' })
         setIsSubmitted(true)
         reset()
+        trackConversion('CompleteRegistration', { content_category: 'visiteur' })
       } else {
         const result = await res.json()
         setError(result.error || 'Une erreur est survenue')

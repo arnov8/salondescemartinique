@@ -68,8 +68,8 @@ export default function ExhibitorForm() {
       })
 
       if (res.ok) {
-        trackConversion('Lead', { content_category: 'exposant' })
         setIsSubmitted(true)
+        trackConversion('Lead', { content_category: 'exposant' })
         reset()
       } else {
         const result = await res.json()

@@ -57,8 +57,8 @@ export default function ContactForm() {
       })
 
       if (res.ok) {
-        trackConversion('Contact')
         setIsSubmitted(true)
+        trackConversion('Contact')
         reset()
       } else {
         const result = await res.json()
