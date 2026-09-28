@@ -4,6 +4,7 @@ import { rateLimit, getClientIP } from '@/lib/rate-limit'
 import { sendEmail, FROM_EMAIL, ADMIN_EMAIL } from '@/lib/resend'
 import { appendToSheet, SHEET_TABS } from '@/lib/google-sheets'
 import { validateSubmission, detectSpamPattern, silentRejectResponse } from '@/lib/antispam'
+import { EXHIBITOR_REGISTRATION_OPEN } from '@/lib/registration'
 
 // Server-side validation schema
 const exhibitorSchema = z.object({
@@ -18,6 +19,14 @@ const exhibitorSchema = z.object({
 })
 
 export async function POST(request: Request) {
+  // Salon complet : plus aucune pré-inscription exposant acceptée (voir lib/registration.ts)
+  if (!EXHIBITOR_REGISTRATION_OPEN) {
+    return NextResponse.json(
+      { error: 'Le Salon est complet. Nous ne prenons plus d\'inscriptions exposants.' },
+      { status: 403 }
+    )
+  }
+
   try {
     // Rate limiting: 3 requests per minute per IP (stricter for exhibitors)
     const clientIP = getClientIP(request)

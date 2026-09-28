@@ -154,8 +154,8 @@ export default function VisiterPage() {
                         </p>
                         <div className="h-px w-16 bg-accent/40 mx-auto my-5" />
                         <p className="text-gray-500 text-sm leading-relaxed">
-                          <strong className="text-primary">Déjà inscrit ?</strong> Présentez-vous à l&apos;entrée
-                          le <strong className="text-primary">jeudi 1er octobre</strong>, dès 8h00.
+                          <strong className="text-primary">Pour ceux déjà inscrits</strong> – Rendez-vous
+                          à l&apos;accueil du Salon.
                         </p>
                       </div>
                     </div>

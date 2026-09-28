@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { Home, ArrowLeft, Search } from 'lucide-react'
-import { VISITOR_REGISTRATION_OPEN } from '@/lib/registration'
+import { VISITOR_REGISTRATION_OPEN, EXHIBITOR_REGISTRATION_OPEN } from '@/lib/registration'
 
 export default function NotFound() {
   return (
@@ -41,7 +41,7 @@ export default function NotFound() {
             className="card hover:border-accent border-2 border-transparent transition-colors"
           >
             <p className="font-bold text-primary">Exposer</p>
-            <p className="text-sm text-gray-500">Devenir exposant</p>
+            <p className="text-sm text-gray-500">{EXHIBITOR_REGISTRATION_OPEN ? 'Devenir exposant' : 'Stands complets'}</p>
           </Link>
         </div>
 

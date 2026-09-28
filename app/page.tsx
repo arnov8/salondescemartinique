@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { Calendar, MapPin, Users, Store, Briefcase, Gift, Plane, GraduationCap, ArrowRight, CheckCircle, Award, Clock, Building2, PartyPopper, CreditCard } from 'lucide-react'
 import YouTubeBackground from '@/components/YouTubeBackground'
 import PhotoCarousel from '@/components/PhotoCarousel'
-import { VISITOR_REGISTRATION_OPEN } from '@/lib/registration'
+import { VISITOR_REGISTRATION_OPEN, EXHIBITOR_REGISTRATION_OPEN } from '@/lib/registration'
 
 const stats = [
   { icon: Store, value: '75', label: 'Exposants' },
@@ -113,7 +113,7 @@ export default function HomePage() {
                   <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
                 </Link>
                 <Link href="/exposer" className="btn-outline inline-flex items-center justify-center gap-2">
-                  Devenir exposant
+                  {EXHIBITOR_REGISTRATION_OPEN ? 'Devenir exposant' : 'Stands complets'}
                 </Link>
               </div>
             </div>
@@ -258,11 +258,20 @@ export default function HomePage() {
             Vous êtes prestataire ou fournisseur ?
           </h2>
           <p className="text-base sm:text-lg lg:text-xl text-gray-200 mb-6 sm:mb-8 max-w-2xl mx-auto">
-            Rejoignez les 75 exposants et présentez vos produits et services
-            aux décideurs CSE &amp; COS de Martinique.
+            {EXHIBITOR_REGISTRATION_OPEN ? (
+              <>
+                Rejoignez les 75 exposants et présentez vos produits et services
+                aux décideurs CSE &amp; COS de Martinique.
+              </>
+            ) : (
+              <>
+                L&apos;édition 2026 affiche complet avec 75 exposants.
+                Contactez-nous dès maintenant pour exposer à la prochaine édition.
+              </>
+            )}
           </p>
           <Link href="/exposer" className="btn-accent inline-flex items-center gap-2">
-            Réserver votre stand
+            {EXHIBITOR_REGISTRATION_OPEN ? 'Réserver votre stand' : 'Stands complets — prochaine édition'}
             <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
           </Link>
         </div>

@@ -2,19 +2,22 @@
 
 import { useState } from 'react'
 import { ChevronDown, Ticket, FileText, Car, Users } from 'lucide-react'
+import { VISITOR_REGISTRATION_OPEN, EXHIBITOR_REGISTRATION_OPEN } from '@/lib/registration'
 
 const faqs = [
   {
     icon: Ticket,
     question: 'Le salon est-il gratuit pour les visiteurs ?',
-    answer:
-      'Oui, l\'entrée est gratuite sur inscription pour tous les membres de CSE et COS.',
+    answer: VISITOR_REGISTRATION_OPEN
+      ? 'Oui, l\'entrée est gratuite sur inscription pour tous les membres de CSE et COS.'
+      : 'Oui, l\'entrée est gratuite sur inscription pour tous les membres de CSE et COS. Pour cette édition, la visite est complète : nous ne prenons plus d\'inscriptions.',
   },
   {
     icon: FileText,
     question: 'Comment devenir exposant ?',
-    answer:
-      'Remplissez le formulaire de pré-inscription sur notre page "Exposer" ou contactez-nous directement. Notre équipe vous recontactera sous 48h.',
+    answer: EXHIBITOR_REGISTRATION_OPEN
+      ? 'Remplissez le formulaire de pré-inscription sur notre page "Exposer" ou contactez-nous directement. Notre équipe vous recontactera sous 48h.'
+      : 'Les stands de l\'édition 2026 sont complets. Contactez-nous dès maintenant pour exposer à la prochaine édition : notre équipe vous recontactera.',
   },
   {
     icon: Car,

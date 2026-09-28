@@ -112,18 +112,20 @@ Sections détaillées :
 
 ---
 
-## 🔒 Inscriptions visiteurs — interrupteur (visite complète)
+## 🔒 Inscriptions visiteurs & exposants — interrupteurs (salon complet)
 
-**Depuis le 28/09/2026 : inscriptions visiteurs FERMÉES (visite complète).**
+**Depuis le 28/09/2026 : inscriptions visiteurs ET exposants FERMÉES (salon complet).**
 
-Un seul interrupteur : `lib/registration.ts` → `VISITOR_REGISTRATION_OPEN`.
+Deux interrupteurs dans `lib/registration.ts` :
 
-| Valeur | Effet |
-|---|---|
-| `false` (actuel) | `/visiter` : le formulaire reste en place mais sous un voile « Complet » (flouté, `fieldset disabled`, inaccessible) ; boutons de l'accueil → « Visite complète » ; `/api/visitor` répond 403 ; JSON-LD `availability: SoldOut` |
-| `true` | Tout redevient comme avant : formulaire actif, boutons « Je visite le salon » / « S'inscrire gratuitement », API ouverte, `InStock` |
+| Interrupteur | `false` (actuel) | `true` |
+|---|---|---|
+| `VISITOR_REGISTRATION_OPEN` | `/visiter` : formulaire sous un voile « Complet » (flouté, `fieldset disabled`, inaccessible) ; boutons accueil « Visite complète » ; FAQ adaptée ; `/api/visitor` → 403 ; JSON-LD `SoldOut` | formulaire actif, « Je visite le salon » / « S'inscrire gratuitement », API ouverte, `InStock` |
+| `EXHIBITOR_REGISTRATION_OPEN` | `/exposer` : pré-inscription sous le même voile, textes « Stands complets / prochaine édition » ; accueil + 404 + FAQ adaptés ; `/api/exhibitor` → 403 | pré-inscription active, « Devenir exposant » / « Réserver votre stand », API ouverte |
 
-**Pour la prochaine édition** : repasser à `true`, commit, push, puis déployer (Vercel manuel).
+Le bulletin signé `/inscription-exposant` (non public, envoyé aux exposants retenus) reste actif dans les deux cas.
+
+**Pour la prochaine édition** : repasser les deux à `true`, commit, push, puis déployer (Vercel manuel).
 Le site Guadeloupe (autre repo) n'est pas concerné.
 
 ---

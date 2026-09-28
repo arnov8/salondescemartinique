@@ -1,5 +1,6 @@
-import { CheckCircle, Users, TrendingUp, Handshake, Target, Phone, Mail, Store } from 'lucide-react'
+import { CheckCircle, Users, TrendingUp, Handshake, Target, Phone, Mail, Store, Lock } from 'lucide-react'
 import ExhibitorForm from '@/components/forms/ExhibitorForm'
+import { EXHIBITOR_REGISTRATION_OPEN } from '@/lib/registration'
 
 const benefits = [
   {
@@ -48,7 +49,9 @@ const steps = [
 
 export const metadata = {
   title: 'Exposer | Salon des CSE & COS de Martinique 2026',
-  description: 'Réservez votre stand au Salon des CSE & COS de Martinique 2026 et présentez vos produits aux décideurs des comités d\'entreprise.',
+  description: EXHIBITOR_REGISTRATION_OPEN
+    ? 'Réservez votre stand au Salon des CSE & COS de Martinique 2026 et présentez vos produits aux décideurs des comités d\'entreprise.'
+    : 'Les stands du Salon des CSE & COS de Martinique 2026 sont complets. Contactez-nous pour exposer à la prochaine édition.',
 }
 
 export default function ExposerPage() {
@@ -59,14 +62,23 @@ export default function ExposerPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto lg:mx-0 text-center lg:text-left">
             <span className="badge mb-4 sm:mb-6">
-              Réservez votre stand
+              {EXHIBITOR_REGISTRATION_OPEN ? 'Réservez votre stand' : 'Stands complets'}
             </span>
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 sm:mb-6">
               Exposer
             </h1>
             <p className="text-base sm:text-lg lg:text-xl text-gray-200">
-              Rejoignez les 75 exposants et présentez vos produits et services
-              aux décideurs CSE &amp; COS de Martinique.
+              {EXHIBITOR_REGISTRATION_OPEN ? (
+                <>
+                  Rejoignez les 75 exposants et présentez vos produits et services
+                  aux décideurs CSE &amp; COS de Martinique.
+                </>
+              ) : (
+                <>
+                  Les 75 exposants de l&apos;édition 2026 sont au rendez-vous pour présenter
+                  leurs produits et services aux décideurs CSE &amp; COS de Martinique.
+                </>
+              )}
             </p>
           </div>
         </div>
@@ -75,52 +87,119 @@ export default function ExposerPage() {
       {/* Form Section - Prominent */}
       <section className="py-12 sm:py-16 lg:py-20 bg-gradient-to-b from-gray-50 to-white">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-6 sm:mb-8">
-            <span className="inline-flex items-center gap-2 bg-accent/10 text-accent-dark px-4 py-2 rounded-full text-sm font-semibold mb-4">
-              <Store className="w-4 h-4" />
-              Places limitées
-            </span>
-            <h2 className="section-title">Pré-inscription exposant</h2>
-            <p className="section-subtitle">
-              Remplissez le formulaire pour recevoir toutes les informations
-              sur les tarifs et les modalités de participation.
-            </p>
-          </div>
+          {EXHIBITOR_REGISTRATION_OPEN ? (
+            <>
+              <div className="text-center mb-6 sm:mb-8">
+                <span className="inline-flex items-center gap-2 bg-accent/10 text-accent-dark px-4 py-2 rounded-full text-sm font-semibold mb-4">
+                  <Store className="w-4 h-4" />
+                  Places limitées
+                </span>
+                <h2 className="section-title">Pré-inscription exposant</h2>
+                <p className="section-subtitle">
+                  Remplissez le formulaire pour recevoir toutes les informations
+                  sur les tarifs et les modalités de participation.
+                </p>
+              </div>
 
-          {/* Steps */}
-          <div className="flex items-center justify-center gap-2 sm:gap-3 mb-8">
-            {steps.map((step, index) => (
-              <div key={index} className="flex items-center gap-2 sm:gap-3">
-                <div className="flex items-center gap-1.5 sm:gap-2">
-                  <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-accent/10 flex items-center justify-center text-xs font-bold text-accent">
-                    {step.num}
+              {/* Steps */}
+              <div className="flex items-center justify-center gap-2 sm:gap-3 mb-8">
+                {steps.map((step, index) => (
+                  <div key={index} className="flex items-center gap-2 sm:gap-3">
+                    <div className="flex items-center gap-1.5 sm:gap-2">
+                      <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-accent/10 flex items-center justify-center text-xs font-bold text-accent">
+                        {step.num}
+                      </div>
+                      <span className="text-gray-600 text-xs sm:text-sm hidden sm:block">{step.text}</span>
+                    </div>
+                    {index < steps.length - 1 && (
+                      <div className="w-6 sm:w-8 h-px bg-gray-300" />
+                    )}
                   </div>
-                  <span className="text-gray-600 text-xs sm:text-sm hidden sm:block">{step.text}</span>
-                </div>
-                {index < steps.length - 1 && (
-                  <div className="w-6 sm:w-8 h-px bg-gray-300" />
-                )}
+                ))}
               </div>
-            ))}
-          </div>
 
-          {/* Form Card */}
-          <div className="card ring-2 ring-accent/20 shadow-xl">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-accent flex items-center justify-center">
-                <Store className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+              {/* Form Card */}
+              <div className="card ring-2 ring-accent/20 shadow-xl">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-accent flex items-center justify-center">
+                    <Store className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg sm:text-xl font-bold text-primary">Formulaire de pré-inscription</h3>
+                    <p className="text-gray-500 text-xs sm:text-sm">Réponse sous 48h</p>
+                  </div>
+                </div>
+                <ExhibitorForm />
               </div>
-              <div>
-                <h3 className="text-lg sm:text-xl font-bold text-primary">Formulaire de pré-inscription</h3>
-                <p className="text-gray-500 text-xs sm:text-sm">Réponse sous 48h</p>
+            </>
+          ) : (
+            <>
+              <div className="text-center mb-6 sm:mb-8">
+                <span className="inline-flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg mb-4">
+                  <Lock className="w-4 h-4 text-accent" />
+                  Stands complets
+                </span>
+                <h2 className="section-title">Tous les stands sont réservés</h2>
+                <p className="section-subtitle">
+                  Le Salon affiche complet pour l&apos;édition 2026.
+                  Nous ne prenons plus d&apos;inscriptions exposants.
+                </p>
               </div>
-            </div>
-            <ExhibitorForm />
-          </div>
+
+              {/* Formulaire conservé sous un voile, inaccessible */}
+              <div className="card !p-0 ring-2 ring-accent/20 shadow-xl relative">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-20 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full shadow-md tracking-widest">
+                  COMPLET
+                </div>
+
+                <div className="relative overflow-hidden rounded-2xl">
+                  <fieldset
+                    disabled
+                    aria-hidden="true"
+                    className="p-5 sm:p-6 md:p-8 blur-[3px] opacity-50 grayscale pointer-events-none select-none"
+                  >
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-accent flex items-center justify-center">
+                        <Store className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                      </div>
+                      <div>
+                        <h3 className="text-lg sm:text-xl font-bold text-primary">Formulaire de pré-inscription</h3>
+                        <p className="text-gray-500 text-xs sm:text-sm">Réponse sous 48h</p>
+                      </div>
+                    </div>
+                    <ExhibitorForm />
+                  </fieldset>
+
+                  <div className="absolute inset-0 z-10 flex items-center justify-center p-4 sm:p-8 bg-gradient-to-b from-white/70 via-white/80 to-white/70 backdrop-blur-[2px]">
+                    <div
+                      role="status"
+                      className="w-full max-w-sm text-center bg-white/95 rounded-2xl shadow-2xl border border-accent/30 px-6 py-8 sm:px-8 sm:py-10"
+                    >
+                      <div className="w-16 h-16 rounded-full bg-gradient-to-br from-accent to-accent-dark flex items-center justify-center mx-auto mb-5 shadow-lg ring-4 ring-accent/15">
+                        <Store className="w-8 h-8 text-white" />
+                      </div>
+                      <p className="text-accent-dark text-xs font-bold uppercase tracking-[0.2em] mb-2">Merci pour votre confiance</p>
+                      <h3 className="text-xl sm:text-2xl font-bold text-primary mb-3">Salon complet</h3>
+                      <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
+                        Tous les stands de l&apos;édition 2026 ont trouvé preneur.
+                        <br />
+                        Nous ne prenons plus d&apos;inscriptions exposants.
+                      </p>
+                      <div className="h-px w-16 bg-accent/40 mx-auto my-5" />
+                      <p className="text-gray-500 text-sm leading-relaxed">
+                        <strong className="text-primary">Vous souhaitez exposer l&apos;an prochain ?</strong> Contactez-nous
+                        dès maintenant pour être parmi les premiers informés de l&apos;ouverture des réservations.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
 
           {/* Contact direct */}
           <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 text-sm text-gray-500">
-            <span>Besoin d&apos;aide ?</span>
+            <span>{EXHIBITOR_REGISTRATION_OPEN ? 'Besoin d\'aide ?' : 'Exposer à la prochaine édition ?'}</span>
             <div className="flex items-center gap-4">
               <a href="tel:0696263096" className="flex items-center gap-1.5 hover:text-accent transition-colors">
                 <Phone className="w-4 h-4" />
@@ -341,15 +420,26 @@ export default function ExposerPage() {
       {/* CTA final */}
       <section className="py-12 sm:py-16 lg:py-20">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="section-title">Prêt à rejoindre le salon ?</h2>
+          <h2 className="section-title">
+            {EXHIBITOR_REGISTRATION_OPEN ? 'Prêt à rejoindre le salon ?' : 'Envie d\'exposer à la prochaine édition ?'}
+          </h2>
           <p className="section-subtitle mb-6">
-            Remontez pour remplir le formulaire de pré-inscription ou contactez-nous directement.
+            {EXHIBITOR_REGISTRATION_OPEN
+              ? 'Remontez pour remplir le formulaire de pré-inscription ou contactez-nous directement.'
+              : 'L\'édition 2026 affiche complet. Prenez date dès maintenant : contactez-nous et soyez parmi les premiers informés de l\'ouverture des réservations.'}
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
-            <a href="#top" className="btn-primary inline-flex items-center gap-2">
-              <Store className="w-4 h-4" />
-              Pré-inscription exposant
-            </a>
+            {EXHIBITOR_REGISTRATION_OPEN ? (
+              <a href="#top" className="btn-primary inline-flex items-center gap-2">
+                <Store className="w-4 h-4" />
+                Pré-inscription exposant
+              </a>
+            ) : (
+              <a href="mailto:organisation@antillessalons.com" className="btn-primary inline-flex items-center gap-2">
+                <Mail className="w-4 h-4" />
+                Nous écrire
+              </a>
+            )}
             <a href="tel:0696263096" className="btn-outline-primary inline-flex items-center gap-2">
               <Phone className="w-4 h-4" />
               06 96 26 30 96
