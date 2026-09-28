@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { Calendar, MapPin, Users, Store, Briefcase, Gift, Plane, GraduationCap, ArrowRight, CheckCircle, Award, Clock, Building2, PartyPopper, CreditCard } from 'lucide-react'
 import YouTubeBackground from '@/components/YouTubeBackground'
 import PhotoCarousel from '@/components/PhotoCarousel'
+import { VISITOR_REGISTRATION_OPEN } from '@/lib/registration'
 
 const stats = [
   { icon: Store, value: '75', label: 'Exposants' },
@@ -27,7 +28,7 @@ const advantages = [
   'Assistez à une conférence animée par un expert',
   'Participez à la Grande Tombola des Comités',
   'Échangez avec vos pairs responsables CSE/COS',
-  'Entrée gratuite sur inscription',
+  VISITOR_REGISTRATION_OPEN ? 'Entrée gratuite sur inscription' : 'Entrée gratuite sur inscription (visite complète)',
 ]
 
 const allSectors = [
@@ -108,7 +109,7 @@ export default function HomePage() {
               {/* CTA Buttons */}
               <div className="flex flex-col xs:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">
                 <Link href="/visiter" className="btn-accent inline-flex items-center justify-center gap-2">
-                  Je visite le salon
+                  {VISITOR_REGISTRATION_OPEN ? 'Je visite le salon' : 'Visite complète'}
                   <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
                 </Link>
                 <Link href="/exposer" className="btn-outline inline-flex items-center justify-center gap-2">
@@ -208,7 +209,7 @@ export default function HomePage() {
               </ul>
               <div className="text-center lg:text-left">
                 <Link href="/visiter" className="btn-primary inline-flex items-center gap-2">
-                  S&apos;inscrire gratuitement
+                  {VISITOR_REGISTRATION_OPEN ? 'S\'inscrire gratuitement' : 'Visite complète — inscriptions closes'}
                   <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
                 </Link>
               </div>

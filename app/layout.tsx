@@ -5,6 +5,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import Analytics from '@/components/Analytics'
 import ConsentBanner from '@/components/ConsentBanner'
+import { VISITOR_REGISTRATION_OPEN } from '@/lib/registration'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -102,7 +103,7 @@ const jsonLd = {
     '@type': 'Offer',
     price: '0',
     priceCurrency: 'EUR',
-    availability: 'https://schema.org/InStock',
+    availability: VISITOR_REGISTRATION_OPEN ? 'https://schema.org/InStock' : 'https://schema.org/SoldOut',
     url: 'https://www.salondescsemartinique.com/visiter',
     validFrom: '2026-01-01',
   },

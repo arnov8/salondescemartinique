@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { Home, ArrowLeft, Search } from 'lucide-react'
+import { VISITOR_REGISTRATION_OPEN } from '@/lib/registration'
 
 export default function NotFound() {
   return (
@@ -33,7 +34,7 @@ export default function NotFound() {
             className="card hover:border-accent border-2 border-transparent transition-colors"
           >
             <p className="font-bold text-primary">Visiter</p>
-            <p className="text-sm text-gray-500">Inscription gratuite</p>
+            <p className="text-sm text-gray-500">{VISITOR_REGISTRATION_OPEN ? 'Inscription gratuite' : 'Visite complète'}</p>
           </Link>
           <Link
             href="/exposer"

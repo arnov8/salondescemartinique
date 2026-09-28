@@ -4,6 +4,7 @@ import { rateLimit, getClientIP } from '@/lib/rate-limit'
 import { sendEmail, FROM_EMAIL, ADMIN_EMAIL } from '@/lib/resend'
 import { appendToSheet, SHEET_TABS } from '@/lib/google-sheets'
 import { validateSubmission, detectSpamPattern, silentRejectResponse } from '@/lib/antispam'
+import { VISITOR_REGISTRATION_OPEN } from '@/lib/registration'
 
 // Server-side validation schema
 const visitorSchema = z.object({
@@ -18,6 +19,14 @@ const visitorSchema = z.object({
 })
 
 export async function POST(request: Request) {
+  // Visite complète : plus aucune inscription acceptée (voir lib/registration.ts)
+  if (!VISITOR_REGISTRATION_OPEN) {
+    return NextResponse.json(
+      { error: 'La visite du Salon est complète. Nous ne prenons plus d\'inscriptions.' },
+      { status: 403 }
+    )
+  }
+
   try {
     // Rate limiting: 5 requests per minute per IP
     const clientIP = getClientIP(request)

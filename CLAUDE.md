@@ -112,6 +112,22 @@ Sections détaillées :
 
 ---
 
+## 🔒 Inscriptions visiteurs — interrupteur (visite complète)
+
+**Depuis le 28/09/2026 : inscriptions visiteurs FERMÉES (visite complète).**
+
+Un seul interrupteur : `lib/registration.ts` → `VISITOR_REGISTRATION_OPEN`.
+
+| Valeur | Effet |
+|---|---|
+| `false` (actuel) | `/visiter` : le formulaire reste en place mais sous un voile « Complet » (flouté, `fieldset disabled`, inaccessible) ; boutons de l'accueil → « Visite complète » ; `/api/visitor` répond 403 ; JSON-LD `availability: SoldOut` |
+| `true` | Tout redevient comme avant : formulaire actif, boutons « Je visite le salon » / « S'inscrire gratuitement », API ouverte, `InStock` |
+
+**Pour la prochaine édition** : repasser à `true`, commit, push, puis déployer (Vercel manuel).
+Le site Guadeloupe (autre repo) n'est pas concerné.
+
+---
+
 ## Formulaires
 
 ### 1. Formulaire Visiteur (`/visiter`)

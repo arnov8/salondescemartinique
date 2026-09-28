@@ -1,5 +1,6 @@
-import { Calendar, MapPin, Clock, CheckCircle, Users, Gift, Briefcase, Ticket, Car, Snowflake } from 'lucide-react'
+import { Calendar, MapPin, Clock, CheckCircle, Users, Gift, Briefcase, Ticket, Car, Snowflake, Lock } from 'lucide-react'
 import VisitorForm from '@/components/forms/VisitorForm'
+import { VISITOR_REGISTRATION_OPEN } from '@/lib/registration'
 
 const benefits = [
   {
@@ -41,7 +42,9 @@ const pratiques = [
 
 export const metadata = {
   title: 'Visiter | Salon des CSE & COS de Martinique 2026',
-  description: 'Inscrivez-vous gratuitement pour visiter le Salon des CSE & COS de Martinique 2026. Réservé aux membres de Comités Sociaux et Économiques.',
+  description: VISITOR_REGISTRATION_OPEN
+    ? 'Inscrivez-vous gratuitement pour visiter le Salon des CSE & COS de Martinique 2026. Réservé aux membres de Comités Sociaux et Économiques.'
+    : 'La visite du Salon des CSE & COS de Martinique 2026 est complète : les inscriptions sont closes. Réservé aux membres de Comités Sociaux et Économiques.',
 }
 
 export default function VisiterPage() {
@@ -87,23 +90,79 @@ export default function VisiterPage() {
       <section className="py-10 sm:py-14 lg:py-16 bg-gradient-to-b from-accent/5 to-white relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl mx-auto">
-            {/* Bandeau accrocheur */}
-            <div className="text-center mb-6 sm:mb-8">
-              <span className="inline-flex items-center gap-2 bg-accent text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg mb-4">
-                <Ticket className="w-4 h-4" />
-                Inscription gratuite & obligatoire
-              </span>
-              <h2 className="text-2xl sm:text-3xl font-bold text-primary">Inscrivez-vous maintenant</h2>
-              <p className="text-gray-500 text-sm sm:text-base mt-2">Réservé aux membres de Comités uniquement.</p>
-            </div>
+            {VISITOR_REGISTRATION_OPEN ? (
+              <>
+                {/* Bandeau accrocheur */}
+                <div className="text-center mb-6 sm:mb-8">
+                  <span className="inline-flex items-center gap-2 bg-accent text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg mb-4">
+                    <Ticket className="w-4 h-4" />
+                    Inscription gratuite & obligatoire
+                  </span>
+                  <h2 className="text-2xl sm:text-3xl font-bold text-primary">Inscrivez-vous maintenant</h2>
+                  <p className="text-gray-500 text-sm sm:text-base mt-2">Réservé aux membres de Comités uniquement.</p>
+                </div>
 
-            {/* Formulaire mis en avant */}
-            <div className="card !p-6 sm:!p-8 border-2 border-accent/20 shadow-xl relative">
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-accent text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
-                Entrée Gratuite
-              </div>
-              <VisitorForm />
-            </div>
+                {/* Formulaire mis en avant */}
+                <div className="card !p-6 sm:!p-8 border-2 border-accent/20 shadow-xl relative">
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-accent text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
+                    Entrée Gratuite
+                  </div>
+                  <VisitorForm />
+                </div>
+              </>
+            ) : (
+              <>
+                {/* Bandeau visite complète */}
+                <div className="text-center mb-6 sm:mb-8">
+                  <span className="inline-flex items-center gap-2 bg-primary text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg mb-4">
+                    <Lock className="w-4 h-4 text-accent" />
+                    Inscriptions closes
+                  </span>
+                  <h2 className="text-2xl sm:text-3xl font-bold text-primary">La visite du Salon est complète</h2>
+                  <p className="text-gray-500 text-sm sm:text-base mt-2">Nous ne prenons plus d&apos;inscriptions.</p>
+                </div>
+
+                {/* Formulaire conservé sous un voile, inaccessible */}
+                <div className="card !p-0 border-2 border-accent/20 shadow-xl relative">
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-20 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full shadow-md tracking-widest">
+                    COMPLET
+                  </div>
+
+                  <div className="relative overflow-hidden rounded-2xl">
+                    <fieldset
+                      disabled
+                      aria-hidden="true"
+                      className="p-6 sm:p-8 blur-[3px] opacity-50 grayscale pointer-events-none select-none"
+                    >
+                      <VisitorForm />
+                    </fieldset>
+
+                    <div className="absolute inset-0 z-10 flex items-center justify-center p-4 sm:p-8 bg-gradient-to-b from-white/70 via-white/80 to-white/70 backdrop-blur-[2px]">
+                      <div
+                        role="status"
+                        className="w-full max-w-sm text-center bg-white/95 rounded-2xl shadow-2xl border border-accent/30 px-6 py-8 sm:px-8 sm:py-10"
+                      >
+                        <div className="w-16 h-16 rounded-full bg-gradient-to-br from-accent to-accent-dark flex items-center justify-center mx-auto mb-5 shadow-lg ring-4 ring-accent/15">
+                          <Users className="w-8 h-8 text-white" />
+                        </div>
+                        <p className="text-accent-dark text-xs font-bold uppercase tracking-[0.2em] mb-2">Merci pour votre engouement</p>
+                        <h3 className="text-xl sm:text-2xl font-bold text-primary mb-3">Visite complète</h3>
+                        <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
+                          La visite du Salon est complète.
+                          <br />
+                          Nous ne prenons plus d&apos;inscriptions.
+                        </p>
+                        <div className="h-px w-16 bg-accent/40 mx-auto my-5" />
+                        <p className="text-gray-500 text-sm leading-relaxed">
+                          <strong className="text-primary">Déjà inscrit ?</strong> Présentez-vous à l&apos;entrée
+                          le <strong className="text-primary">jeudi 1er octobre</strong>, dès 8h00.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </section>
@@ -254,10 +313,21 @@ export default function VisiterPage() {
                 <div className="w-14 h-14 rounded-full bg-white/10 flex items-center justify-center mx-auto mb-4">
                   <span className="text-2xl font-bold text-accent">1</span>
                 </div>
-                <h4 className="font-semibold mb-2">Inscrivez-vous</h4>
-                <p className="text-gray-300 text-sm">
-                  Remplissez le formulaire d&apos;inscription ci-dessous. L&apos;entrée est gratuite mais obligatoire.
-                </p>
+                {VISITOR_REGISTRATION_OPEN ? (
+                  <>
+                    <h4 className="font-semibold mb-2">Inscrivez-vous</h4>
+                    <p className="text-gray-300 text-sm">
+                      Remplissez le formulaire d&apos;inscription ci-dessous. L&apos;entrée est gratuite mais obligatoire.
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <h4 className="font-semibold mb-2">Inscriptions closes</h4>
+                    <p className="text-gray-300 text-sm">
+                      La visite est complète : nous ne prenons plus de nouvelles inscriptions.
+                    </p>
+                  </>
+                )}
               </div>
               <div className="text-center">
                 <div className="w-14 h-14 rounded-full bg-white/10 flex items-center justify-center mx-auto mb-4">
