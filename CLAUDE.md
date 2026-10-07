@@ -4,23 +4,36 @@
 
 ## ⚠️ RÈGLE DE DÉPLOIEMENT — À NE JAMAIS OUBLIER
 
-**Toujours travailler et déployer depuis ce dossier :**
-```
-/Users/arnaudvalere/salondescemartinique/
-```
+**La version de référence est toujours `origin/main` sur GitHub.** Les copies locales peuvent être en retard : faire `git pull origin main` avant toute modification.
 
-**Projet Vercel correct :** `salon-cse-martinique` → https://www.salondescemartinique.com
+**Dossier de travail (sur chaque machine) :** `~/salondescemartinique/`
+- MacBook (`avmbp`) : `/Users/avmbp/salondescemartinique/` — copie propre recréée le 2026-10-07 depuis GitHub, liée au bon projet Vercel. L'ancienne copie (périmée, mal liée) est conservée dans `/Users/avmbp/salondescemartinique.old-2026-10-07/`.
+- Mac mini (`arnaudvalere`) : `/Users/arnaudvalere/salondescemartinique/`
 
-**NE PAS utiliser** `/Users/arnaudvalere/Documents/Projects/salondescemartinique/` — ce dossier est lié à un mauvais projet Vercel (`salondescemartinique`) qui n'a pas le domaine custom.
+**Projet Vercel correct :** `salon-cse-martinique` (`prj_hIYG6vrer4jG2nJyNA7pyEkroB12`, équipe `arnauds-projects-84fc44a0`) → https://www.salondescemartinique.com
 
-**Commandes correctes :**
+**NE PAS utiliser** un dossier lié au projet Vercel fantôme `salondescemartinique` (prj_Gu1vtT1fcOeQEUGV265BiiLT7dvH, sans domaine custom), par exemple `~/Documents/Projects/salondescemartinique/`. Vérifier avant de déployer :
 ```bash
-cd /Users/arnaudvalere/salondescemartinique
-git pull origin main   # si modifications faites ailleurs
-npx vercel --prod      # déploiement production
+cat .vercel/project.json   # doit contenir "projectName":"salon-cse-martinique"
 ```
+Si ce n'est pas le cas : `npx vercel link --yes --project salon-cse-martinique --scope arnauds-projects-84fc44a0`
 
-**Vercel n'est PAS en auto-deploy.** Après chaque `git push`, déployer manuellement avec `npx vercel --prod` depuis ce dossier.
+**Vercel n'est PAS en auto-deploy.** L'intégration Git est connectée mais chaque push sur `main` produit un déploiement « Canceled » (Ignored Build Step). Fusionner une PR sur GitHub ne met donc **rien** en ligne. Après chaque `git push` ou fusion :
+```bash
+cd ~/salondescemartinique
+git pull origin main
+npm install              # si package.json a changé
+npm run build            # vérifier localement avant de déployer
+npx vercel --prod --yes  # déploiement production
+```
+Si Vercel refuse avec `COMMIT_AUTHOR_REQUIRED` (commit d'un bot), déployer depuis une copie sans `.git` :
+```bash
+rsync -a --exclude .git --exclude node_modules --exclude .next --exclude .vercel ~/salondescemartinique/ /tmp/deploy-mq/
+cd /tmp/deploy-mq && npx vercel link --yes --project salon-cse-martinique --scope arnauds-projects-84fc44a0 && npx vercel --prod --yes
+```
+Vérifier ensuite : `curl -sI https://www.salondescemartinique.com | head -1` (200 attendu) et le dashboard Vercel (déploiement « Ready », environnement Production).
+
+**Sur le MacBook :** le git d'Apple est bloqué par la licence Xcode. Avant toute commande git : `export DEVELOPER_DIR=/Library/Developer/CommandLineTools` (ou, une fois pour toutes, `sudo xcodebuild -license accept`).
 
 ---
 
@@ -180,7 +193,7 @@ Le site Guadeloupe (autre repo) n'est pas concerné.
 
 ## Stack technique
 
-- **Framework** : Next.js 16.1.6 (App Router + Turbopack)
+- **Framework** : Next.js 16.3.x (App Router + Turbopack) — voir « Dépendances & sécurité »
 - **Langage** : TypeScript (strict mode)
 - **Styling** : Tailwind CSS 3.4
 - **Formulaires** : React Hook Form + Zod (client & serveur)
@@ -407,6 +420,7 @@ salon-cse-martinique/
 | 37 | Fix: logging détaillé Resend + Google Sheets sur toutes les routes | ✅ Fait |
 | 38 | Fix: utilisation variable `FROM_EMAIL` Vercel au lieu du hardcode | ✅ Fait |
 | 39 | Ajout endpoint diagnostic `/api/health` (test Resend + Google Sheets) | ✅ Fait |
+| 40 | Mise à jour de sécurité groupée (Next 16.3.8, jspdf 4.2.1, resend, postcss) — PR #25, déployée le 2026-10-07 | ✅ Fait |
 
 ---
 
@@ -419,7 +433,7 @@ salon-cse-martinique/
 | **GitHub Repo** | https://github.com/arnov8/salondescemartinique |
 | **Vercel Dashboard** | https://vercel.com/arnauds-projects-84fc44a0/salon-cse-martinique |
 
-> Déploiement automatique activé : chaque push sur `main` déclenche un nouveau build.
+> Pas de déploiement automatique : les builds Git sont annulés (Ignored Build Step). Déployer avec `npx vercel --prod --yes` (règle en tête de fichier).
 > Domaine personnalisé configuré : salondescemartinique.com redirige vers www.
 
 ---
@@ -490,7 +504,7 @@ GOOGLE_CREDENTIALS='{"type":"service_account",...}'
 - Site actuel : https://www.salondescemartinique.com (Wix)
 - Entrée gratuite mais réservée aux membres CSE/COS
 - URL production prévue : https://www.salondescsemartinique.com
-- Déploiement : Vercel (auto-deploy sur push main)
+- Déploiement : Vercel, manuel via `npx vercel --prod --yes` (pas d'auto-deploy)
 
 ---
 
@@ -627,3 +641,18 @@ inscrits séminaire ↔ visiteurs du salon. **Jamais** de passerelle avec le sal
 
 Les audiences issues du pixel expirent au bout de **180 jours** — insuffisant pour un salon annuel.
 L'actif durable, ce sont les **listes d'inscrits téléversées** (elles, n'expirent jamais).
+
+---
+
+## 📦 Dépendances & sécurité (état au 2026-10-07)
+
+Mise à jour groupée de sécurité fusionnée (PR #25) et déployée en production le 2026-10-07 : Next 16.3.8, eslint-config-next 16.3.8, jspdf 4.2.1, dompurify 3.4.16 (transitif), resend 6.32, postcss 8.5.29, react-hook-form 7.89, autoprefixer 10.6, dépendances transitives à jour (`npm update`). Toutes les alertes critiques et hautes de Next, jspdf, nodemailer/uuid/qs (via resend), nanoid, minimatch, brace-expansion sont corrigées.
+
+### Règles
+- **Next reste sur la ligne `~16.3.x`** (patchs uniquement). Passer en 16.4+ seulement après quelques semaines de recul, avec build local.
+- **Pas de montée de version majeure sans décision explicite** : zod 4, @hookform/resolvers 5, react 19, @types/node 25, eslint 10, tailwind 4, typescript 7 sont volontairement exclus. Les PR Dependabot correspondantes se ferment, elles ne se fusionnent pas.
+- **Alertes Dependabot restantes, acceptées** : chaîne de build de tailwindcss 3 (braces, micromatch, chokidar, postcss-selector-parser, fast-glob via eslint-plugin-next). Seule correction proposée = Tailwind 4 (majeur). Outils de build uniquement, aucune exposition en production (`npm audit --omit=dev` = 0).
+- `npm run lint` est cassé depuis Next 16 (`next lint` supprimé) et le projet est encore en `.eslintrc.json`. Migration à faire un jour : `npx @next/codemod@canary next-lint-to-eslint-cli .`
+- **PR Dependabot** : ne jamais les fusionner une par une (conflits de lockfile en chaîne, versions souvent déjà dépassées au moment de la revue). Faire une mise à jour groupée locale : `npm install <paquet>@<version>…`, `npm update`, puis `npm ci` + `npm run build` + `npx tsc --noEmit` (+ `npm run lint` si disponible) avant de pousser. Ensuite déployer (règle en tête de fichier) et fermer les PR Dependabot remplacées avec un commentaire.
+- Si `npm ci` échoue avec des entrées `@emnapi/*` manquantes (dérive du lockfile liée à sharp) : `npm install --package-lock-only` puis `npm ci`.
+- Vercel construit avec Node 24.x ; en local Node 25 fonctionne aussi.
