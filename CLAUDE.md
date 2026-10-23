@@ -193,7 +193,7 @@ Le site Guadeloupe (autre repo) n'est pas concerné.
 
 ## Stack technique
 
-- **Framework** : Next.js 16.3.x (App Router + Turbopack) — voir « Dépendances & sécurité »
+- **Framework** : Next.js 16.4.x (App Router + Turbopack) — voir « Dépendances & sécurité »
 - **Langage** : TypeScript (strict mode)
 - **Styling** : Tailwind CSS 3.4
 - **Formulaires** : React Hook Form + Zod (client & serveur)
@@ -644,12 +644,14 @@ L'actif durable, ce sont les **listes d'inscrits téléversées** (elles, n'expi
 
 ---
 
-## 📦 Dépendances & sécurité (état au 2026-10-07)
+## 📦 Dépendances & sécurité (état au 2026-10-23)
 
-Mise à jour groupée de sécurité fusionnée (PR #25) et déployée en production le 2026-10-07 : Next 16.3.8, eslint-config-next 16.3.8, jspdf 4.2.1, dompurify 3.4.16 (transitif), resend 6.32, postcss 8.5.29, react-hook-form 7.89, autoprefixer 10.6, dépendances transitives à jour (`npm update`). Toutes les alertes critiques et hautes de Next, jspdf, nodemailer/uuid/qs (via resend), nanoid, minimatch, brace-expansion sont corrigées.
+**Mise à jour de sécurité du 23/10/2026 (PR #26, mergée et déployée en production le 23/10)** : Next 16.3.8 → **16.4.2**, eslint-config-next 16.4.2, dépendances transitives via `npm audit fix` (dompurify 3.4.17, nanoid 3.3.20, postcss 8.5.23 transitif…). Motif : les correctifs Next.js du 14/10/2026 (RCE `use cache` GHSA-673q-mjm6-r5xr, RCE SVG GHSA-2464-fhr4-w9xw, DoS Server Actions GHSA-p3m5-59mp-jv5r) n'existent **que** sur 16.4.1+ et 15.5.28 : les lignes 16.1 / 16.2 / 16.3 ne reçoivent plus de patch. `npm audit --omit=dev` = 0. tsc 0, build OK, toutes les pages publiques en 200 après déploiement.
+
+État précédent (PR #25, 2026-10-07) : Next 16.3.8, jspdf 4.2.1, dompurify 3.4.16 (transitif), resend 6.32, postcss 8.5.29, react-hook-form 7.89, autoprefixer 10.6.
 
 ### Règles
-- **Next reste sur la ligne `~16.3.x`** (patchs uniquement). Passer en 16.4+ seulement après quelques semaines de recul, avec build local.
+- **Next suit la ligne `~16.4.x`** (Active LTS, patchs uniquement) depuis le 23/10/2026 ; 15.5.x est la ligne Maintenance LTS. Avant toute montée : build local + `tsc`, puis déploiement CLI.
 - **Pas de montée de version majeure sans décision explicite** : zod 4, @hookform/resolvers 5, react 19, @types/node 25, eslint 10, tailwind 4, typescript 7 sont volontairement exclus. Les PR Dependabot correspondantes se ferment, elles ne se fusionnent pas.
 - **Alertes Dependabot restantes, acceptées** : chaîne de build de tailwindcss 3 (braces, micromatch, chokidar, postcss-selector-parser, fast-glob via eslint-plugin-next). Seule correction proposée = Tailwind 4 (majeur). Outils de build uniquement, aucune exposition en production (`npm audit --omit=dev` = 0).
 - `npm run lint` est cassé depuis Next 16 (`next lint` supprimé) et le projet est encore en `.eslintrc.json`. Migration à faire un jour : `npx @next/codemod@canary next-lint-to-eslint-cli .`
